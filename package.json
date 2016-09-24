@@ -1,0 +1,30 @@
+{
+  "name": "@badgeup/badgeup-node-client",
+  "version": "0.1.2",
+  "description": "Official BadgeUp Node.js client",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha spec/"
+  },
+  "author": "Mark Herhold <mark@badgeup.io>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/badgeup/badgeup-node-client"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "check-types": "^7.0.0",
+    "got": "6.3.0",
+    "lodash.create": "^4.2.0",
+    "lodash.defaults": "^4.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "co-mocha": "^1.1.2",
+    "eslint": "^3.3.1",
+    "mocha": "^3.0.2"
+  },
+  "files": [
+    "src"
+  ]
+}
