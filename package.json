@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "check-types": "^7.0.0",
+    "check-types": "7.0.1",
     "got": "6.3.0",
     "lodash.create": "^4.2.0",
     "lodash.defaults": "^4.2.0"
@@ -21,8 +21,8 @@
   "devDependencies": {
     "chai": "^3.3.0",
     "co-mocha": "^1.1.2",
-    "eslint": "^3.3.1",
-    "mocha": "^3.0.2"
+    "eslint": "3.6.1",
+    "mocha": "3.1.0"
   },
   "files": [
     "src"
