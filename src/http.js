@@ -24,10 +24,10 @@ function findOwnPackageJOSN() {
 var requestDefaults = {
     json: true,
     timeout: 5000,
-    baseUrl: 'https://api.badgeup.io',
+    baseUrl: 'https://api.useast1.badgeup.io',
     headers: {
-        'User-Agent': packageJSON.name + ' ' + packageJSON.version,
-        'Accept': 'application/json'
+        'user-agent': packageJSON.name + '/' + packageJSON.version + ' (https://www.badgeup.io/)',
+        'accept': 'application/json'
     }
 };
 
