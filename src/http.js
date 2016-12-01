@@ -1,48 +1,50 @@
 'use strict';
 
-const defaults = require('lodash.defaults');
-const got = require('got');
-const path = require('path');
+const defaults = require('lodash.defaultsdeep');
+const got = require('./utils/gotWrapper');
+const findOwnPackageJOSN = require('./utils/findOwnPackageJSON');
 
 var packageJSON = findOwnPackageJOSN();
-
-function findOwnPackageJOSN() {
-    var foundPackageJSON = {};
-    var testLoc = __dirname; // current directory to test for a package.json
-    for (var level = 0; level < 5; level++) {
-        try {
-            foundPackageJSON = require(testLoc + '/package.json');
-            return foundPackageJSON;
-        } catch (err) {
-            /* do nothing */
-        }
-        testLoc = path.join(testLoc, '..');
-    }
-}
 
 // client library defaults
 var requestDefaults = {
     json: true,
     timeout: 5000,
-    baseUrl: 'https://api.useast1.badgeup.io',
+    baseUrl: 'https://api.useast1.badgeup.io', // default API endpoint
     headers: {
-        'user-agent': packageJSON.name + '/' + packageJSON.version + ' (https://www.badgeup.io/)',
-        'accept': 'application/json'
+        'User-Agent': packageJSON.name + '/' + packageJSON.version + ' (https://www.badgeup.io/)',
+        'Accept': 'application/json'
     }
 };
 
 class BadgeUpHttp {
     // Constructor for the HTTP stack for BadgeUp
-    //@param globalOpts: Options from the user for BadgeUp as a whole.
+    // @param globalOpts: Options from the user for BadgeUp as a whole.
     constructor(globalReqOpts) {
         this.globalReqOpts = globalReqOpts || {};
     }
 
-    //@param reqOpts: Request options from this library's functions.
-    //@param userOpts: Option overrides from the user. Highest priority.
-    //@return: Returns a Promise that resolves with the request data
+    // Performs a HTTP request given the collective options
+    // @param reqOpts: Request options from this library's functions.
+    // @param userOpts: Option overrides from the user. Highest priority.
+    // @return: Returns a Promise that resolves with the request data
     makeRequest(reqOpts, userOpts) {
-        return got(defaults({}, userOpts, reqOpts, this.globalReqOpts, requestDefaults));
+        const options = defaults({}, userOpts, reqOpts, this.globalReqOpts, requestDefaults);
+
+        // for internal unit tests
+        if (options._validate) {
+            options._validate(options);
+        }
+
+        // for internal unit tests
+        if (options._payload) {
+            return options._payload(options);
+        }
+
+        return got(options).then(function(response) {
+            // TODO implement error response translation
+            return response.body;
+        });
     }
 
 }

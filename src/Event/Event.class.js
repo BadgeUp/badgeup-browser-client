@@ -7,7 +7,6 @@ module.exports = class Event {
         this.id = source.id;
         this.subject = source.subject;
         this.key = source.key;
-        this.tags = source.tags;
         this.options = source.options;
         this.data = source.data;
         this.modifier = source.modifier;

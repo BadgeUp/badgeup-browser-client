@@ -1,7 +1,7 @@
 'use strict';
 
 const check = require('check-types');
-const defaults = require('lodash.defaults');
+const defaults = require('lodash.defaultsdeep');
 const Event = require('./Event');
 const Http = require('./http');
 const Metric = require('./Metric');
@@ -10,8 +10,8 @@ class BadgeUp {
     constructor(globalOpts) {
 
         // these fields are required
-        check.assert.object(globalOpts, 'globalOpts must be an object');
-        check.assert.string(globalOpts.applicationId, 'globalOpts.applicationId must be an string');
+        check.assert.object(globalOpts, 'You must provide an options object. Please see the documentation.');
+        check.assert.string(globalOpts.applicationId, 'You must provide your applicationId.');
         if (!globalOpts.apiKey && !globalOpts.token) {
             throw new Error('Either globalOpts.apiKey or globalOpts.token must be an string');
         }
