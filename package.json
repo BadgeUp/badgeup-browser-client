@@ -16,7 +16,7 @@
     "check-types": "7.0.1",
     "got": "6.6.3",
     "lodash.create": "^4.2.0",
-    "lodash.defaultsdeepdeep": "4.6.0"
+    "lodash.defaultsdee": "4.6.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",
