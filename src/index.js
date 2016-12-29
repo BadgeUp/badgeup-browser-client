@@ -2,9 +2,7 @@
 
 const check = require('check-types');
 const defaults = require('lodash.defaultsdeep');
-const Event = require('./Event');
 const Http = require('./http');
-const Metric = require('./Metric');
 
 class BadgeUp {
     constructor(globalOpts) {
@@ -33,8 +31,14 @@ class BadgeUp {
         // init the HTTP
         this.http = new Http(globalOpts.request);
 
-        this.Metric = Metric(this);
-        this.Event = Event(this);
+        this.achievements = require('./achievements')(this);
+        this._analytics = require('./analytics')(this);
+        this.apiKeys = require('./apiKeys')(this);
+        this.awards = require('./awards')(this);
+        this.criteria = require('./criteria')(this);
+        this.earnedAchievements = require('./earnedAchievements')(this);
+        this.metrics = require('./metrics')(this);
+        this.events = require('./events')(this);
     }
 }
 
