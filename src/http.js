@@ -2,9 +2,9 @@
 
 const defaults = require('lodash.defaultsdeep');
 const got = require('./utils/gotWrapper');
-const findOwnPackageJOSN = require('./utils/findOwnPackageJSON');
+const findOwnPackageJSON = require('./utils/findOwnPackageJSON');
 
-var packageJSON = findOwnPackageJOSN();
+const packageJSON = findOwnPackageJSON() || { name: '@badgeup/badgeup-node-client', version: 'unknown' };
 
 // client library defaults
 var requestDefaults = {

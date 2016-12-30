@@ -26,7 +26,7 @@ badgeup.achievements.getAll().then(function(achievements) {
     console.log(achievements);
 }).console.error(function(err) {
     console.log('Error fetching achievements: ' + err.message);
-});;
+});
 ```
 
 ## API
