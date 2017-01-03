@@ -7,18 +7,21 @@ function* pageToGenerator(pageFn) {
     let bank = [];
     let fetchPromise = Promise.resolve();
     while (bank.length > 0 || nextPageExists) {
-        if (bank.length > 0) {
-            yield Promise.resolve(bank.shift());
-        } else {
-            fetchPromise = fetchPromise.then(pageFn).then(function(response) {
-                nextPageExists = !!response.pages.next;
-                bank = response.data;
 
-                return bank.shift();
-            });
+        fetchPromise = fetchPromise.then(function() {
+            if (bank.length === 0) {
+                return pageFn().then(function(response) {
+                    nextPageExists = !!response.pages.next;
+                    bank = response.data;
 
-            yield fetchPromise;
-        }
+                    return bank.shift();
+                });
+            }
+
+            return bank.shift();
+        });
+
+        yield fetchPromise;
     }
 }
 
