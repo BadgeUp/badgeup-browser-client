@@ -100,4 +100,65 @@ describe('events', function() {
 
         expect(result).to.eql(event);
     });
+
+    it('should delete an event', function*() {
+        const event = generateFakeEvent();
+        function _payload() {
+            return event;
+        }
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/events?id=${event.id}`);
+            expect(options.method).to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        const result = yield bup.events.remove(event.id, { _payload, _validate });
+
+        expect(result).to.eql(event);
+    });
+
+    it('should delete multiple events for a subject', function*() {
+        function _payload() {
+            return { count: 5 };
+        }
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/events?subject=100`);
+            expect(options.method).to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.events.removeMultiple({ subject: '100' }, { _payload, _validate });
+    });
+
+    it('should delete multiple events after a specific date', function*() {
+        const date = new Date();
+
+        function _payload() {
+            return { count: 5 };
+        }
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/events?since=${date.toISOString().replace(/:/g, '%3A')}`);
+            expect(options.method).to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.events.removeMultiple({ since: date }, { _payload, _validate });
+    });
+
+    it('should delete all events', function*() {
+        function _payload() {
+            return { count: 5 };
+        }
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/events?all=true`);
+            expect(options.method).to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.events.removeAll({ _payload, _validate });
+    });
 });
