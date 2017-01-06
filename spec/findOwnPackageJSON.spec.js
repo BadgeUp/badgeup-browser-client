@@ -5,9 +5,9 @@ const findOwnPackageJOSN = require('./../src/utils/findOwnPackageJSON.js');
 
 describe('findOwnPackageJOSN()', function() {
     it('should be able to find this package.json file', function() {
-        const package = findOwnPackageJOSN();
+        const pkg = findOwnPackageJOSN();
 
-        expect(package).to.be.an('object');
-        expect(package.version).to.be.a('string');
+        expect(pkg).to.be.an('object');
+        expect(pkg.version).to.be.a('string');
     });
 });
