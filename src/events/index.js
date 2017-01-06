@@ -2,7 +2,7 @@
 
 const check = require('check-types');
 const common = require('./../common');
-const difference = require('lodash/difference');
+const difference = require('lodash.difference');
 const querystring = require('querystring');
 const ENDPT = 'events';
 
