@@ -27,7 +27,7 @@ module.exports = function events(context) {
     // deletes multiple events
     // @param deleteBy: options to delete events by
     // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to the deleted object
+    // @returns Returns a promise that resolves to an object stating the number of deleted events
     function removeMultiple(deleteBy, userOpts) {
         check.string(deleteBy, 'deleteBy must be an object');
 
@@ -55,7 +55,7 @@ module.exports = function events(context) {
 
     // deletes all events
     // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to the deleted object
+    // @returns Returns a promise that resolves to an object stating the number of deleted events
     function removeAll(userOpts) {
 
         return context.http.makeRequest({
