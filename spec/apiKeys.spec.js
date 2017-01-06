@@ -9,7 +9,7 @@ const bup = new BadgeUp({
     apiKey: 'Co0kieMonst3r'
 });
 
-describe('criterion', function() {
+describe('API Keys', function() {
     it('should get a list of scopes', function*() {
         const payload = {
             data: [
