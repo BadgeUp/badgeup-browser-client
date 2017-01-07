@@ -31,6 +31,7 @@ class BadgeUp {
         // init the HTTP
         this.http = new Http(globalOpts.request);
 
+        this.applications = require('./applications')(this);
         this.achievements = require('./achievements')(this);
         this._analytics = require('./analytics')(this);
         this.apiKeys = require('./apiKeys')(this);
