@@ -19,7 +19,7 @@ describe('API Keys', function() {
         };
 
         function _payload() {
-            return payload;
+            return Promise.resolve(payload);
         }
 
         function _validate(options) {
@@ -30,7 +30,7 @@ describe('API Keys', function() {
 
         const result = yield bup.apiKeys.listScopes({ _payload, _validate });
 
-        expect(result).to.be.an('object');
-        expect(result).to.eql(payload);
+        expect(result).to.be.an('array');
+        expect(result).to.eql(payload.data);
     });
 });

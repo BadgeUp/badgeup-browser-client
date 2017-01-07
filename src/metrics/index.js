@@ -32,7 +32,7 @@ module.exports = function metrics(context) {
 
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/${subject}/${key}`
-        }, userOpts).then(function(body) { return body.data; });
+        }, userOpts);
     }
 
     // deletes a single metric for a subject by key
