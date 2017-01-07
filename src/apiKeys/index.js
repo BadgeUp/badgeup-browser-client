@@ -15,7 +15,7 @@ module.exports = function apiKeys(context) {
     function listScopes(userOpts) {
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/scopes`
-        }, userOpts);
+        }, userOpts).then(function(body) { return body.data; });
     }
 
     return {

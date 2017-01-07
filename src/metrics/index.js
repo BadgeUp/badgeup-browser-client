@@ -18,7 +18,7 @@ module.exports = function metrics(context) {
 
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/${subject}`
-        }, userOpts);
+        }, userOpts).then(function(body) { return body.data; });
     }
 
     // retrieves a single metric for a subject by key
@@ -32,7 +32,7 @@ module.exports = function metrics(context) {
 
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/${subject}/${key}`
-        }, userOpts);
+        }, userOpts).then(function(body) { return body.data; });
     }
 
     // deletes a single metric for a subject by key
