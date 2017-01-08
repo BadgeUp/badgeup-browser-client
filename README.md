@@ -43,15 +43,20 @@ badgeup.applications.get('ke9ox992');
 ```
 
 #### `getAll()` - Iterate through all applications
-Returns a generator that returns promises that resolves with each application.
+Returns a generator that returns promises that resolves with each application. See also `getList()`.
 
 ```js
 const applications = badgeup.applications.getAll();
 for (let app of applications) {
-    await app.then(function() {
-        // do something with the application
-    });
+    console.log(await app);
 }
+```
+
+#### `getList()` - Get an array of all applications
+Returns a promise that resolves to an array containing all applications. See also `getAll()`.
+
+```js
+const applications = await badgeup.applications.getList();
 ```
 
 #### `create(application)` - Create a new application
@@ -67,7 +72,7 @@ badgeup.applications.create({
 #### `remove(applicationId)` - Deletes an application by ID
 Returns a promise that resolves with the deleted application.
 ```js
-badgeup.applications.delete('ke9ox992');
+badgeup.applications.remove('ke9ox992');
 ```
 
 #### `update(applicationId, changesObj)` - Updates an application by ID
