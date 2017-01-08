@@ -20,7 +20,7 @@ module.exports = function common(context, endpoint) {
         }, userOpts);
     }
 
-    // retrieve all objects
+    // retrieve all objects, returned as an iterator
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
     function* getAll(userOpts) {
@@ -35,6 +35,29 @@ module.exports = function common(context, endpoint) {
         }
 
         yield* pageToGenerator(pageFn());
+    }
+
+    // retrieve all objects, returned as an array
+    // @param userOpts: option overrides for this request
+    // @return An iterator that returns promises that resolve with the next object
+    function getList(userOpts) {
+        let array = [];
+        let url = `/v1/apps/${context.applicationId}/${endpoint}`;
+
+        function pageFn() {
+            return context.http.makeRequest({ url }, userOpts).then(function(body) {
+                array = array.concat(body.data || []); // concatinate the new data
+
+                url = body.pages.next;
+                if (url) {
+                    return pageFn();
+                } else {
+                    return array;
+                }
+            });
+        }
+
+        return pageFn();
     }
 
     // updates the object by ID
@@ -83,6 +106,7 @@ module.exports = function common(context, endpoint) {
     return {
         get: get,
         getAll,
+        getList,
         create,
         update,
         remove

@@ -34,7 +34,7 @@ describe('metrics', function() {
         expect(result).to.eql(metric);
     });
 
-    it('should get all metrics', function*() {
+    it('should get all metrics with an iterator', function*() {
         const event = generateFakeMetric();
 
         function _payload(options) {
@@ -77,6 +77,46 @@ describe('metrics', function() {
 
         // total number of metrics
         expect(count).to.equal(20);
+    });
+
+    it('should get all metrics with an array', function*() {
+        const event = generateFakeMetric();
+
+        function _payload(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                // last page of date
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: null
+                    },
+                    data: (new Array(10)).fill(event)
+                });
+            } else {
+                // first page of data
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: '/v1/apps/1337/metrics?after=PAGE_TWO'
+                    },
+                    data: (new Array(10)).fill(event)
+                });
+            }
+        }
+
+        function _validate(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                expect(options.url).to.equal('/v1/apps/1337/metrics?after=PAGE_TWO');
+            } else {
+                expect(options.url).to.equal('/v1/apps/1337/metrics');
+            }
+            expect(options.headers).to.be.an('object');
+        }
+
+        let metrics = yield bup.metrics.getList({ _payload, _validate });
+
+        // total number of metrics
+        expect(metrics.length).to.equal(20);
     });
 
     it('should create a metric', function*() {

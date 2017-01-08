@@ -52,6 +52,7 @@ module.exports = function metrics(context) {
 
     return {
         getAll: obj.getAll,
+        getList: obj.getList,
         create: obj.create,
         getSubjectMetrics,
         getIndividualSubjectMetric, // TODO: consider aliasing to "get"
