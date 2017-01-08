@@ -1,8 +1,6 @@
 'use strict';
 
-const _got = require('got');
-
-const gotWrapper = function gotWrapper(options) {
+const fetchWrapper = function fetchWrapper(options) {
     if (!options || typeof options !== 'object') {
         throw new Error('options object must be provided and must be an object');
     }
@@ -26,16 +24,13 @@ const gotWrapper = function gotWrapper(options) {
 
     const simple = (options.simple === undefined) ? true : false;
     delete options.simple;
-
-    return _got(url, options).then(function(response) {
-        return Promise.resolve(response);
-    }, function(reason) {
-        if (!simple && reason instanceof _got.HTTPError) {
-            return Promise.resolve(reason.response);
+    return fetch(url, options).then(function(response) {
+        if (!response.ok) {
+            return Promise.reject(response);
         }
-        return Promise.reject(reason);
+        return response;
     });
 };
 
 // export the wrapped got instance
-module.exports = Object.assign(gotWrapper, _got);
+module.exports = fetchWrapper;

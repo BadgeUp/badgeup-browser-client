@@ -1,10 +1,9 @@
 'use strict';
 
 const defaults = require('lodash.defaultsdeep');
-const got = require('./utils/gotWrapper');
-const findOwnPackageJSON = require('./utils/findOwnPackageJSON');
+const request = require('./utils/fetchWrapper');
 
-const packageJSON = findOwnPackageJSON() || { name: '@badgeup/badgeup-node-client', version: 'unknown' };
+const packageJSON = { name: '@badgeup/badgeup-browser-client', version: 'unknown' };
 
 // client library defaults
 var requestDefaults = {
@@ -41,9 +40,9 @@ class BadgeUpHttp {
             return options._payload(options);
         }
 
-        return got(options).then(function(response) {
+        return request(options).then(function(response) {
             // TODO implement error response translation
-            return response.body;
+            return response.json();
         });
     }
 

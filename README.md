@@ -1,7 +1,7 @@
 :warning: This client is still a work-in-progress.
 
 # BadgeUp Node.js Client
-Official Node.js client for working with [BadgeUp](https://www.badgeup.io/). Targets compatibility with all LTS versions of Node.js. These versions can be found in `.travis.yml`.
+Official browser client for working with [BadgeUp](https://www.badgeup.io/). This is a downstream repository of the [badgeup-node-client](https://github.com/BadgeUp/badgeup-node-client).
 
 [![Build Status](https://travis-ci.org/BadgeUp/badgeup-node-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-node-client)
 
@@ -12,9 +12,9 @@ npm install @badgeup/badgeup-node-client --save
 ```
 
 ## Initialization
-The BadgeUp Node.js client is initialized with an options object.
+The BadgeUp browser client is initialized with an options object.
 ```js
-const BadgeUp = require('@badgeup/badgeup-node-client');
+const BadgeUp = require('@badgeup/badgeup-browser-client');
 const badgeup = new BadgeUp({
     applicationId: '<your applicationId from the dashboard>',
     apiKey: // the API Key created for use with this application (preferred)
