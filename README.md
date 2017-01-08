@@ -1,7 +1,7 @@
 :warning: This client is still a work-in-progress.
 
 # BadgeUp Node.js Client
-Official browser client for working with [BadgeUp](https://www.badgeup.io/). This is a downstream repository of the [badgeup-node-client](https://github.com/BadgeUp/badgeup-node-client).
+Official browser client for working with [BadgeUp](https://www.badgeup.io/). This module uses the [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) api, so you may need to [polyfill](https://github.com/github/fetch) it for older browsers. This is a downstream repository of the [badgeup-node-client](https://github.com/BadgeUp/badgeup-node-client).
 
 [![Build Status](https://travis-ci.org/BadgeUp/badgeup-node-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-node-client)
 
