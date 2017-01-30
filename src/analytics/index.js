@@ -18,6 +18,15 @@ module.exports = function achievements(context) {
         }, userOpts);
     }
 
+    // retrieve subject analytics
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves with the retrieved object
+    function subjectsLast60Days(userOpts) {
+        return context.http.makeRequest({
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/subjects/last-60-days`
+        }, userOpts);
+    }
+
     // retrieve earned achievement analytics
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves with the retrieved object
@@ -27,5 +36,9 @@ module.exports = function achievements(context) {
         }, userOpts);
     }
 
-    return { eventsLast60Days, earnedAchievementsLast60Days };
+    return {
+        eventsLast60Days,
+        subjectsLast60Days,
+        earnedAchievementsLast60Days
+    };
 };
