@@ -39,7 +39,7 @@ module.exports = function common(context, endpoint) {
 
     // retrieve all objects, returned as an array
     // @param userOpts: option overrides for this request
-    // @return A promise that resolves to an array of progress objects
+    // @return A promise that resolves to an array of objects
     function getList(userOpts) {
         let array = [];
         let url = `/v1/apps/${context.applicationId}/${endpoint}`;
