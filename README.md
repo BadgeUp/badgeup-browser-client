@@ -24,7 +24,7 @@ const badgeup = new BadgeUp({
 // get a complete list of achievements
 badgeup.achievements.getAll().then(function(achievements) {
     console.log(achievements);
-}).console.error(function(err) {
+}).catch(function(err) {
     console.log('Error fetching achievements: ' + err.message);
 });
 ```
