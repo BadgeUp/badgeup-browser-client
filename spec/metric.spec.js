@@ -69,7 +69,7 @@ describe('metrics', function() {
         }
 
         let count = 0;
-        for (let event of bup.metrics.getAll({ _payload, _validate })) {
+        for (let event of bup.metrics.getIterator({ _payload, _validate })) {
             count++;
             event = yield event;
             expect(event).to.be.an('object');
@@ -113,7 +113,7 @@ describe('metrics', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        let metrics = yield bup.metrics.getList({ _payload, _validate });
+        let metrics = yield bup.metrics.getAll({ _payload, _validate });
 
         // total number of metrics
         expect(metrics.length).to.equal(20);

@@ -23,7 +23,7 @@ module.exports = function common(context, endpoint) {
     // retrieve all objects, returned as an iterator
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
-    function* getAll(userOpts) {
+    function* getIterator(userOpts) {
         function pageFn() {
             let url = `/v1/apps/${context.applicationId}/${endpoint}`;
             return function() {
@@ -40,7 +40,7 @@ module.exports = function common(context, endpoint) {
     // retrieve all objects, returned as an array
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of objects
-    function getList(userOpts) {
+    function getAll(userOpts) {
         let array = [];
         let url = `/v1/apps/${context.applicationId}/${endpoint}`;
 
@@ -105,8 +105,8 @@ module.exports = function common(context, endpoint) {
 
     return {
         get: get,
+        getIterator,
         getAll,
-        getList,
         create,
         update,
         remove

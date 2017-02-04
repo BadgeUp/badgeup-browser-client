@@ -62,7 +62,7 @@ class EventQueryBuilder {
     // retrieve all queried events, returned as an array
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of event objects
-    getList(userOpts) {
+    getAll(userOpts) {
         const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
 
         let array = [];
@@ -87,7 +87,7 @@ class EventQueryBuilder {
     // retrieve all queried events, returned as an iterator
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next event
-    *getAll(userOpts) {
+    *getIterator(userOpts) {
         const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
 
         const pageFn = () => {

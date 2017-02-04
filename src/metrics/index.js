@@ -14,7 +14,7 @@ module.exports = function metrics(context) {
     // @param subject: subject to retrieve the metrics for
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves to a list of metrics
-    function getSubjectMetricsList(subject, userOpts) {
+    function getAllSubjectMetrics(subject, userOpts) {
         check.string(subject, 'subject must be a string');
 
         let array = [];
@@ -40,7 +40,7 @@ module.exports = function metrics(context) {
     // @param subject: subject to retrieve the metrics for
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
-    function* getAllSubjectMetrics(subject, userOpts) {
+    function* getSubjectMetricsIterator(subject, userOpts) {
         check.string(subject, 'subject must be a string');
 
         function pageFn() {
@@ -87,10 +87,10 @@ module.exports = function metrics(context) {
 
     return {
         getAll: obj.getAll,
-        getList: obj.getList,
+        getIterator: obj.getIterator,
         create: obj.create,
-        getSubjectMetricsList,
         getAllSubjectMetrics,
+        getSubjectMetricsIterator,
         getIndividualSubjectMetric, // TODO: consider aliasing to "get"
         removeIndividualSubjectMetric // TODO: consider aliasing to "remove"
     };

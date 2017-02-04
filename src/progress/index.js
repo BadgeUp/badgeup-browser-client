@@ -9,7 +9,7 @@ module.exports = function progress(context) {
     // @param subject: The subject to get the progress for
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
-    function* getAll(subject, userOpts) {
+    function* getIterator(subject, userOpts) {
         check.assert.string(subject, 'subject must be a string');
 
         function pageFn() {
@@ -29,7 +29,7 @@ module.exports = function progress(context) {
     // @param subject: The subject to get the progress for
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of progress objects
-    function getList(subject, userOpts) {
+    function getAll(subject, userOpts) {
         check.assert.string(subject, 'subject must be a string');
 
         let array = [];
@@ -67,7 +67,7 @@ module.exports = function progress(context) {
 
     return {
         getAll,
-        getList,
+        getIterator,
         getBySubjectAndAchievement
     };
 };

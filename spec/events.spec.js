@@ -40,7 +40,7 @@ describe('events', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        const result = yield bup.events.query().id(event.id).getList({ _payload, _validate });
+        const result = yield bup.events.query().id(event.id).getAll({ _payload, _validate });
 
         expect(result).to.be.an('array');
     });
@@ -80,7 +80,7 @@ describe('events', function() {
         }
 
         let count = 0;
-        for (let event of bup.events.query().getAll({ _payload, _validate })) {
+        for (let event of bup.events.query().getIterator({ _payload, _validate })) {
             count++;
             event = yield event;
             expect(event).to.be.an('object');
