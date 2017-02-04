@@ -25,18 +25,24 @@ describe('events', function() {
     it('should get a single event', function*() {
         const event = generateFakeEvent();
         function _payload() {
-            return event;
+            return {
+                pages: {
+                    previous: null,
+                    next: null
+                },
+                data: [event]
+            };
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/events/${event.id}`);
+            expect(options.url).to.equal(`/v1/apps/1337/events?id=${event.id}`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }
 
-        const result = yield bup.events.get(event.id, { _payload, _validate });
+        const result = yield bup.events.query().id(event.id).getList({ _payload, _validate });
 
-        expect(result).to.be.an('object');
+        expect(result).to.be.an('array');
     });
 
     it('should get all events', function*() {
@@ -68,13 +74,13 @@ describe('events', function() {
             if (options.url.indexOf('PAGE_TWO') > 0) {
                 expect(options.url).to.equal('/v1/apps/1337/events?after=PAGE_TWO');
             } else {
-                expect(options.url).to.equal('/v1/apps/1337/events');
+                expect(options.url).to.equal('/v1/apps/1337/events?');
             }
             expect(options.headers).to.be.an('object');
         }
 
         let count = 0;
-        for (let event of bup.events.getAll({ _payload, _validate })) {
+        for (let event of bup.events.query().getAll({ _payload, _validate })) {
             count++;
             event = yield event;
             expect(event).to.be.an('object');
@@ -113,7 +119,7 @@ describe('events', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        const result = yield bup.events.remove(event.id, { _payload, _validate });
+        const result = yield bup.events.query().id(event.id).remove({ _payload, _validate });
 
         expect(result).to.eql(event);
     });
@@ -129,7 +135,7 @@ describe('events', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.events.removeMultiple({ subject: '100' }, { _payload, _validate });
+        yield bup.events.query().subject('100').remove({ _payload, _validate });
     });
 
     it('should delete multiple events after a specific date', function*() {
@@ -145,7 +151,7 @@ describe('events', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.events.removeMultiple({ since: date }, { _payload, _validate });
+        yield bup.events.query().since(date).remove({ _payload, _validate });
     });
 
     it('should delete all events', function*() {
@@ -159,6 +165,6 @@ describe('events', function() {
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.events.removeAll({ _payload, _validate });
+        yield bup.events.query().all(true).remove({ _payload, _validate });
     });
 });
