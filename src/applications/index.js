@@ -24,7 +24,7 @@ module.exports = function applications(context) {
     // retrieve all applications
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
-    function* getAll(userOpts) {
+    function* getIterator(userOpts) {
         function pageFn() {
             let url = `/v1/${ENDPT}`;
             return function() {
@@ -39,7 +39,7 @@ module.exports = function applications(context) {
     }
 
     return {
-        getAll,
+        getIterator,
         create
     };
 };

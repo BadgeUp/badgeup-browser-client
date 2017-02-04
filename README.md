@@ -24,7 +24,7 @@ const badgeup = new BadgeUp({
 // get a complete list of achievements
 badgeup.achievements.getAll().then(function(achievements) {
     console.log(achievements);
-}).console.error(function(err) {
+}).catch(function(err) {
     console.log('Error fetching achievements: ' + err.message);
 });
 ```
@@ -42,21 +42,21 @@ Returns a promise that resolves with the application.
 badgeup.applications.get('ke9ox992');
 ```
 
-#### `getAll()` - Iterate through all applications
-Returns a generator that returns promises that resolves with each application. See also `getList()`.
+#### `getIterator()` - Iterate through all applications
+Returns an iterator that returns promises that resolves with each application. See also `getAll()`.
 
 ```js
-const applications = badgeup.applications.getAll();
+const applications = badgeup.applications.getIterator();
 for (let app of applications) {
     console.log(await app);
 }
 ```
 
-#### `getList()` - Get an array of all applications
-Returns a promise that resolves to an array containing all applications. See also `getAll()`.
+#### `getAll()` - Get an array of all applications
+Returns a promise that resolves with an array containing all applications. See also `getIterator()`.
 
 ```js
-const applications = await badgeup.applications.getList();
+const applications = await badgeup.applications.getAll();
 ```
 
 #### `create(application)` - Create a new application

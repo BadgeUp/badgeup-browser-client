@@ -1,6 +1,6 @@
 {
   "name": "@badgeup/badgeup-browser-client",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Official BadgeUp browser client",
   "main": "src/index.js",
   "scripts": {
@@ -15,7 +15,8 @@
   "dependencies": {
     "check-types": "7.0.1",
     "lodash.defaultsdeep": "4.6.0",
-    "lodash.difference": "4.5.0"
+    "lodash.includes": "4.3.0",
+    "lodash.pickby": "4.6.0"
   },
   "devDependencies": {
     "chai": "^3.3.0",

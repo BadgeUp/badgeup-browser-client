@@ -37,7 +37,7 @@ class BadgeUpHttp {
 
         // for internal unit tests
         if (options._payload) {
-            return options._payload(options);
+            return Promise.resolve(options._payload(options));
         }
 
         return request(options).then(function(response) {
