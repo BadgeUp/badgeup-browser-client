@@ -19,6 +19,7 @@ module.exports = function apiKeys(context) {
 
     return {
         getAll: obj.getAll,
+        getIterator: obj.getIterator,
         create: obj.create,
         remove: obj.remove,
         listScopes
