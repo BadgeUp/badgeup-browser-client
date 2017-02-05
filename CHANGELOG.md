@@ -17,4 +17,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Renamed getList() to getAll()
 - Renamed getAll() to getIterator()
+- Renamed getAllSubjectMetrics() to getAllSubjectMetrics()
+- Renamed getSubjectMetricsList() to getSubjectMetricsIterator()
 - Cleaner event querying for get/delete (#2)
