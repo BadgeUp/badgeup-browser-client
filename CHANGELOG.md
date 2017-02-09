@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - applications.getAll()
 - apikeys.getIterator()
+- criteria.getDynamicCriteriaImages()
 
 ### Changed
 - N/A
