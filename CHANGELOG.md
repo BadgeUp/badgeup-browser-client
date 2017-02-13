@@ -5,8 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- applications.getAll()
-- apikeys.getIterator()
+- N/A
+
+### Changed
+- N/A
+
+## [0.4.1] - 2017-02-13
+### Added
+- `applications.getAll()`
+- `criteria.getDynamicCriteriaImages()`
+- `apiKeys.getIterator()`
+- `apiKeys.update()` per [badgeup-browser-client #2](https://github.com/BadgeUp/badgeup-browser-client/issues/2)
 
 ### Changed
 - N/A
@@ -16,8 +25,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Analytics endpoint for subjects
 
 ### Changed
-- Renamed getList() to getAll()
-- Renamed getAll() to getIterator()
-- Renamed getSubjectMetricsList() to getAllSubjectMetrics()
-- Renamed getAllSubjectMetrics() to getSubjectMetricsIterator()
+- Renamed `getList()` to `getAll()`
+- Renamed `getAll()` to `getIterator()`
+- Renamed `getSubjectMetricsList()` to `getAllSubjectMetrics()`
+- Renamed `getAllSubjectMetrics()` to `getSubjectMetricsIterator()`
 - Cleaner event querying for get/delete (#2)

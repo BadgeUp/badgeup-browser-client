@@ -22,6 +22,7 @@ module.exports = function apiKeys(context) {
         getIterator: obj.getIterator,
         create: obj.create,
         remove: obj.remove,
+        update: obj.update,
         listScopes
     };
 };
