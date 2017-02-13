@@ -8,10 +8,9 @@ const ENDPT = 'apikeys';
 module.exports = function apiKeys(context) {
     const obj = common(context, ENDPT);
 
-    // retrieve object by ID
-    // @param id ID of the object to retrieve
+    // Get all possible API key scopes
     // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves with the retrieved object
+    // @returns Returns a promise that resolves with the requested API key scopes
     function listScopes(userOpts) {
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/scopes`
@@ -20,6 +19,7 @@ module.exports = function apiKeys(context) {
 
     return {
         getAll: obj.getAll,
+        getIterator: obj.getIterator,
         create: obj.create,
         remove: obj.remove,
         listScopes

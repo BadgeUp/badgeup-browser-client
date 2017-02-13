@@ -21,6 +21,29 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
+    // retrieve all objects, returned as an array
+    // @param userOpts: option overrides for this request
+    // @return A promise that resolves to an array of objects
+    function getAll(userOpts) {
+        let array = [];
+        let url = `/v1/${ENDPT}`;
+
+        function pageFn() {
+            return context.http.makeRequest({ url }, userOpts).then(function(body) {
+                array = array.concat(body.data || []); // concatinate the new data
+
+                url = body.pages.next;
+                if (url) {
+                    return pageFn();
+                } else {
+                    return array;
+                }
+            });
+        }
+
+        return pageFn();
+    }
+
     // retrieve all applications
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next object
@@ -39,6 +62,7 @@ module.exports = function applications(context) {
     }
 
     return {
+        getAll,
         getIterator,
         create
     };

@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- N/A
+- applications.getAll()
+- apikeys.getIterator()
 
 ### Changed
 - N/A
@@ -17,4 +18,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Renamed getList() to getAll()
 - Renamed getAll() to getIterator()
+- Renamed getSubjectMetricsList() to getAllSubjectMetrics()
+- Renamed getAllSubjectMetrics() to getSubjectMetricsIterator()
 - Cleaner event querying for get/delete (#2)
