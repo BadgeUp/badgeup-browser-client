@@ -2,21 +2,13 @@
 
 const check = require('check-types');
 const common = require('./../common');
-const pickBy = require('lodash.pickby');
-const includes = require('lodash.includes');
 const querystring = require('querystring');
 const pageToGenerator = require('../utils/pageToGenerator');
+const collectQueryParams = require('../utils/collectQueryParams');
 const ENDPT = 'events';
 
 const GET_QUERY_PARAMS = ['id', 'key', 'subject', 'since', 'until'];
 const DELETE_QUERY_PARAMS = ['id', 'key', 'subject', 'since', 'until', 'all'];
-
-function collectQueryParams(source, keys) {
-    return pickBy(source, function(value, key) {
-        // TODO switch to Array.prototype.includes when we drop support for Node v4
-        return !!value && includes(keys, key);
-    });
-}
 
 class EventQueryBuilder {
     constructor(context) {

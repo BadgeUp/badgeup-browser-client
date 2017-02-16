@@ -12,7 +12,7 @@ const bup = new BadgeUp({
 function generateFakeMetric() {
     return {
         subject: 'kram',
-        key: 'event:key',
+        key: 'eventkey',
         value: 10
     };
 }
@@ -139,17 +139,25 @@ describe('metrics', function() {
     it('should delete a metric', function*() {
         const metric = generateFakeMetric();
         function _payload() {
-            return metric;
+            return { count: 1 };
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/metrics/${metric.subject}/${metric.key}`);
+            expect(options.url).to.equal(`/v1/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
             expect(options.method).to.equal('DELETE');
             expect(options.headers).to.be.an('object');
         }
 
-        const result = yield bup.metrics.removeIndividualSubjectMetric(metric.subject, metric.key, { _payload, _validate });
+        const result = yield bup.metrics.query().subject(metric.subject).key(metric.key).remove({ _payload, _validate });
 
-        expect(result).to.eql(metric);
+        expect(result).to.eql({ count: 1 });
+    });
+
+    it('should error when deleting metrics without specifying key or subject', function(){
+        function fn() {
+            bup.metrics.query().remove();
+        }
+
+        expect(fn).to.throw('You must specify at least the \"subject\" or \"key\"');
     });
 });

@@ -3,12 +3,51 @@
 const check = require('check-types');
 const common = require('./../common');
 const pageToGenerator = require('../utils/pageToGenerator');
+const collectQueryParams = require('../utils/collectQueryParams');
+const querystring = require('querystring');
+
 const ENDPT = 'metrics';
+
+const DELETE_QUERY_PARAMS = ['key', 'subject'];
 
 // Metrics module
 // @param context: The context to make requests in. Basically, `this`
 module.exports = function metrics(context) {
     const obj = common(context, ENDPT);
+
+    class MetricQueryBuilder {
+        constructor(context) {
+            this.context = context;
+        }
+
+        key(key) {
+            check.string(key, 'key must be a string');
+            this.key = key;
+            return this;
+        }
+
+        subject(subject) {
+            check.string(subject, 'subject must be a string');
+            this.subject = subject;
+            return this;
+        }
+
+        // delete all queried metrics
+        // @param userOpts: option overrides for this request
+        // @returns Returns a promise that resolves to an object stating the number of deleted metrics
+        remove(userOpts) {
+            const queryBy = collectQueryParams(this, DELETE_QUERY_PARAMS);
+
+            if (Object.keys(queryBy).length === 0) {
+                throw new Error('You must specify at least the \"subject\" or \"key\"');
+            }
+
+            return this.context.http.makeRequest({
+                method: 'DELETE',
+                url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
+            }, userOpts);
+        }
+    }
 
     // retrives metrics for a subject, returned as an array
     // @param subject: subject to retrieve the metrics for
@@ -70,19 +109,11 @@ module.exports = function metrics(context) {
         }, userOpts);
     }
 
-    // deletes a single metric for a subject by key
-    // @param subject: subject to retrieve the metric for
-    // @param key: metric key to retrive the metric for
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to a single metric
-    function removeIndividualSubjectMetric(subject, key, userOpts) {
-        check.string(subject, 'id must be a string');
-        check.string(key, 'key must be a string');
-
-        return context.http.makeRequest({
-            method: 'DELETE',
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/${subject}/${key}`
-        }, userOpts);
+    // Sets up a delete/get request targeting metrics using several filters
+    // @param queryBy: filters to query events by
+    // @returns Returns an instance of the EventQueryBuilder class
+    function query() {
+        return new MetricQueryBuilder(context);
     }
 
     return {
@@ -92,6 +123,6 @@ module.exports = function metrics(context) {
         getAllSubjectMetrics,
         getSubjectMetricsIterator,
         getIndividualSubjectMetric, // TODO: consider aliasing to "get"
-        removeIndividualSubjectMetric // TODO: consider aliasing to "remove"
+        query
     };
 };
