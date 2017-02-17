@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - N/A
 
 ### Changed
-- N/A
+- getDynamicCriteriaImages() now returns the data object
 
 ## [0.4.1] - 2017-02-13
 ### Added
