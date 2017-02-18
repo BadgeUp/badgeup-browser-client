@@ -1,5 +1,7 @@
 'use strict';
 
+const pageToGenerator = require('../utils/pageToGenerator');
+
 const ENDPT = 'analytics';
 
 // Analytics module
@@ -36,9 +38,27 @@ module.exports = function achievements(context) {
         }, userOpts);
     }
 
+    // retrieve subject summary list
+    // @param userOpts: option overrides for this request
+    // @return An iterator that returns promises that resolve with the next object
+    function* getSubjectsSummaryIterator(userOpts) {
+        function pageFn() {
+            let url = `/v1/apps/${context.applicationId}/${ENDPT}/subjects/summary`;
+            return function() {
+                return context.http.makeRequest({ url }, userOpts).then(function(body) {
+                    url = body.pages.next;
+                    return body;
+                });
+            };
+        }
+
+        yield* pageToGenerator(pageFn());
+    }
+
     return {
         eventsLast60Days,
         subjectsLast60Days,
-        earnedAchievementsLast60Days
+        earnedAchievementsLast60Days,
+        getSubjectsSummaryIterator
     };
 };
