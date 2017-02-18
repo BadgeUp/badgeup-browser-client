@@ -5,11 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+## [0.5.0] - 2017-02-18
+### Added
+- earned achievements query builder for removing by `achievementId`, `subject`, and `id`
 - metrics query builder for removing by `key` and `subject`
 - `_analytics.getSubjectsSummaryIterator()`
 
 ### Changed
 - getDynamicCriteriaImages() now returns the data object
+- Removed `earnedAchievement.remove()`
 
 ## [0.4.1] - 2017-02-13
 ### Added
