@@ -35,7 +35,7 @@ describe('metrics', function() {
     });
 
     it('should get all metrics with an iterator', function*() {
-        const event = generateFakeMetric();
+        const metric = generateFakeMetric();
 
         function _payload(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
@@ -45,7 +45,7 @@ describe('metrics', function() {
                         previous: null,
                         next: null
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             } else {
                 // first page of data
@@ -54,7 +54,7 @@ describe('metrics', function() {
                         previous: null,
                         next: '/v1/apps/1337/metrics?after=PAGE_TWO'
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             }
         }
@@ -69,10 +69,10 @@ describe('metrics', function() {
         }
 
         let count = 0;
-        for (let event of bup.metrics.getIterator({ _payload, _validate })) {
+        for (let metric of bup.metrics.getIterator({ _payload, _validate })) {
             count++;
-            event = yield event;
-            expect(event).to.be.an('object');
+            metric = yield metric;
+            expect(metric).to.be.an('object');
         }
 
         // total number of metrics
@@ -80,7 +80,7 @@ describe('metrics', function() {
     });
 
     it('should get all metrics with an array', function*() {
-        const event = generateFakeMetric();
+        const metric = generateFakeMetric();
 
         function _payload(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
@@ -90,7 +90,7 @@ describe('metrics', function() {
                         previous: null,
                         next: null
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             } else {
                 // first page of data
@@ -99,7 +99,7 @@ describe('metrics', function() {
                         previous: null,
                         next: '/v1/apps/1337/metrics?after=PAGE_TWO'
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             }
         }
