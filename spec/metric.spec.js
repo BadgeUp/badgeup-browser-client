@@ -12,7 +12,7 @@ const bup = new BadgeUp({
 function generateFakeMetric() {
     return {
         subject: 'kram',
-        key: 'event:key',
+        key: 'eventkey',
         value: 10
     };
 }
@@ -35,7 +35,7 @@ describe('metrics', function() {
     });
 
     it('should get all metrics with an iterator', function*() {
-        const event = generateFakeMetric();
+        const metric = generateFakeMetric();
 
         function _payload(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
@@ -45,7 +45,7 @@ describe('metrics', function() {
                         previous: null,
                         next: null
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             } else {
                 // first page of data
@@ -54,7 +54,7 @@ describe('metrics', function() {
                         previous: null,
                         next: '/v1/apps/1337/metrics?after=PAGE_TWO'
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             }
         }
@@ -69,10 +69,10 @@ describe('metrics', function() {
         }
 
         let count = 0;
-        for (let event of bup.metrics.getIterator({ _payload, _validate })) {
+        for (let metric of bup.metrics.getIterator({ _payload, _validate })) {
             count++;
-            event = yield event;
-            expect(event).to.be.an('object');
+            metric = yield metric;
+            expect(metric).to.be.an('object');
         }
 
         // total number of metrics
@@ -80,7 +80,7 @@ describe('metrics', function() {
     });
 
     it('should get all metrics with an array', function*() {
-        const event = generateFakeMetric();
+        const metric = generateFakeMetric();
 
         function _payload(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
@@ -90,7 +90,7 @@ describe('metrics', function() {
                         previous: null,
                         next: null
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             } else {
                 // first page of data
@@ -99,7 +99,7 @@ describe('metrics', function() {
                         previous: null,
                         next: '/v1/apps/1337/metrics?after=PAGE_TWO'
                     },
-                    data: (new Array(10)).fill(event)
+                    data: (new Array(10)).fill(metric)
                 });
             }
         }
@@ -139,17 +139,25 @@ describe('metrics', function() {
     it('should delete a metric', function*() {
         const metric = generateFakeMetric();
         function _payload() {
-            return metric;
+            return { count: 1 };
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/metrics/${metric.subject}/${metric.key}`);
+            expect(options.url).to.equal(`/v1/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
             expect(options.method).to.equal('DELETE');
             expect(options.headers).to.be.an('object');
         }
 
-        const result = yield bup.metrics.removeIndividualSubjectMetric(metric.subject, metric.key, { _payload, _validate });
+        const result = yield bup.metrics.query().subject(metric.subject).key(metric.key).remove({ _payload, _validate });
 
-        expect(result).to.eql(metric);
+        expect(result).to.eql({ count: 1 });
+    });
+
+    it('should error when deleting metrics without specifying key or subject', function(){
+        function fn() {
+            bup.metrics.query().remove();
+        }
+
+        expect(fn).to.throw('You must specify at least the \"subject\" or \"key\"');
     });
 });

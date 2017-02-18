@@ -5,10 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
-- N/A
+- metrics query builder for removing by `key` and `subject`
+- `_analytics.getSubjectsSummaryIterator()`
 
 ### Changed
-- N/A
+- getDynamicCriteriaImages() now returns the data object
 
 ## [0.4.1] - 2017-02-13
 ### Added

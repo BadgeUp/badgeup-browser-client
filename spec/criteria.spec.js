@@ -78,15 +78,17 @@ describe('criterion', function() {
 
     it('should get all dynamic criteria images', function*() {
         const dcImages = {
-            node: [
-                {
+            data: [{
+                runtime: 'node',
+                runtimeName: 'Node.js',
+                images: [{
                     runtimeVersion: '6.9.4',
                     clientVersion: '0.4.0',
                     imageVersion: '1.0.1',
                     tag: '6.9.4-0.4.0-1.0.1',
                     created: new Date()
-                }
-            ]
+                }]
+            }]
         };
         function _payload() {
             return dcImages;
@@ -99,6 +101,6 @@ describe('criterion', function() {
 
         const result = yield bup.criteria.getDynamicCriteriaImages({ _payload, _validate });
 
-        expect(result).to.eql(dcImages);
+        expect(result).to.eql(dcImages.data);
     });
 });

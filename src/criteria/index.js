@@ -14,7 +14,7 @@ module.exports = function criteria(context) {
     function getDynamicCriteriaImages(userOpts) {
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/dcimages`
-        }, userOpts);
+        }, userOpts).then(body => body.data);
     }
 
     return {
