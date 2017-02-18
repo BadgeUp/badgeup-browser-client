@@ -39,7 +39,7 @@ module.exports = function metrics(context) {
             const queryBy = collectQueryParams(this, DELETE_QUERY_PARAMS);
 
             if (Object.keys(queryBy).length === 0) {
-                throw new Error('You must specify at least the \"subject\" or \"key\"');
+                throw new Error('You must specify at least the "subject" or "key"');
             }
 
             return this.context.http.makeRequest({
@@ -109,7 +109,7 @@ module.exports = function metrics(context) {
         }, userOpts);
     }
 
-    // Sets up a delete/get request targeting metrics using several filters
+    // Sets up a delete/get request targeting metrics using query filters
     // @param queryBy: filters to query events by
     // @returns Returns an instance of the EventQueryBuilder class
     function query() {
