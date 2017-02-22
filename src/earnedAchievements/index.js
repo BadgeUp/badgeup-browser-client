@@ -19,9 +19,9 @@ module.exports = function earnedAchievements(context) {
             this.context = context;
         }
 
-        achievementId(key) {
-            check.string(key, 'achievementId must be a string');
-            this.key = key;
+        achievementId(achievementId) {
+            check.string(achievementId, 'achievementId must be a string');
+            this.achievementId = achievementId;
             return this;
         }
 
