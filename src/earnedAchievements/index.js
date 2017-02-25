@@ -3,11 +3,12 @@
 const check = require('check-types');
 const common = require('./../common');
 const collectQueryParams = require('../utils/collectQueryParams');
+const pageToGenerator = require('../utils/pageToGenerator');
 const querystring = require('querystring');
 
 const ENDPT = 'earnedachievements';
 
-const DELETE_QUERY_PARAMS = ['achievementId', 'subject', 'id'];
+const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'id'];
 
 // Earned Achievements module
 // @param context: The context to make requests in. Basically, `this`
@@ -19,9 +20,9 @@ module.exports = function earnedAchievements(context) {
             this.context = context;
         }
 
-        achievementId(key) {
-            check.string(key, 'achievementId must be a string');
-            this.key = key;
+        achievementId(achievementId) {
+            check.string(achievementId, 'achievementId must be a string');
+            this.achievementId = achievementId;
             return this;
         }
 
@@ -37,19 +38,72 @@ module.exports = function earnedAchievements(context) {
             return this;
         }
 
-        // delete all queried earned achievements
-        // @param userOpts: option overrides for this request
-        // @returns Returns a promise that resolves to an object stating the number of deleted metrics
-        remove(userOpts) {
-            const queryBy = collectQueryParams(this, DELETE_QUERY_PARAMS);
-
+        // checks and builds query parameters for use in a URL
+        // @returns Returns a string containing URL query paramters
+        _buildQuery(queryBy) {
             if (Object.keys(queryBy).length === 0) {
                 throw new Error('You must specify at least the "achievementId", "subject", or "id"');
             }
 
+            return querystring.stringify(queryBy);
+        }
+
+        // retrives earned achievements, returned as an array
+        // @param userOpts: option overrides for this request
+        // @returns Returns a promise that resolves to a list of metrics
+        getAll(userOpts) {
+            let array = [];
+            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryPart = this._buildQuery(queryBy);
+
+            let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+
+            function pageFn() {
+                return context.http.makeRequest({ url }, userOpts).then(function(body) {
+                    array = array.concat(body.data || []); // concatinate the new data
+
+                    url = body.pages.next;
+                    if (url) {
+                        return pageFn();
+                    } else {
+                        return array;
+                    }
+                });
+            }
+
+            return pageFn();
+        }
+
+        // retrives earned achievements, returned as an iterator
+        // @param userOpts: option overrides for this request
+        // @return An iterator that returns promises that resolve with the next object
+        *getIterator(userOpts) {
+            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryPart = this._buildQuery(queryBy);
+
+            function pageFn() {
+                let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+                return function() {
+                    return context.http.makeRequest({ url }, userOpts).then(function(body) {
+                        url = body.pages.next;
+                        return body;
+                    });
+                };
+            }
+
+            yield* pageToGenerator(pageFn());
+        }
+
+        // delete all queried earned achievements
+        // @param userOpts: option overrides for this request
+        // @returns Returns a promise that resolves to an object stating the number of deleted metrics
+        remove(userOpts) {
+            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryPart = this._buildQuery(queryBy);
+
             return this.context.http.makeRequest({
                 method: 'DELETE',
-                url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
+                url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
             }, userOpts);
         }
     }
@@ -64,6 +118,7 @@ module.exports = function earnedAchievements(context) {
     return {
         get: obj.get,
         getAll: obj.getAll,
+        getIterator: obj.getIterator,
         query
     };
 };
