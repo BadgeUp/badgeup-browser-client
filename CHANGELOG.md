@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.5.1] - 2017-02-25
+### Added
+- earned achievements query builder for getting by `achievementId`, `subject`, and `id`
+
+### Changed
+- N/A
+
 ## [0.5.0] - 2017-02-18
 ### Added
 - earned achievements query builder for removing by `achievementId`, `subject`, and `id`
