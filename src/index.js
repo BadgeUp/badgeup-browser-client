@@ -41,6 +41,7 @@ class BadgeUp {
         this.metrics = require('./metrics')(this);
         this.events = require('./events')(this);
         this.progress = require('./progress')(this);
+        this.jobResults = require('./jobResults')(this);
     }
 }
 
