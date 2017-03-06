@@ -63,4 +63,21 @@ describe('Analytics', function() {
         // total number of results
         expect(count).to.equal(20);
     });
+
+    it('should get all metric keys', function*() {
+        function _payload() {
+            return Promise.resolve({
+                data: ['foo']
+            });
+        }
+
+        function _validate(options) {
+            expect(options.url).to.equal('/v1/apps/1337/analytics/metrics/keys');
+        }
+
+        const result = yield bup._analytics.getAllMetricKeys({ _payload, _validate });
+
+        expect(result).to.be.an('array');
+        expect(result[0]).to.equal('foo');
+    });
 });
