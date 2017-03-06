@@ -55,10 +55,20 @@ module.exports = function achievements(context) {
         yield* pageToGenerator(pageFn());
     }
 
+    // retrieve a list of unique metric keys
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves with an array of retrieved metric keys
+    function getAllMetricKeys(userOpts) {
+        return context.http.makeRequest({
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/metrics/keys`
+        }, userOpts).then(obj => obj.data);
+    }
+
     return {
         eventsLast60Days,
         subjectsLast60Days,
         earnedAchievementsLast60Days,
-        getSubjectsSummaryIterator
+        getSubjectsSummaryIterator,
+        getAllMetricKeys
     };
 };
