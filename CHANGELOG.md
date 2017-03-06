@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.5.3] - 2017-03-05
+### Added
+- `_analytics.getAllMetricKeys()`
+
+### Changed
+- N/A
+
 ## [0.5.2] - 2017-02-26
 ### Added
 - job results query builder for getting by `criterionId`, `subject`, and `id`
