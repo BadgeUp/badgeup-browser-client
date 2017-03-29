@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+## [0.6.0] - 2017-03-28
+### Added
 - `_analytics.eventsLast60DaysBySubject()`
 
 ### Changed
