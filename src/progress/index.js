@@ -1,42 +1,45 @@
 'use strict';
 
 const check = require('check-types');
+const querystring = require('querystring');
 const pageToGenerator = require('./../utils/pageToGenerator');
+const collectQueryParams = require('../utils/collectQueryParams');
 const ENDPT = 'progress';
 
-module.exports = function progress(context) {
-    // retrieve all progress objects for a single subject, returned as an iterator
-    // @param subject: The subject to get the progress for
-    // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next object
-    function* getIterator(subject, userOpts) {
-        check.assert.string(subject, 'subject must be a string');
+const GET_QUERY_PARAMS = ['subject', 'achievementId'];
 
-        function pageFn() {
-            let url = `/v1/apps/${context.applicationId}/${ENDPT}?subject=${subject}`;
-            return function() {
-                return context.http.makeRequest({ url }, userOpts).then(function(body) {
-                    url = body.pages.next;
-                    return body;
-                });
-            };
-        }
-
-        yield* pageToGenerator(pageFn());
+class ProgressQueryBuilder {
+    constructor(context) {
+        this.context = context;
     }
 
-    // retrieves all progress objects for a single subject, returned as an array
-    // @param subject: The subject to get the progress for
+    achievementId(achievementId) {
+        check.string(achievementId, 'achievementId must be a string');
+        this.achievementId = achievementId;
+        return this;
+    }
+
+    subject(subject) {
+        check.string(subject, 'subject must be a string');
+        this.subject = subject;
+        return this;
+    }
+
+    // retrieve all queried events, returned as an array
     // @param userOpts: option overrides for this request
-    // @return A promise that resolves to an array of progress objects
-    function getAll(subject, userOpts) {
-        check.assert.string(subject, 'subject must be a string');
+    // @return A promise that resolves to an array of event objects
+    getAll(userOpts) {
+        if (!this.subject) {
+            throw new Error('subject must be provided');
+        }
+
+        const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
 
         let array = [];
-        let url = `/v1/apps/${context.applicationId}/${ENDPT}?subject=${subject}`;
+        let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
 
-        function pageFn() {
-            return context.http.makeRequest({ url }, userOpts).then(function(body) {
+        const pageFn = () => {
+            return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
                 array = array.concat(body.data || []); // concatinate the new data
 
                 url = body.pages.next;
@@ -46,28 +49,45 @@ module.exports = function progress(context) {
                     return array;
                 }
             });
-        }
+        };
 
         return pageFn();
     }
 
-    // retrieves progress for a single subject and achievement
-    // @param subject The subject to get progress for
-    // @param achievementId The achievement to get progress for
+    // retrieve all queried events, returned as an iterator
     // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves with the progress object
-    function getBySubjectAndAchievement(subject, achievementId, userOpts) {
-        check.assert.string(subject, 'subject must be a string');
-        check.assert.string(achievementId, 'achievementId must be a string');
+    // @return An iterator that returns promises that resolve with the next event
+    *getIterator(userOpts) {
+        if (!this.subject) {
+            throw new Error('subject must be provided');
+        }
 
-        return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/?subject=${subject}&achievementId=${achievementId}`
-        }, userOpts).then(function(body) { return body.data[0]; });
+        const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
+
+        const pageFn = () => {
+            let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+            return () => {
+                return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
+                    url = body.pages.next;
+                    return body;
+                });
+            };
+        };
+
+        yield* pageToGenerator(pageFn());
+    }
+}
+
+module.exports = function progress(context) {
+
+    // Sets up a delete/get request targeting events using several filters
+    // @param queryBy: filters to query events by
+    // @returns Returns an instance of the EventQueryBuilder class
+    function query() {
+        return new ProgressQueryBuilder(context);
     }
 
     return {
-        getAll,
-        getIterator,
-        getBySubjectAndAchievement
+        query
     };
 };

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - `_analytics.eventsLast60DaysBySubject()`
 
 ### Changed
+- Reworked progress to use query builder pattern
 
 ## [0.5.3] - 2017-03-05
 ### Added
