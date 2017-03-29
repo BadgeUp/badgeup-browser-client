@@ -25,9 +25,9 @@ class ProgressQueryBuilder {
         return this;
     }
 
-    // retrieve all queried events, returned as an array
+    // retrieve all queried progress objects, returned as an array
     // @param userOpts: option overrides for this request
-    // @return A promise that resolves to an array of event objects
+    // @return A promise that resolves to an array of progress objects
     getAll(userOpts) {
         if (!this.subject) {
             throw new Error('subject must be provided');
@@ -54,9 +54,9 @@ class ProgressQueryBuilder {
         return pageFn();
     }
 
-    // retrieve all queried events, returned as an iterator
+    // retrieve all queried progress objects, returned as an iterator
     // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next event
+    // @return An iterator that returns promises that resolve with the next progress object
     *getIterator(userOpts) {
         if (!this.subject) {
             throw new Error('subject must be provided');
@@ -80,9 +80,8 @@ class ProgressQueryBuilder {
 
 module.exports = function progress(context) {
 
-    // Sets up a delete/get request targeting events using several filters
-    // @param queryBy: filters to query events by
-    // @returns Returns an instance of the EventQueryBuilder class
+    // Sets up a get request targeting progress objects
+    // @returns Returns an instance of the ProgressQueryBuilder class
     function query() {
         return new ProgressQueryBuilder(context);
     }
