@@ -101,7 +101,7 @@ module.exports = function metrics(context) {
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves to a single metric
     function getIndividualSubjectMetric(subject, key, userOpts) {
-        check.string(subject, 'id must be a string');
+        check.string(subject, 'subject must be a string');
         check.string(key, 'key must be a string');
 
         return context.http.makeRequest({

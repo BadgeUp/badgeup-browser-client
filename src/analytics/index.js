@@ -1,5 +1,6 @@
 'use strict';
 
+const check = require('check-types');
 const pageToGenerator = require('../utils/pageToGenerator');
 
 const ENDPT = 'analytics';
@@ -17,6 +18,17 @@ module.exports = function achievements(context) {
     function eventsLast60Days(userOpts) {
         return context.http.makeRequest({
             url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-60-days`
+        }, userOpts);
+    }
+
+    // retrieve event analytics for a single subject
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves with the retrieved object
+    function eventsLast60DaysBySubject(subject, userOpts) {
+        check.string(subject, 'subject must be a string');
+
+        return context.http.makeRequest({
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-60-days/subject/${subject}`
         }, userOpts);
     }
 
@@ -66,6 +78,7 @@ module.exports = function achievements(context) {
 
     return {
         eventsLast60Days,
+        eventsLast60DaysBySubject,
         subjectsLast60Days,
         earnedAchievementsLast60Days,
         getSubjectsSummaryIterator,
