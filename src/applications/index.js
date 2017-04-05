@@ -21,6 +21,35 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
+    // update an application
+    // @param id: ID of the application to be updated
+    // @param updates: JSON patch updates
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves to the updated application
+    function update(id, updates, userOpts) {
+        check.string(id, 'id must be a string');
+        check.array(updates, 'updates must be an array');
+
+        return context.http.makeRequest({
+            method: 'PATCH',
+            body: updates,
+            url: `/v1/${ENDPT}/${id}`
+        }, userOpts);
+    }
+
+    // delete an application
+    // @param id: ID of the application to be updated
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise
+    function remove(id, userOpts) {
+        check.string(id, 'id must be a string');
+
+        return context.http.makeRequest({
+            method: 'DELETE',
+            url: `/v1/${ENDPT}/${id}`
+        }, userOpts);
+    }
+
     // retrieve all objects, returned as an array
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of objects
@@ -64,6 +93,8 @@ module.exports = function applications(context) {
     return {
         getAll,
         getIterator,
-        create
+        create,
+        update,
+        remove
     };
 };
