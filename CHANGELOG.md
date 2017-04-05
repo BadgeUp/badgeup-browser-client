@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [0.6.1] - 2017-04-05
 ### Added
 - `applications.update()`
-- `applications.delete()`
+- `applications.remove()`
 
 ### Changed
 
