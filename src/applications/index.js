@@ -103,7 +103,7 @@ module.exports = function applications(context) {
     }
 
     return {
-        get,
+        get: get,
         getAll,
         getIterator,
         create,
