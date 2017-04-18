@@ -50,6 +50,18 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
+    // retrieve application by ID
+    // @param id ID of the application to retrieve
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves with the retrieved application
+    function get(id, userOpts) {
+        check.string(id, 'id must be a string');
+
+        return context.http.makeRequest({
+            url: `/v1/${ENDPT}/${id}`
+        }, userOpts);
+    }
+
     // retrieve all objects, returned as an array
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of objects
@@ -91,6 +103,7 @@ module.exports = function applications(context) {
     }
 
     return {
+        get,
         getAll,
         getIterator,
         create,
