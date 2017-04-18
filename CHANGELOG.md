@@ -8,10 +8,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.6.3] - 2017-04-18
+### Added
+
+### Changed
+- Fixed `applications.get()` in prior release for older Node.js versions
+
+## [0.6.2] - 2017-04-18
+### Added
+- `applications.get()`
+
+### Changed
+
 ## [0.6.1] - 2017-04-05
 ### Added
 - `applications.update()`
-- `applications.delete()`
+- `applications.remove()`
 
 ### Changed
 
