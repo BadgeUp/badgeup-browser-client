@@ -9,7 +9,6 @@ class BadgeUp {
 
         // these fields are required
         check.assert.object(globalOpts, 'You must provide an options object. Please see the documentation.');
-        check.assert.string(globalOpts.applicationId, 'You must provide your applicationId.');
         if (!globalOpts.apiKey && !globalOpts.token) {
             throw new Error('Either globalOpts.apiKey or globalOpts.token must be an string');
         }
@@ -18,14 +17,26 @@ class BadgeUp {
         globalOpts.request = defaults({}, globalOpts.request);
         globalOpts.request.headers = defaults({}, globalOpts.request.headers);
 
-        // setup the application this client is pointing to
-        this.applicationId = globalOpts.applicationId;
-
         // setup the Authorization header
         if (globalOpts.token) { // JWT bearer token
+            check.assert.string(globalOpts.applicationId, 'You must provide your applicationId.');
+            // setup the application this client is pointing to
+            this.applicationId = globalOpts.applicationId;
             globalOpts.request.headers.authorization = 'Bearer ' + globalOpts.token;
         } else if (globalOpts.apiKey) { // BadgeUp APIKey
-            globalOpts.request.headers.authorization = 'Basic ' + Buffer.from(globalOpts.apiKey + ':');
+            let applicationId;
+
+            try {
+                applicationId = JSON.parse(Buffer.from(globalOpts.apiKey, 'base64').toString('utf8')).applicationId;
+                if (!applicationId) {
+                    throw new Error('applicationId not present');
+                }
+                this.applicationId = applicationId;
+            } catch (error) {
+                throw new Error('Malformed API key');
+            }
+
+            globalOpts.request.headers.authorization = 'Basic ' + Buffer.from(globalOpts.apiKey + ':', 'ascii').toString('base64');
         }
 
         // init the HTTP
