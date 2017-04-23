@@ -1,6 +1,6 @@
 :warning: This client is still a work-in-progress.
 
-# BadgeUp Node.js Client
+# BadgeUp Browser Client
 Official browser client for working with [BadgeUp](https://www.badgeup.io/). This module uses the [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) api, so you may need to [polyfill](https://github.com/github/fetch) it for older browsers. This is a downstream repository of the [badgeup-node-client](https://github.com/BadgeUp/badgeup-node-client).
 
 [![Build Status](https://travis-ci.org/BadgeUp/badgeup-node-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-node-client)
@@ -8,7 +8,7 @@ Official browser client for working with [BadgeUp](https://www.badgeup.io/). Thi
 ## Quickstart
 
 ```sh
-npm install @badgeup/badgeup-node-client --save
+npm install @badgeup/badgeup-browser-client --save
 ```
 
 ## Initialization
@@ -16,9 +16,7 @@ The BadgeUp browser client is initialized with an options object.
 ```js
 const BadgeUp = require('@badgeup/badgeup-browser-client');
 const badgeup = new BadgeUp({
-    applicationId: '<your applicationId from the dashboard>',
-    apiKey: // the API Key created for use with this application (preferred)
-    // token: // the token issued when you use the dashboard (use apiKey if possible)
+    apiKey: // the API Key created for use with this application
 });
 
 // get a complete list of achievements
@@ -32,6 +30,69 @@ badgeup.achievements.getAll().then(function(achievements) {
 ## API
 
 This client is promise-based. This client provides the following APIs:
+
+### Achievements
+
+#### `get(achievementId)` - Retrieve an achievement by ID
+Returns a promise that resolves with the achievement.
+
+```js
+badgeup.achievements.get('ke9ox992');
+```
+
+#### `getIterator()` - Iterate through all achievements
+Returns an iterator that returns promises that resolves with each achievement. See also `getAll()`.
+
+```js
+const achievements = badgeup.achievements.getIterator();
+for (let app of achievements) {
+    console.log(await app);
+}
+```
+
+#### `getAll()` - Get an array of all achievements
+Returns a promise that resolves with an array containing all achievements. See also `getIterator()`.
+
+```js
+const achievements = await badgeup.achievements.getAll();
+```
+
+#### `create(achievement)` - Create a new achievement
+Returns a promise that resolves with a new achievement.
+
+```js
+badgeup.achievements.create({
+    name: 'Head Chef',
+    description: 'Cook 100 different dishes',
+    evalTree: {},
+    awards: []
+});
+```
+
+#### `update(achievementId, patches)` - Updates an achievement by ID
+Returns a promise that resolves when the achievement has been updated.
+```js
+badgeup.achievements.update('1eao490c', [{ op: 'replace', path: '/name', value: 'Super Chef' }]);
+```
+
+#### `remove(achievementId)` - Deletes an achievement by ID
+Returns a promise that resolves with the deleted achievement.
+```js
+badgeup.achievements.remove('1eao490c');
+```
+
+#### `getAchievementCriteria(achievementId)` - Retrieves an achievement's attached criteria
+Returns a promise that resolves with an array of an achievement's attached criteria.
+```js
+badgeup.achievements.remove('1eao490c');
+```
+
+#### `getAchievementAwards(achievementId)` - Retrieves an achievement's attached awards
+Returns a promise that resolves with an array of an achievement's attached awards.
+```js
+badgeup.achievements.remove('1eao490c');
+```
+
 
 ### Applications
 
@@ -64,9 +125,15 @@ Returns a promise that resolves with a new application.
 
 ```js
 badgeup.applications.create({
-    name: 'Honor Fuzz',
-    description: 'A new-age fuzzy fighting game'
+    name: 'Super Chef',
+    description: 'Master Cooking, Second to None'
 });
+```
+
+#### `update(applicationId, patches)` - Updates an application by ID
+Returns a promise that resolves when the application has been updated.
+```js
+badgeup.applications.update('ke9ox992', [{ op: replace, path: '/name', value: 'Super Chef 2' }]);
 ```
 
 #### `remove(applicationId)` - Deletes an application by ID
@@ -75,17 +142,9 @@ Returns a promise that resolves with the deleted application.
 badgeup.applications.remove('ke9ox992');
 ```
 
-#### `update(applicationId, changesObj)` - Updates an application by ID
-Returns a promise that resolves when the application has been updated.
-```js
-badgeup.applications.modify('ke9ox992', { name: 'Honor Fuzz 2' });
-```
-
 ### Events
 
 ### Metrics
-
-### Achievements
 
 ### Criteria
 
