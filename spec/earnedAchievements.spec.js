@@ -5,8 +5,7 @@ require('co-mocha');
 const expect = require('chai').expect;
 const BadgeUp = require('./../');
 const bup = new BadgeUp({
-    applicationId: '1337',
-    apiKey: 'Co0kieMonst3r'
+    apiKey: 'eyJhY2NvdW50SWQiOiJ0aGViZXN0IiwiYXBwbGljYXRpb25JZCI6IjEzMzciLCJrZXkiOiJpY2VjcmVhbWFuZGNvb2tpZXN5dW0ifQ=='
 });
 
 function generateFakeEarnedAchievement() {
