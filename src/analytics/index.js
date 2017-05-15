@@ -15,38 +15,56 @@ module.exports = function achievements(context) {
     // retrieve event analytics
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves with the retrieved object
-    function eventsLast60Days(userOpts) {
+    function eventsLastNDays(numDays, userOpts) {
+        check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
+
         return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-60-days`
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-n-days?duration=${numDays}`
         }, userOpts);
     }
 
     // retrieve event analytics for a single subject
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves with the retrieved object
-    function eventsLast60DaysBySubject(subject, userOpts) {
+    function eventsLastNDaysBySubject(numDays, subject, userOpts) {
+        check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         check.string(subject, 'subject must be a string');
 
         return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-60-days/subject/${subject}`
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/events/last-n-days/subject/${subject}?duration=${numDays}`
         }, userOpts);
     }
 
     // retrieve subject analytics
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves with the retrieved object
-    function subjectsLast60Days(userOpts) {
+    function subjectsLastNDays(numDays, userOpts) {
+        check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
+
         return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/subjects/last-60-days`
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/subjects/last-n-days?duration=${numDays}`
+        }, userOpts);
+    }
+
+    // retrieve new subject analytics
+    // @param userOpts: option overrides for this request
+    // @returns Returns a promise that resolves with the retrieved object
+    function newSubjectsLastNDays(numDays, userOpts) {
+        check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
+
+        return context.http.makeRequest({
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/subjects/new/last-n-days?duration=${numDays}`
         }, userOpts);
     }
 
     // retrieve earned achievement analytics
     // @param userOpts: option overrides for this request
     // @returns Returns a promise that resolves with the retrieved object
-    function earnedAchievementsLast60Days(userOpts) {
+    function earnedAchievementsLastNDays(numDays, userOpts) {
+        check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
+
         return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${ENDPT}/earnedachievements/last-60-days`
+            url: `/v1/apps/${context.applicationId}/${ENDPT}/earnedachievements/last-n-days?duration=${numDays}`
         }, userOpts);
     }
 
@@ -77,10 +95,11 @@ module.exports = function achievements(context) {
     }
 
     return {
-        eventsLast60Days,
-        eventsLast60DaysBySubject,
-        subjectsLast60Days,
-        earnedAchievementsLast60Days,
+        eventsLastNDays,
+        eventsLastNDaysBySubject,
+        subjectsLastNDays,
+        newSubjectsLastNDays,
+        earnedAchievementsLastNDays,
         getSubjectsSummaryIterator,
         getAllMetricKeys
     };
