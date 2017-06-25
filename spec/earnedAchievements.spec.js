@@ -107,7 +107,7 @@ describe('earned achievements', function() {
         yield bup.earnedAchievements.query().achievementId('100').getAll({ _payload, _validate });
     });
 
-    it('should get by both subject and achievementId', function*() {
+    it('should get earned achievements created after a certain time', function*() {
         function _payload() {
             return {
                 pages: {
@@ -118,27 +118,65 @@ describe('earned achievements', function() {
             };
         }
 
+        const date = new Date();
+
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100&achievementId=100`);
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
             expect(options.method).any.to.equal(undefined, 'GET');
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.earnedAchievements.query().subject('100').achievementId('100').getAll({ _payload, _validate });
+        yield bup.earnedAchievements.query().since(date).getAll({ _payload, _validate });
     });
 
-    it('should remove by id', function*() {
+    it('should get earned achievements created before a certain time', function*() {
         function _payload() {
-            return { count: 5 };
+            return {
+                pages: {
+                    previous: null,
+                    next: null
+                },
+                data: [ generateFakeEarnedAchievement() ]
+            };
         }
 
+        const date = new Date();
+
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?id=100`);
-            expect(options.method).any.to.equal('DELETE');
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
+            expect(options.method).any.to.equal(undefined, 'GET');
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.earnedAchievements.query().id('100').remove({ _payload, _validate });
+        yield bup.earnedAchievements.query().until(date).getAll({ _payload, _validate });
+    });
+
+    it('should get by subject, achievementId, and since & until', function*() {
+        function _payload() {
+            return {
+                pages: {
+                    previous: null,
+                    next: null
+                },
+                data: [ generateFakeEarnedAchievement() ]
+            };
+        }
+        
+        const since = new Date();
+        const until = new Date();
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100&achievementId=100&since=${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}`);
+            expect(options.method).any.to.equal(undefined, 'GET');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.earnedAchievements.query()
+            .subject('100')
+            .achievementId('100')
+            .since(since)
+            .until(until)
+            .getAll({ _payload, _validate });
     });
 
     it('should remove by subject', function*() {
@@ -169,17 +207,69 @@ describe('earned achievements', function() {
         yield bup.earnedAchievements.query().achievementId('100').remove({ _payload, _validate });
     });
 
-    it('should remove by both subject and achievementId', function*() {
+    it('should remove earned achievements created after a certain time', function*() {
         function _payload() {
-            return { count: 5 };
+            return {
+                pages: {
+                    previous: null,
+                    next: null
+                },
+                data: [ generateFakeEarnedAchievement() ]
+            };
         }
 
+        const date = new Date();
+
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100&achievementId=100`);
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
             expect(options.method).any.to.equal('DELETE');
             expect(options.headers).to.be.an('object');
         }
 
-        yield bup.earnedAchievements.query().subject('100').achievementId('100').remove({ _payload, _validate });
+        yield bup.earnedAchievements.query().since(date).remove({ _payload, _validate });
+    });
+
+    it('should remove earned achievements created before a certain time', function*() {
+        function _payload() {
+            return {
+                pages: {
+                    previous: null,
+                    next: null
+                },
+                data: [ generateFakeEarnedAchievement() ]
+            };
+        }
+
+        const date = new Date();
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
+            expect(options.method).any.to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.earnedAchievements.query().until(date).remove({ _payload, _validate });
+    });
+
+    it('should remove by subject and achievementId', function*() {
+        function _payload() {
+            return { count: 5 };
+        }
+
+        const since = new Date();
+        const until = new Date();
+
+        function _validate(options) {
+            expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100&achievementId=100&since=${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}`);
+            expect(options.method).any.to.equal('DELETE');
+            expect(options.headers).to.be.an('object');
+        }
+
+        yield bup.earnedAchievements.query()
+            .subject('100')
+            .achievementId('100')
+            .since(since)
+            .until(until)
+            .remove({ _payload, _validate });
     });
 });
