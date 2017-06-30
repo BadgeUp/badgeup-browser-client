@@ -1,5 +1,6 @@
 language: node_js
 node_js:
+  - "8"
   - "7"
   - "--lts=boron" # Node.js v6 latest
   - "--lts=argon" # Node.js v4 latest

@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.8.0] - 2017-05-30
+### Added
+- `achievementIcons.getAll()`
+- `achievementIcons.remove()`
+
+### Changed
+- Removed most event functions, leaving create
+- Added `since` and `until` filters for earned achievements
+
 ## [0.7.0] - 2017-04-23
 ### Added
 

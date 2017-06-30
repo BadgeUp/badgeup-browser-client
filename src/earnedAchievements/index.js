@@ -8,7 +8,7 @@ const querystring = require('querystring');
 
 const ENDPT = 'earnedachievements';
 
-const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'id'];
+const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'since', 'until'];
 
 // Earned Achievements module
 // @param context: The context to make requests in. Basically, `this`
@@ -32,9 +32,15 @@ module.exports = function earnedAchievements(context) {
             return this;
         }
 
-        id(id) {
-            check.string(id, 'id must be a string');
-            this.id = id;
+        since(since) {
+            check.date(since, 'since must be a date');
+            this.since = since.toISOString();
+            return this;
+        }
+
+        until(until) {
+            check.date(until, 'until must be a date');
+            this.until = until.toISOString();
             return this;
         }
 
@@ -42,7 +48,7 @@ module.exports = function earnedAchievements(context) {
         // @returns Returns a string containing URL query paramters
         _buildQuery(queryBy) {
             if (Object.keys(queryBy).length === 0) {
-                throw new Error('You must specify at least the "achievementId", "subject", or "id"');
+                throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
             }
 
             return querystring.stringify(queryBy);
@@ -119,6 +125,7 @@ module.exports = function earnedAchievements(context) {
         get: obj.get,
         getAll: obj.getAll,
         getIterator: obj.getIterator,
+        remove: obj.remove,
         query
     };
 };
