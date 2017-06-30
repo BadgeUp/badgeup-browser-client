@@ -53,6 +53,7 @@ class BadgeUp {
         this.events = require('./events')(this);
         this.progress = require('./progress')(this);
         this.jobResults = require('./jobResults')(this);
+        this.achievementIcons = require('./achievementIcons')(this);
     }
 }
 
