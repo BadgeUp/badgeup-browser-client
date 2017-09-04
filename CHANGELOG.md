@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.8.1] - 2017-09-04
+### Changed
+- Upgradge `got`
+- Internal query builder changes
+
 ## [0.8.0] - 2017-05-30
 ### Added
 - `achievementIcons.getAll()`
