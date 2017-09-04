@@ -15,30 +15,33 @@ module.exports = function earnedAchievements(context) {
     class JobResultQueryBuilder {
         constructor(context) {
             this.context = context;
+
+            // container for the query parameters
+            this._params = {};
         }
 
         criterionId(criterionId) {
             check.string(criterionId, 'criterionId must be a string');
-            this.criterionId = criterionId;
+            this._params.criterionId = criterionId;
             return this;
         }
 
         subject(subject) {
             check.string(subject, 'subject must be a string');
-            this.subject = subject;
+            this._params.subject = subject;
             return this;
         }
 
         id(id) {
             check.string(id, 'id must be a string');
-            this.id = id;
+            this._params.id = id;
             return this;
         }
 
         sort(key, direction) {
             check.string(key, 'key must be a string');
             check.string(direction, 'direction must be a string');
-            this.sort =`${key}:${direction}`;
+            this._params.sort =`${key}:${direction}`;
             return this;
         }
 
@@ -46,7 +49,7 @@ module.exports = function earnedAchievements(context) {
         // @param userOpts: option overrides for this request
         // @returns Returns an iterator that returns promises that resolve with the next job result
         *getIterator(userOpts) {
-            const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
             function pageFn() {
                 let url = `/v1/apps/${context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
@@ -65,7 +68,7 @@ module.exports = function earnedAchievements(context) {
         // @param userOpts: option overrides for this request
         // @return A promise that resolves to an array of job results
         getAll(userOpts) {
-            const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
             let array = [];
             let url = `/v1/apps/${context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;

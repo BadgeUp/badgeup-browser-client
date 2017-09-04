@@ -18,29 +18,32 @@ module.exports = function earnedAchievements(context) {
     class EarnedAchievementQueryBuilder {
         constructor(context) {
             this.context = context;
+
+            // container for the query parameters
+            this._params = {};
         }
 
         achievementId(achievementId) {
             check.string(achievementId, 'achievementId must be a string');
-            this.achievementId = achievementId;
+            this._params.achievementId = achievementId;
             return this;
         }
 
         subject(subject) {
             check.string(subject, 'subject must be a string');
-            this.subject = subject;
+            this._params.subject = subject;
             return this;
         }
 
         since(since) {
             check.date(since, 'since must be a date');
-            this.since = since.toISOString();
+            this._params.since = since.toISOString();
             return this;
         }
 
         until(until) {
             check.date(until, 'until must be a date');
-            this.until = until.toISOString();
+            this._params.until = until.toISOString();
             return this;
         }
 
@@ -59,7 +62,7 @@ module.exports = function earnedAchievements(context) {
         // @returns Returns a promise that resolves to a list of metrics
         getAll(userOpts) {
             let array = [];
-            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
             const queryPart = this._buildQuery(queryBy);
 
             let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
@@ -84,7 +87,7 @@ module.exports = function earnedAchievements(context) {
         // @param userOpts: option overrides for this request
         // @return An iterator that returns promises that resolve with the next object
         *getIterator(userOpts) {
-            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
             const queryPart = this._buildQuery(queryBy);
 
             function pageFn() {
@@ -104,7 +107,7 @@ module.exports = function earnedAchievements(context) {
         // @param userOpts: option overrides for this request
         // @returns Returns a promise that resolves to an object stating the number of deleted metrics
         remove(userOpts) {
-            const queryBy = collectQueryParams(this, AVAILABLE_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
             const queryPart = this._buildQuery(queryBy);
 
             return this.context.http.makeRequest({

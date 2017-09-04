@@ -18,17 +18,20 @@ module.exports = function metrics(context) {
     class MetricQueryBuilder {
         constructor(context) {
             this.context = context;
+
+            // container for the query parameters
+            this._params = {};
         }
 
         key(key) {
             check.string(key, 'key must be a string');
-            this.key = key;
+            this._params.key = key;
             return this;
         }
 
         subject(subject) {
             check.string(subject, 'subject must be a string');
-            this.subject = subject;
+            this._params.subject = subject;
             return this;
         }
 
@@ -36,7 +39,7 @@ module.exports = function metrics(context) {
         // @param userOpts: option overrides for this request
         // @returns Returns a promise that resolves to an object stating the number of deleted metrics
         remove(userOpts) {
-            const queryBy = collectQueryParams(this, DELETE_QUERY_PARAMS);
+            const queryBy = collectQueryParams(this._params, DELETE_QUERY_PARAMS);
 
             if (Object.keys(queryBy).length === 0) {
                 throw new Error('You must specify at least the "subject" or "key"');

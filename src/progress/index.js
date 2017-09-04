@@ -11,17 +11,20 @@ const GET_QUERY_PARAMS = ['subject', 'achievementId'];
 class ProgressQueryBuilder {
     constructor(context) {
         this.context = context;
+
+        // container for the query parameters
+        this._params = {};
     }
 
     achievementId(achievementId) {
         check.string(achievementId, 'achievementId must be a string');
-        this.achievementId = achievementId;
+        this._params.achievementId = achievementId;
         return this;
     }
 
     subject(subject) {
         check.string(subject, 'subject must be a string');
-        this.subject = subject;
+        this._params.subject = subject;
         return this;
     }
 
@@ -29,11 +32,11 @@ class ProgressQueryBuilder {
     // @param userOpts: option overrides for this request
     // @return A promise that resolves to an array of progress objects
     getAll(userOpts) {
-        if (!this.subject) {
+        if (!this._params.subject) {
             throw new Error('subject must be provided');
         }
 
-        const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
+        const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
         let array = [];
         let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
@@ -58,11 +61,11 @@ class ProgressQueryBuilder {
     // @param userOpts: option overrides for this request
     // @return An iterator that returns promises that resolve with the next progress object
     *getIterator(userOpts) {
-        if (!this.subject) {
+        if (!this._params.subject) {
             throw new Error('subject must be provided');
         }
 
-        const queryBy = collectQueryParams(this, GET_QUERY_PARAMS);
+        const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
         const pageFn = () => {
             let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
