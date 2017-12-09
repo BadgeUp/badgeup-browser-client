@@ -2,6 +2,7 @@
 
 const check = require('check-types');
 const pageToGenerator = require('./utils/pageToGenerator');
+const qs = require('qs');
 
 /**
  * Provides a set of common funcitonality that can be used on most endpoints
@@ -19,8 +20,10 @@ module.exports = function common(context, endpoint) {
     function get(id, userOpts) {
         check.string(id, 'id must be a string');
 
+        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+
         return context.http.makeRequest({
-            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}`
+            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}${query}`
         }, userOpts);
     }
 
@@ -31,7 +34,8 @@ module.exports = function common(context, endpoint) {
      */
     function* getIterator(userOpts) {
         function pageFn() {
-            let url = `/v1/apps/${context.applicationId}/${endpoint}`;
+            const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+            let url = `/v1/apps/${context.applicationId}/${endpoint}${query}`;
             return function() {
                 return context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;
@@ -50,7 +54,8 @@ module.exports = function common(context, endpoint) {
      */
     function getAll(userOpts) {
         let array = [];
-        let url = `/v1/apps/${context.applicationId}/${endpoint}`;
+        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        let url = `/v1/apps/${context.applicationId}/${endpoint}${query}`;
 
         function pageFn() {
             return context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -79,15 +84,17 @@ module.exports = function common(context, endpoint) {
         check.string(id, 'id must be a string');
         check.array(updates, 'updates must be an array');
 
+        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+
         return context.http.makeRequest({
             method: 'PATCH',
             body: updates,
-            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}`
+            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}${query}`
         }, userOpts);
     }
 
     /**
-     * Create a object
+     * Create an object
      * @param {Object} object Sub-resource to object to create
      * @param {Object} userOpts option overrides for this request
      * @returns {Promise<Object>} A promise that resolves to the provided object
@@ -95,15 +102,17 @@ module.exports = function common(context, endpoint) {
     function create(object, userOpts) {
         check.object(object, 'object must be an object');
 
+        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+
         return context.http.makeRequest({
             method: 'POST',
             body: object,
-            url: `/v1/apps/${context.applicationId}/${endpoint}`
+            url: `/v1/apps/${context.applicationId}/${endpoint}${query}`
         }, userOpts);
     }
 
     /**
-     * Delete a object by ID
+     * Delete an object by ID
      * @param {string} id ID of the object to delete
      * @param {Object} userOpts option overrides for this request
      * @returns {Promise<Object>} A promise that resolves to the deleted object
@@ -111,9 +120,11 @@ module.exports = function common(context, endpoint) {
     function remove(id, userOpts) {
         check.string(id, 'id must be a string');
 
+        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+
         return context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}`
+            url: `/v1/apps/${context.applicationId}/${endpoint}/${id}${query}`
         }, userOpts);
     }
 
