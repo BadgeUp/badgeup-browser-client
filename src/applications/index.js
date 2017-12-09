@@ -4,13 +4,17 @@ const check = require('check-types');
 const pageToGenerator = require('./../utils/pageToGenerator');
 const ENDPT = 'apps';
 
-// API Keys module
-// @param context: The context to make requests in. Basically, `this`
+/**
+ * API Keys module
+ * @param {object} context The context to make requests in. Basically, `this`
+ */
 module.exports = function applications(context) {
-    // create an application
-    // @param object
-    // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next object
+    /**
+     * Create an application
+     * @param {object} event object
+     * @param userOpts: option overrides for this request
+     * @return An iterator that returns promises that resolve with the next object
+     */
     function create(object, userOpts) {
         check.object(object, 'object must be an object');
 
@@ -21,11 +25,13 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
-    // update an application
-    // @param id: ID of the application to be updated
-    // @param updates: JSON patch updates
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to the updated application
+    /**
+     * Update an application
+     * @param id: ID of the application to be updated
+     * @param updates: JSON patch updates
+     * @param userOpts: option overrides for this request
+     * @returns Returns a promise that resolves to the updated application
+     */
     function update(id, updates, userOpts) {
         check.string(id, 'id must be a string');
         check.array(updates, 'updates must be an array');
@@ -37,10 +43,12 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
-    // delete an application
-    // @param id: ID of the application to be updated
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise
+    /**
+     * Delete an application
+     * @param id: ID of the application to be updated
+     * @param userOpts: option overrides for this request
+     * @returns Returns a promise
+     */
     function remove(id, userOpts) {
         check.string(id, 'id must be a string');
 
@@ -50,10 +58,12 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
-    // retrieve application by ID
-    // @param id ID of the application to retrieve
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves with the retrieved application
+    /**
+     * Retrieve application by ID
+     * @param id ID of the application to retrieve
+     * @param userOpts: option overrides for this request
+     * @returns Returns a promise that resolves with the retrieved application
+     */
     function get(id, userOpts) {
         check.string(id, 'id must be a string');
 
@@ -62,9 +72,11 @@ module.exports = function applications(context) {
         }, userOpts);
     }
 
-    // retrieve all objects, returned as an array
-    // @param userOpts: option overrides for this request
-    // @return A promise that resolves to an array of objects
+    /**
+     * Retrieve all objects, returned as an array
+     * @param userOpts: option overrides for this request
+     * @return A promise that resolves to an array of objects
+     */
     function getAll(userOpts) {
         let array = [];
         let url = `/v1/${ENDPT}`;
@@ -85,9 +97,11 @@ module.exports = function applications(context) {
         return pageFn();
     }
 
-    // retrieve all applications
-    // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next object
+    /**
+     * Retrieve all applications
+     * @param userOpts: option overrides for this request
+     * @return An iterator that returns promises that resolve with the next object
+     */
     function* getIterator(userOpts) {
         function pageFn() {
             let url = `/v1/${ENDPT}`;

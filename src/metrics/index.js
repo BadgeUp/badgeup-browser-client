@@ -10,8 +10,10 @@ const ENDPT = 'metrics';
 
 const DELETE_QUERY_PARAMS = ['key', 'subject'];
 
-// Metrics module
-// @param context: The context to make requests in. Basically, `this`
+/**
+ * Metrics module
+ * @param {object} context The context to make requests in. Basically, `this`
+ */
 module.exports = function metrics(context) {
     const obj = common(context, ENDPT);
 
@@ -35,9 +37,11 @@ module.exports = function metrics(context) {
             return this;
         }
 
-        // delete all queried metrics
-        // @param userOpts: option overrides for this request
-        // @returns Returns a promise that resolves to an object stating the number of deleted metrics
+        /**
+         * delete all queried metrics
+         * @param userOpts: option overrides for this request
+         * @returns Returns a promise that resolves to an object stating the number of deleted metrics
+         */
         remove(userOpts) {
             const queryBy = collectQueryParams(this._params, DELETE_QUERY_PARAMS);
 
@@ -52,10 +56,12 @@ module.exports = function metrics(context) {
         }
     }
 
-    // retrives metrics for a subject, returned as an array
-    // @param subject: subject to retrieve the metrics for
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to a list of metrics
+    /**
+     * retrives metrics for a subject, returned as an array
+     * @param subject: subject to retrieve the metrics for
+     * @param userOpts: option overrides for this request
+     * @returns Returns a promise that resolves to a list of metrics
+     */
     function getAllSubjectMetrics(subject, userOpts) {
         check.string(subject, 'subject must be a string');
 
@@ -78,10 +84,12 @@ module.exports = function metrics(context) {
         return pageFn();
     }
 
-    // retrives metrics for a subject, returned as an iterator
-    // @param subject: subject to retrieve the metrics for
-    // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next object
+    /**
+     * retrives metrics for a subject, returned as an iterator
+     * @param subject: subject to retrieve the metrics for
+     * @param userOpts: option overrides for this request
+     * @return An iterator that returns promises that resolve with the next object
+     */
     function* getSubjectMetricsIterator(subject, userOpts) {
         check.string(subject, 'subject must be a string');
 
@@ -98,11 +106,13 @@ module.exports = function metrics(context) {
         yield* pageToGenerator(pageFn());
     }
 
-    // retrieves a single metric for a subject by key
-    // @param subject: subject to retrieve the metric for
-    // @param key: metric key to retrive the metric for
-    // @param userOpts: option overrides for this request
-    // @returns Returns a promise that resolves to a single metric
+    /**
+     * retrieves a single metric for a subject by key
+     * @param subject: subject to retrieve the metric for
+     * @param key: metric key to retrive the metric for
+     * @param userOpts: option overrides for this request
+     * @returns Returns a promise that resolves to a single metric
+     */
     function getIndividualSubjectMetric(subject, key, userOpts) {
         check.string(subject, 'subject must be a string');
         check.string(key, 'key must be a string');
@@ -112,9 +122,11 @@ module.exports = function metrics(context) {
         }, userOpts);
     }
 
-    // Sets up a delete/get request targeting metrics using query filters
-    // @param queryBy: filters to query events by
-    // @returns Returns an instance of the EventQueryBuilder class
+    /**
+     * Sets up a delete/get request targeting metrics using query filters
+     * @param queryBy: filters to query events by
+     * @returns Returns an instance of the EventQueryBuilder class
+     */
     function query() {
         return new MetricQueryBuilder(context);
     }
@@ -125,7 +137,7 @@ module.exports = function metrics(context) {
         create: obj.create,
         getAllSubjectMetrics,
         getSubjectMetricsIterator,
-        getIndividualSubjectMetric, // TODO: consider aliasing to "get"
+        getIndividualSubjectMetric,  // TODO: consider aliasing to "get"
         query
     };
 };

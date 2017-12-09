@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - "8"
+  - "9" # Node.js 9
+  - "--lts=carbon" # Node.js 8 latest
   - "--lts=boron" # Node.js v6 latest
   - "--lts=argon" # Node.js v4 latest
 

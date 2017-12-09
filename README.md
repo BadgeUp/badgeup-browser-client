@@ -157,3 +157,15 @@ badgeup.applications.remove('ke9ox992');
 ### Awards
 
 ### Billable Events
+
+## Query Parameters
+
+Query parameters may be passed via the `userOptions.query` object.
+
+For example,
+```js
+const event = { key: 'jump', subject: 'test-user', modifier: { '@inc': 1 } };
+const opts = { query: { showIncomplete: true } };
+
+client.events.create(event, opts);
+```

@@ -9,8 +9,10 @@ const ENDPT = 'jobresult';
 
 const GET_QUERY_PARAMS = ['criterionId', 'subject', 'id', 'sort'];
 
-// Earned Achievements module
-// @param context: The context to make requests in. Basically, `this`
+/**
+ * Earned Achievements module
+ * @param {object} context The context to make requests in. Basically, `this`
+ */
 module.exports = function earnedAchievements(context) {
     class JobResultQueryBuilder {
         constructor(context) {
@@ -45,9 +47,11 @@ module.exports = function earnedAchievements(context) {
             return this;
         }
 
-        // get all queried job results
-        // @param userOpts: option overrides for this request
-        // @returns Returns an iterator that returns promises that resolve with the next job result
+        /**
+         * Get all queried job results
+         * @param userOpts: option overrides for this request
+         * @returns Returns an iterator that returns promises that resolve with the next job result
+         */
         *getIterator(userOpts) {
             const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
@@ -64,9 +68,11 @@ module.exports = function earnedAchievements(context) {
             yield* pageToGenerator(pageFn());
         }
 
-        // retrieve all queried job results, returned as an array
-        // @param userOpts: option overrides for this request
-        // @return A promise that resolves to an array of job results
+        /**
+         * Retrieve all queried job results, returned as an array
+         * @param userOpts: option overrides for this request
+         * @return A promise that resolves to an array of job results
+         */
         getAll(userOpts) {
             const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
 
@@ -90,9 +96,11 @@ module.exports = function earnedAchievements(context) {
         }
     }
 
-    // Sets up a delete request targeting earned achievements using query filters
-    // @param queryBy: filters to query events by
-    // @returns Returns an instance of the JobResultQueryBuilder class
+    /**
+     * Sets up a delete request targeting earned achievements using query filters
+     * @param queryBy: filters to query events by
+     * @returns Returns an instance of the JobResultQueryBuilder class
+     */
     function query() {
         return new JobResultQueryBuilder(context);
     }
