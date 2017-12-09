@@ -26,7 +26,7 @@ module.exports = function common(context, endpoint) {
 
     /**
      * Retrieve all objects, returned as an iterator
-     * @param {Object} [userOpts] option overrides for this request
+     * @param {Object} userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
     function* getIterator(userOpts) {
@@ -45,7 +45,7 @@ module.exports = function common(context, endpoint) {
 
     /**
      * Retrieve all objects, returned as an array
-     * @param {Object} [userOpts] option overrides for this request
+     * @param {Object} userOpts option overrides for this request
      * @return A promise that resolves to an array of objects
      */
     function getAll(userOpts) {
@@ -70,9 +70,9 @@ module.exports = function common(context, endpoint) {
 
     /**
      * Updates a resource by ID
-     * @param {string} [id] ID of the object to be updated
-     * @param {Array<object>} [updates] JSON patch updates
-     * @param {Object} [userOpts] option overrides for this request
+     * @param {string} id ID of the object to be updated
+     * @param {Array<object>} updates JSON patch updates
+     * @param {Object} userOpts option overrides for this request
      * @returns {Promise<Object>} A promise that resolves to the updated object
      */
     function update(id, updates, userOpts) {
@@ -88,8 +88,8 @@ module.exports = function common(context, endpoint) {
 
     /**
      * Create a object
-     * @param {Object} [object] Sub-resource to object to create
-     * @param {Object} [userOpts] option overrides for this request
+     * @param {Object} object Sub-resource to object to create
+     * @param {Object} userOpts option overrides for this request
      * @returns {Promise<Object>} A promise that resolves to the provided object
      */
     function create(object, userOpts) {
@@ -104,8 +104,8 @@ module.exports = function common(context, endpoint) {
 
     /**
      * Delete a object by ID
-     * @param {string} [id] ID of the object to delete
-     * @param {Object} [userOpts] option overrides for this request
+     * @param {string} id ID of the object to delete
+     * @param {Object} userOpts option overrides for this request
      * @returns {Promise<Object>} A promise that resolves to the deleted object
      */
     function remove(id, userOpts) {
