@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [0.8.5] - 2017-12-09
+### Changed
+- Better jsdocs
+- Query parameter support
+
 ## [0.8.1] - 2017-09-04
 ### Changed
 - Upgradge `got`
