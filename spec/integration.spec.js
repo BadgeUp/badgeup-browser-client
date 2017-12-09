@@ -26,7 +26,8 @@ describe('integration tests', function() {
             }
         }).then(function(response) {
             expect(response).to.be.an('object');
-            const { event, progress } = response;
+            const event = response.event;
+            const progress = response.progress;
 
             expect(event).to.be.an('object');
             expect(event.key).to.be.equal(key);
