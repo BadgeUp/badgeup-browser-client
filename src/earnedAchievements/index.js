@@ -10,8 +10,10 @@ const ENDPT = 'earnedachievements';
 
 const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'since', 'until'];
 
-// Earned Achievements module
-// @param context: The context to make requests in. Basically, `this`
+/**
+ * Earned Achievements module
+ * @param {object} context The context to make requests in. Basically, `this`
+ */
 module.exports = function earnedAchievements(context) {
     const obj = common(context, ENDPT);
 
@@ -47,8 +49,10 @@ module.exports = function earnedAchievements(context) {
             return this;
         }
 
-        // checks and builds query parameters for use in a URL
-        // @returns Returns a string containing URL query paramters
+        /**
+         * checks and builds query parameters for use in a URL
+         * @returns Returns a string containing URL query paramters
+         */
         _buildQuery(queryBy) {
             if (Object.keys(queryBy).length === 0) {
                 throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
@@ -57,9 +61,11 @@ module.exports = function earnedAchievements(context) {
             return querystring.stringify(queryBy);
         }
 
-        // retrives earned achievements, returned as an array
-        // @param userOpts: option overrides for this request
-        // @returns Returns a promise that resolves to a list of metrics
+        /**
+         * retrives earned achievements, returned as an array
+         * @param userOpts: option overrides for this request
+         * @returns Returns a promise that resolves to a list of metrics
+         */
         getAll(userOpts) {
             let array = [];
             const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
@@ -83,9 +89,11 @@ module.exports = function earnedAchievements(context) {
             return pageFn();
         }
 
-        // retrives earned achievements, returned as an iterator
-        // @param userOpts: option overrides for this request
-        // @return An iterator that returns promises that resolve with the next object
+        /**
+         * retrives earned achievements, returned as an iterator
+         * @param userOpts: option overrides for this request
+         * @return An iterator that returns promises that resolve with the next object
+         */
         *getIterator(userOpts) {
             const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
             const queryPart = this._buildQuery(queryBy);
@@ -103,9 +111,11 @@ module.exports = function earnedAchievements(context) {
             yield* pageToGenerator(pageFn());
         }
 
-        // delete all queried earned achievements
-        // @param userOpts: option overrides for this request
-        // @returns Returns a promise that resolves to an object stating the number of deleted metrics
+        /**
+         * delete all queried earned achievements
+         * @param userOpts: option overrides for this request
+         * @returns Returns a promise that resolves to an object stating the number of deleted metrics
+         */
         remove(userOpts) {
             const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);
             const queryPart = this._buildQuery(queryBy);
@@ -117,9 +127,11 @@ module.exports = function earnedAchievements(context) {
         }
     }
 
-    // Sets up a delete request targeting earned achievements using query filters
-    // @param queryBy: filters to query events by
-    // @returns Returns an instance of the EarnedAchievementQueryBuilder class
+    /**
+     * Sets up a delete request targeting earned achievements using query filters
+     * @param queryBy: filters to query events by
+     * @returns Returns an instance of the EarnedAchievementQueryBuilder class
+     */
     function query() {
         return new EarnedAchievementQueryBuilder(context);
     }

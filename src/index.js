@@ -2,9 +2,26 @@
 
 const check = require('check-types');
 const defaults = require('lodash.defaultsdeep');
-const Http = require('./http');
+const BadgeUpHttp = require('./http');
+
+const applications = require('./applications');
+const achievements = require('./achievements');
+const _analytics = require('./analytics');
+const apiKeys = require('./apiKeys');
+const awards = require('./awards');
+const criteria = require('./criteria');
+const earnedAchievements = require('./earnedAchievements');
+const metrics = require('./metrics');
+const events = require('./events');
+const progress = require('./progress');
+const jobResults = require('./jobResults');
+const achievementIcons = require('./achievementIcons');
 
 class BadgeUp {
+    /**
+     * Construct an instance of the BadgeUp client.
+     * @param {{apiKey: string, token: string, applicationId: string, request: object }} globalOpts - Client and global options
+     */
     constructor(globalOpts) {
 
         // these fields are required
@@ -39,21 +56,23 @@ class BadgeUp {
             globalOpts.request.headers.authorization = 'Basic ' + Buffer.from(globalOpts.apiKey + ':', 'ascii').toString('base64');
         }
 
-        // init the HTTP
-        this.http = new Http(globalOpts.request);
+        /**
+         * @member {BadgeUpHttp}
+         */
+        this.http = new BadgeUpHttp(globalOpts.request);
 
-        this.applications = require('./applications')(this);
-        this.achievements = require('./achievements')(this);
-        this._analytics = require('./analytics')(this);
-        this.apiKeys = require('./apiKeys')(this);
-        this.awards = require('./awards')(this);
-        this.criteria = require('./criteria')(this);
-        this.earnedAchievements = require('./earnedAchievements')(this);
-        this.metrics = require('./metrics')(this);
-        this.events = require('./events')(this);
-        this.progress = require('./progress')(this);
-        this.jobResults = require('./jobResults')(this);
-        this.achievementIcons = require('./achievementIcons')(this);
+        this.applications = applications(this);
+        this.achievements = achievements(this);
+        this._analytics = _analytics(this);
+        this.apiKeys = apiKeys(this);
+        this.awards = awards(this);
+        this.criteria = criteria(this);
+        this.earnedAchievements = earnedAchievements(this);
+        this.metrics = metrics(this);
+        this.events = events(this);
+        this.progress = progress(this);
+        this.jobResults = jobResults(this);
+        this.achievementIcons = achievementIcons(this);
     }
 }
 

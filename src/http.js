@@ -24,10 +24,12 @@ class BadgeUpHttp {
         this.globalReqOpts = globalReqOpts || {};
     }
 
-    // Performs a HTTP request given the collective options
-    // @param reqOpts: Request options from this library's functions.
-    // @param userOpts: Option overrides from the user. Highest priority.
-    // @return: Returns a Promise that resolves with the request data
+    /**
+     * Performs a HTTP request given the collective options
+     * @param {object} [reqOpts] Request options from this library's functions.
+     * @param {object} [userOpts] Option overrides from the user. Highest priority.
+     * @return {Promise} Returns a Promise that resolves with the request data
+     */
     makeRequest(reqOpts, userOpts) {
         const options = defaults({}, userOpts, reqOpts, this.globalReqOpts, requestDefaults);
 
