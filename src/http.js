@@ -26,8 +26,8 @@ class BadgeUpHttp {
 
     /**
      * Performs a HTTP request given the collective options
-     * @param {object} [reqOpts] Request options from this library's functions.
-     * @param {object} [userOpts] Option overrides from the user. Highest priority.
+     * @param {object} reqOpts Request options from this library's functions.
+     * @param {object} userOpts Option overrides from the user. Highest priority.
      * @return {Promise} Returns a Promise that resolves with the request data
      */
     makeRequest(reqOpts, userOpts) {
