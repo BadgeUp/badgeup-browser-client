@@ -18,8 +18,10 @@ var requestDefaults = {
 };
 
 class BadgeUpHttp {
-    // Constructor for the HTTP stack for BadgeUp
-    // @param globalOpts: Options from the user for BadgeUp as a whole.
+    /**
+     * Constructor for the HTTP stack for BadgeUp
+     * @param {object} globalReqOpts Options from the user for BadgeUp as a whole.
+     */
     constructor(globalReqOpts) {
         this.globalReqOpts = globalReqOpts || {};
     }
