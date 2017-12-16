@@ -12,8 +12,8 @@ module.exports = function criteria(context) {
 
     /**
      * Get a list of all dynamic criteria runtimes and image tags
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the requested dynamic criteria images
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the requested dynamic criteria images
      */
     function getDynamicCriteriaImages(userOpts) {
         return context.http.makeRequest({

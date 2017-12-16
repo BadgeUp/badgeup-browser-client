@@ -15,7 +15,7 @@ module.exports = function common(context, endpoint) {
      * Retrieve resource object by ID
      * @param {string} id ID of the object to retrieve
      * @param {object} userOpts option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function get(id, userOpts) {
         check.string(id, 'id must be a string');
@@ -50,7 +50,7 @@ module.exports = function common(context, endpoint) {
     /**
      * Retrieve all objects, returned as an array
      * @param {Object} userOpts option overrides for this request
-     * @return A promise that resolves to an array of objects
+     * @returns {Promise<object[]>} Promise that resolves to an array of objects
      */
     function getAll(userOpts) {
         let array = [];

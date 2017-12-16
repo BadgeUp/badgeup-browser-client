@@ -14,8 +14,8 @@ module.exports = function achievements(context) {
     /**
      * Retrieves a list of criteria
      * @param id ID of the achievement to retrieve criteria for
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the list of criteria
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the list of criteria
      */
     function getAchievementCriteria(id, userOpts) {
         check.string(id, 'id must be a string');
@@ -28,8 +28,8 @@ module.exports = function achievements(context) {
     /**
      * Retrieves a list of awards
      * @param id ID of the achievement to retrieve criteria for
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the list of awards
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the list of awards
      */
     function getAchievementAwards(id, userOpts) {
         check.string(id, 'id must be a string');

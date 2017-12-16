@@ -49,7 +49,7 @@ module.exports = function earnedAchievements(context) {
 
         /**
          * Get all queried job results
-         * @param userOpts: option overrides for this request
+         * @param {object} userOpts option overrides for this request
          * @returns Returns an iterator that returns promises that resolve with the next job result
          */
         *getIterator(userOpts) {
@@ -70,8 +70,8 @@ module.exports = function earnedAchievements(context) {
 
         /**
          * Retrieve all queried job results, returned as an array
-         * @param userOpts: option overrides for this request
-         * @return A promise that resolves to an array of job results
+         * @param {object} userOpts option overrides for this request
+         * @returns {Promise<object[]>} Promise that resolves to an array of job results
          */
         getAll(userOpts) {
             const queryBy = collectQueryParams(this._params, GET_QUERY_PARAMS);
@@ -98,7 +98,6 @@ module.exports = function earnedAchievements(context) {
 
     /**
      * Sets up a delete request targeting earned achievements using query filters
-     * @param queryBy: filters to query events by
      * @returns Returns an instance of the JobResultQueryBuilder class
      */
     function query() {
