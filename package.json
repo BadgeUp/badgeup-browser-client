@@ -18,6 +18,7 @@
     "lodash.defaultsdeep": "^4.6.0",
     "lodash.includes": "^4.3.0",
     "lodash.pickby": "^4.6.0",
+    "map-obj": "2.0.0",
     "qs": "6.5.1"
   },
   "devDependencies": {
