@@ -16,21 +16,31 @@ class ProgressQueryBuilder {
         this._params = {};
     }
 
+    /**
+     * Query by achievement ID
+     * @param {string} achievementId
+     */
     achievementId(achievementId) {
         check.string(achievementId, 'achievementId must be a string');
         this._params.achievementId = achievementId;
         return this;
     }
 
+    /**
+     * Query by subject
+     * @param {string} subject
+     */
     subject(subject) {
         check.string(subject, 'subject must be a string');
         this._params.subject = subject;
         return this;
     }
 
-    // retrieve all queried progress objects, returned as an array
-    // @param userOpts: option overrides for this request
-    // @return A promise that resolves to an array of progress objects
+    /**
+     * Retrieve all queried progress objects, returned as an array
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object[]>} Promise that resolves to an array of progress objects
+     */
     getAll(userOpts) {
         if (!this._params.subject) {
             throw new Error('subject must be provided');
@@ -57,9 +67,11 @@ class ProgressQueryBuilder {
         return pageFn();
     }
 
-    // retrieve all queried progress objects, returned as an iterator
-    // @param userOpts: option overrides for this request
-    // @return An iterator that returns promises that resolve with the next progress object
+    /**
+     * Retrieve all queried progress objects, returned as an iterator
+     * @param {object} userOpts option overrides for this request
+     * @return An iterator that returns promises that resolve with the next progress object
+     */
     *getIterator(userOpts) {
         if (!this._params.subject) {
             throw new Error('subject must be provided');
@@ -83,8 +95,9 @@ class ProgressQueryBuilder {
 
 module.exports = function progress(context) {
 
-    // Sets up a get request targeting progress objects
-    // @returns Returns an instance of the ProgressQueryBuilder class
+    /**
+     * @returns Returns an instance of the ProgressQueryBuilder class
+     */
     function query() {
         return new ProgressQueryBuilder(context);
     }

@@ -1,5 +1,7 @@
 'use strict';
 
+const dateStringify = require('./dateStringify');
+
 const fetchWrapper = function fetchWrapper(options) {
     if (!options || typeof options !== 'object') {
         throw new Error('options object must be provided and must be an object');
@@ -13,6 +15,8 @@ const fetchWrapper = function fetchWrapper(options) {
     if (options.json === true && options.body && (typeof options.body === 'object' || Array.isArray(options.body))) {
         options.headers = options.headers || {};
         options.headers['Content-Type'] = 'application/json';
+        // stringify dates to include timezones
+        options.body = dateStringify(options.body);
         options.body = JSON.stringify(options.body);
     }
 

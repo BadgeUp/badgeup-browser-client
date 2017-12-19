@@ -25,24 +25,40 @@ module.exports = function earnedAchievements(context) {
             this._params = {};
         }
 
+        /**
+         * Query by achievement ID
+         * @param {string} achievementId
+         */
         achievementId(achievementId) {
             check.string(achievementId, 'achievementId must be a string');
             this._params.achievementId = achievementId;
             return this;
         }
 
+        /**
+         * Query by subject
+         * @param {string} subject
+         */
         subject(subject) {
             check.string(subject, 'subject must be a string');
             this._params.subject = subject;
             return this;
         }
 
+        /**
+         * Query by starting date (find after)
+         * @param {Date} since
+         */
         since(since) {
             check.date(since, 'since must be a date');
             this._params.since = since.toISOString();
             return this;
         }
 
+        /**
+         * Query by ending date (find before)
+         * @param {Date} until
+         */
         until(until) {
             check.date(until, 'until must be a date');
             this._params.until = until.toISOString();
@@ -63,8 +79,8 @@ module.exports = function earnedAchievements(context) {
 
         /**
          * retrives earned achievements, returned as an array
-         * @param userOpts: option overrides for this request
-         * @returns Returns a promise that resolves to a list of metrics
+         * @param {object} userOpts option overrides for this request
+         * @returns {Promise<object[]>} Promise that resolves to a list of metrics
          */
         getAll(userOpts) {
             let array = [];
@@ -91,7 +107,7 @@ module.exports = function earnedAchievements(context) {
 
         /**
          * retrives earned achievements, returned as an iterator
-         * @param userOpts: option overrides for this request
+         * @param {object} userOpts option overrides for this request
          * @return An iterator that returns promises that resolve with the next object
          */
         *getIterator(userOpts) {
@@ -113,8 +129,8 @@ module.exports = function earnedAchievements(context) {
 
         /**
          * delete all queried earned achievements
-         * @param userOpts: option overrides for this request
-         * @returns Returns a promise that resolves to an object stating the number of deleted metrics
+         * @param {object} userOpts option overrides for this request
+         * @returns {Promise<object>} Promise that resolves to an object stating the number of deleted metrics
          */
         remove(userOpts) {
             const queryBy = collectQueryParams(this._params, AVAILABLE_QUERY_PARAMS);

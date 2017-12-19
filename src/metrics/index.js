@@ -25,12 +25,20 @@ module.exports = function metrics(context) {
             this._params = {};
         }
 
+        /**
+         * Query by key
+         * @param {string} key
+         */
         key(key) {
             check.string(key, 'key must be a string');
             this._params.key = key;
             return this;
         }
 
+        /**
+         * Query by subject
+         * @param {string} subject
+         */
         subject(subject) {
             check.string(subject, 'subject must be a string');
             this._params.subject = subject;
@@ -38,9 +46,9 @@ module.exports = function metrics(context) {
         }
 
         /**
-         * delete all queried metrics
-         * @param userOpts: option overrides for this request
-         * @returns Returns a promise that resolves to an object stating the number of deleted metrics
+         * Deletes all queried metrics
+         * @param {object} userOpts option overrides for this request
+         * @returns {Promise<object>} Promise that resolves to an object stating the number of deleted metrics
          */
         remove(userOpts) {
             const queryBy = collectQueryParams(this._params, DELETE_QUERY_PARAMS);
@@ -57,10 +65,10 @@ module.exports = function metrics(context) {
     }
 
     /**
-     * retrives metrics for a subject, returned as an array
-     * @param subject: subject to retrieve the metrics for
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves to a list of metrics
+     * Retrives metrics for a subject, returned as an array
+     * @param {string} subject subject to retrieve the metrics for
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object[]>} Promise that resolves to a list of metrics
      */
     function getAllSubjectMetrics(subject, userOpts) {
         check.string(subject, 'subject must be a string');
@@ -85,9 +93,9 @@ module.exports = function metrics(context) {
     }
 
     /**
-     * retrives metrics for a subject, returned as an iterator
-     * @param subject: subject to retrieve the metrics for
-     * @param userOpts: option overrides for this request
+     * Retrives metrics for a subject, returned as an iterator
+     * @param {string} subject subject to retrieve the metrics for
+     * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
     function* getSubjectMetricsIterator(subject, userOpts) {
@@ -107,11 +115,11 @@ module.exports = function metrics(context) {
     }
 
     /**
-     * retrieves a single metric for a subject by key
-     * @param subject: subject to retrieve the metric for
-     * @param key: metric key to retrive the metric for
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves to a single metric
+     * Retrieves a single metric for a subject by key
+     * @param {string} subject subject to retrieve the metric for
+     * @param {string} key metric key to retrive the metric for
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves to a single metric
      */
     function getIndividualSubjectMetric(subject, key, userOpts) {
         check.string(subject, 'subject must be a string');
@@ -124,7 +132,6 @@ module.exports = function metrics(context) {
 
     /**
      * Sets up a delete/get request targeting metrics using query filters
-     * @param queryBy: filters to query events by
      * @returns Returns an instance of the EventQueryBuilder class
      */
     function query() {

@@ -12,8 +12,8 @@ module.exports = function apiKeys(context) {
 
     /**
      * Get all possible API key scopes
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the requested API key scopes
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the requested API key scopes
      */
     function listScopes(userOpts) {
         return context.http.makeRequest({

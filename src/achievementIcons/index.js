@@ -12,8 +12,8 @@ module.exports = function achievementIcons(context) {
 
     /**
      * Get all achievement icons
-     * @param userOpts: option overrides for this request
-     * @returns A promise that resolves to an array of achievement icon identifiers
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object[]>} A promise that resolves to an array of achievement icon identifiers
      */
     function getAll(userOpts) {
         return context.http.makeRequest({

@@ -14,8 +14,8 @@ const ENDPT = 'analytics';
 module.exports = function achievements(context) {
     /**
      * Retrieve event analytics
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function eventsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
@@ -27,8 +27,8 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve event analytics for a single subject
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function eventsLastNDaysBySubject(numDays, subject, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
@@ -41,8 +41,8 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve subject analytics
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function subjectsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
@@ -54,8 +54,8 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve new subject analytics
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function newSubjectsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
@@ -67,8 +67,8 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve earned achievement analytics
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with the retrieved object
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with the retrieved object
      */
     function earnedAchievementsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
@@ -80,7 +80,7 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve subject summary list
-     * @param userOpts: option overrides for this request
+     * @param {object} userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
     function* getSubjectsSummaryIterator(userOpts) {
@@ -99,8 +99,8 @@ module.exports = function achievements(context) {
 
     /**
      * Retrieve a list of unique metric keys
-     * @param userOpts: option overrides for this request
-     * @returns Returns a promise that resolves with an array of retrieved metric keys
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object>} Promise that resolves with an array of retrieved metric keys
      */
     function getAllMetricKeys(userOpts) {
         return context.http.makeRequest({
