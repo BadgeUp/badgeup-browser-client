@@ -29,7 +29,7 @@ function formatTZ(date) {
     const hours = Math.floor(absOffset / 60);
     const hoursOut = absOffset > 0 ? ('0' + hours).slice(-2) : '';
     const minutes = absOffset % 60;
-    const minutesOut = minutes > 0 ? ':' + ('0' + minutes).slice(-2) : '';
+    const minutesOut = ':' + ('0' + minutes).slice(-2);
 
     return (offset < 0 ? '+' : '-') + hoursOut + minutesOut;
 }
