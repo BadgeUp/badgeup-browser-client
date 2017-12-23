@@ -1,6 +1,6 @@
 'use strict';
 
-const mapObj = require('map-obj');
+const cloneDeepWith = require('lodash.clonedeepwith');
 
 /**
  * Formats a date in ISO 8601 format with the correct time zone offset
@@ -39,12 +39,10 @@ function formatTZ(date) {
  * @param {*} name object key name
  * @param {*} val value
  */
-function replacer(name, val) {
-    let v = val;
+function replacer(val) {
     if (val instanceof Date) {
-        v = formatDate(val);
+        return formatDate(val);
     }
-    return [name, v];
 }
 
 /**
@@ -52,7 +50,7 @@ function replacer(name, val) {
  * @param {*} value
  */
 function dateStringify(value) {
-    return mapObj(value, replacer, { deep: true });
+    return cloneDeepWith(value, replacer);
 }
 
 module.exports = dateStringify;
