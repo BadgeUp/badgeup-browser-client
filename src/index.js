@@ -14,7 +14,6 @@ const earnedAchievements = require('./earnedAchievements');
 const metrics = require('./metrics');
 const events = require('./events');
 const progress = require('./progress');
-const jobResults = require('./jobResults');
 const achievementIcons = require('./achievementIcons');
 
 class BadgeUp {
@@ -71,7 +70,6 @@ class BadgeUp {
         this.metrics = metrics(this);
         this.events = events(this);
         this.progress = progress(this);
-        this.jobResults = jobResults(this);
         this.achievementIcons = achievementIcons(this);
     }
 }

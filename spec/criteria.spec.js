@@ -74,32 +74,4 @@ describe('criterion', function() {
 
         expect(result).to.eql(criterion);
     });
-
-    it('should get all dynamic criteria images', function*() {
-        const dcImages = {
-            data: [{
-                runtime: 'node',
-                runtimeName: 'Node.js',
-                images: [{
-                    runtimeVersion: '6.9.4',
-                    clientVersion: '0.4.0',
-                    imageVersion: '1.0.1',
-                    tag: '6.9.4-0.4.0-1.0.1',
-                    created: new Date()
-                }]
-            }]
-        };
-        function _payload() {
-            return dcImages;
-        }
-
-        function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/dcimages`);
-            expect(options.headers).to.be.an('object');
-        }
-
-        const result = yield bup.criteria.getDynamicCriteriaImages({ _payload, _validate });
-
-        expect(result).to.eql(dcImages.data);
-    });
 });
