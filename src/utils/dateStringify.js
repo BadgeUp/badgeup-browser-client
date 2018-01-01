@@ -8,8 +8,13 @@ const cloneDeepWith = require('lodash.clonedeepwith');
  * @returns {string}
  */
 function formatDate(date) {
-    const dateStr = (date || new Date()).toISOString();
-    return dateStr.replace('Z', formatTZ(date));
+    const dateClone = date ? new Date(date.getTime()) : new Date();
+
+    // subtract the timezone offset
+    dateClone.setMinutes(dateClone.getMinutes() - dateClone.getTimezoneOffset());
+
+    const dateStr = dateClone.toISOString();
+    return dateStr.replace('Z', formatTZ(dateClone));
 }
 
 /**
