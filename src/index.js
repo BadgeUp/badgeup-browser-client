@@ -13,6 +13,7 @@ const criteria = require('./criteria');
 const earnedAchievements = require('./earnedAchievements');
 const metrics = require('./metrics');
 const events = require('./events');
+const eventsV2Preview = require('./events/v2preview');
 const progress = require('./progress');
 const achievementIcons = require('./achievementIcons');
 
@@ -71,6 +72,11 @@ class BadgeUp {
         this.events = events(this);
         this.progress = progress(this);
         this.achievementIcons = achievementIcons(this);
+
+        // API V2 Preview
+        this.v2Preview = {
+            events: eventsV2Preview(this)
+        };
     }
 }
 
