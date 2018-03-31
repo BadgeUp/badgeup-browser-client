@@ -1,5 +1,3 @@
-:warning: This client is still a work-in-progress.
-
 # BadgeUp Node.js Client
 Official Node.js client for working with [BadgeUp](https://www.badgeup.io/). Targets compatibility with all LTS versions of Node.js. These versions can be found in `.travis.yml`.
 
