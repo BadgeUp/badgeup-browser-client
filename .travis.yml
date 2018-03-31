@@ -3,6 +3,7 @@ node_js:
   - "9" # Node.js 9
   - "--lts=carbon" # Node.js 8 latest
   - "--lts=boron" # Node.js v6 latest
-  - "--lts=argon" # Node.js v4 latest
+before_install:
+  - npm i -g npm@5.8.0
 
 # See Node.js releases: https://nodejs.org/en/download/releases/

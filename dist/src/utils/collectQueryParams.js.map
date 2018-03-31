@@ -1,0 +1,1 @@
+{"version":3,"file":"collectQueryParams.js","sourceRoot":"","sources":["../../../src/utils/collectQueryParams.ts"],"names":[],"mappings":";;AAAA,mCAAgC;AAGhC,4BAAmC,MAAuB,EAAE,IAAc;IACtE,OAAO,eAAM,CAAC,MAAM,EAAE,UAAS,KAAK,EAAE,GAAG;QACrC,OAAO,CAAC,CAAC,KAAK,IAAI,IAAI,CAAC,QAAQ,CAAC,GAAG,CAAC,CAAC;IACzC,CAAC,CAAC,CAAC;AACP,CAAC;AAJD,gDAIC"}
