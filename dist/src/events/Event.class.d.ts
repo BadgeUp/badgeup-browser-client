@@ -56,12 +56,18 @@ export interface EventBase extends EventRequest {
      */
     applicationId: string;
 }
+/**
+ * BadgeUp Event response
+ */
 export declare class Event extends EventRequest implements EventBase {
-    id: any;
-    applicationId: any;
-    constructor(id: any, applicationId: any, subject: string, key: string, modifier?: EventModifier, options?: EventOptions);
+    id: string;
+    applicationId: string;
+    constructor(id: string, applicationId: string, subject: string, key: string, modifier?: EventModifier, options?: EventOptions);
     static fromSource(source: EventBase): Event;
 }
+/**
+ * Describes how an event modifies a subjects' metric
+ */
 export interface EventModifier {
     [key: string]: number;
 }

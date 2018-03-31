@@ -31,6 +31,9 @@ class EventRequest {
     }
 }
 exports.EventRequest = EventRequest;
+/**
+ * BadgeUp Event response
+ */
 class Event extends EventRequest {
     constructor(id, applicationId, subject, key, modifier = {}, options) {
         super(subject, key, modifier, options);
