@@ -50,5 +50,5 @@ export declare class ApplicationsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getIterator(userOpts?: any): IterableIterator<Promise<BadgeUpApplication>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<BadgeUpApplication | undefined>>;
 }

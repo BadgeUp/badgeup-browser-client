@@ -39,14 +39,14 @@ export class AchievementsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next achievement
      */
-    public getIterator(userOpts?): IterableIterator<Promise<Achievement>> {
+    public getIterator(userOpts?): IterableIterator<Promise<Achievement | undefined>> {
         return this.common.getIterator(userOpts);
     }
 
     /**
      * Retrieve all achievements, returned as an array
      * @param userOpts option overrides for this request
-     * @returns Promise that resolves to an array of objects
+     * @returns Promise that resolves to an array of achievements
      */
     public getAll(userOpts?): Promise<Achievement[]> {
         return this.common.getAll(userOpts);
@@ -57,7 +57,7 @@ export class AchievementsResource {
      * @param id ID of the achievement to be updated
      * @param updates JSON patch updates
      * @param userOpts option overrides for this request
-     * @returns A promise that resolves to the updated object
+     * @returns A promise that resolves to the updated achievement
      */
     public update(id: string, updates: JsonPatch[], userOpts?): Promise<Achievement> {
         return this.common.update(id, updates, userOpts);

@@ -25,7 +25,7 @@ export declare class ProgressQueryBuilder {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next progress object
      */
-    getIterator(userOpts?: any): IterableIterator<Promise<Progress>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<Progress | undefined>>;
 }
 /**
  * Progress resource

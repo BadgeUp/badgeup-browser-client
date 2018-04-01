@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function* pageToGenerator(pageFn) {
     let nextPageExists = true;
     let bank = [];
-    let fetchPromise = new Promise((resolve) => resolve());
+    let fetchPromise = Promise.resolve(undefined);
     while (bank.length > 0 || nextPageExists) {
         fetchPromise = fetchPromise.then(function () {
             if (bank.length === 0) {

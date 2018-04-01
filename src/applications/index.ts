@@ -112,7 +112,7 @@ export class ApplicationsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    public *getIterator(userOpts?): IterableIterator<Promise<BadgeUpApplication>> {
+    public *getIterator(userOpts?): IterableIterator<Promise<BadgeUpApplication | undefined>> {
         const pageFn = () => {
             let url = `/v1/${ENDPT}`;
             return () => {

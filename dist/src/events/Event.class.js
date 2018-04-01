@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const DEFAULT_EVENT_MODIFIER = { '@inc': 1 };
 class EventRequest {
-    constructor(subject, key, modifier = {}, options) {
+    constructor(subject, key, modifier = DEFAULT_EVENT_MODIFIER, options) {
         /**
          * Uniquely identifies the subject the event is for.
          */
@@ -35,7 +36,7 @@ exports.EventRequest = EventRequest;
  * BadgeUp Event response
  */
 class Event extends EventRequest {
-    constructor(id, applicationId, subject, key, modifier = {}, options) {
+    constructor(id, applicationId, subject, key, modifier = DEFAULT_EVENT_MODIFIER, options) {
         super(subject, key, modifier, options);
         this.id = id;
         this.applicationId = applicationId;

@@ -35,7 +35,7 @@ class AchievementsResource {
     /**
      * Retrieve all achievements, returned as an array
      * @param userOpts option overrides for this request
-     * @returns Promise that resolves to an array of objects
+     * @returns Promise that resolves to an array of achievements
      */
     getAll(userOpts) {
         return this.common.getAll(userOpts);
@@ -45,7 +45,7 @@ class AchievementsResource {
      * @param id ID of the achievement to be updated
      * @param updates JSON patch updates
      * @param userOpts option overrides for this request
-     * @returns A promise that resolves to the updated object
+     * @returns A promise that resolves to the updated achievement
      */
     update(id, updates, userOpts) {
         return this.common.update(id, updates, userOpts);

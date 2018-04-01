@@ -76,7 +76,7 @@ export class ProgressQueryBuilder {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next progress object
      */
-    *getIterator(userOpts?): IterableIterator<Promise<Progress>> {
+    *getIterator(userOpts?): IterableIterator<Promise<Progress | undefined>> {
         if (!this.params.subject) {
             throw new Error('subject must be provided');
         }
@@ -93,7 +93,7 @@ export class ProgressQueryBuilder {
             };
         };
 
-        yield* pageToGenerator<Progress>(pageFn());
+        yield* pageToGenerator<Progress| undefined>(pageFn());
     }
 }
 

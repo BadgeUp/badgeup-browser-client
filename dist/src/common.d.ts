@@ -21,7 +21,7 @@ export declare class Common<T> {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getIterator(userOpts?: any): IterableIterator<Promise<T>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<T | undefined>>;
     /**
      * Retrieve all objects, returned as an array
      * @param userOpts option overrides for this request
@@ -42,7 +42,7 @@ export declare class Common<T> {
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to the provided object
      */
-    create<K = T>(object: any, userOpts?: any): Promise<K>;
+    create<K = T>(object: Object, userOpts?: any): Promise<K>;
     /**
      * Delete an object by ID
      * @param id ID of the object to delete

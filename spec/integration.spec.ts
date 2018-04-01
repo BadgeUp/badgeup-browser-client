@@ -88,7 +88,7 @@ describe('integration tests', function() {
         let countViaIterator = 0;
         for (const achievementPromise of client.achievements.getIterator()) {
             const achievement = await achievementPromise;
-            checkAchievement(achievement);
+            checkAchievement(achievement!);
             countViaIterator++;
         }
         expect(achievementsCount).to.be.equal(countViaIterator, 'Number of achievements retrieved via .getAll and .getIterator is not equal.');
@@ -184,9 +184,9 @@ describe('integration tests', function() {
 
         const iterator = client.earnedAchievements.getIterator();
         for (const achievementPromise of iterator) {
-            const achievement: EarnedAchievement = await achievementPromise;
+            const achievement: EarnedAchievement | undefined = await achievementPromise;
             expect(achievement).to.be.an('object');
-            expect(achievement.achievementId).to.be.a('string');
+            expect(achievement!.achievementId).to.be.a('string');
         }
     });
 

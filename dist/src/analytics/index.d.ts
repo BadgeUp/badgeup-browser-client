@@ -46,7 +46,7 @@ export declare class AnalyticsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getSubjectsSummaryIterator(userOpts?: any): IterableIterator<Promise<{}>>;
+    getSubjectsSummaryIterator(userOpts?: any): IterableIterator<Promise<{} | undefined>>;
     /**
      * Retrieve a list of unique metric keys
      * @param userOpts option overrides for this request

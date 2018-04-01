@@ -61,13 +61,28 @@ class MetricsResource {
         this.common = new common_1.Common(context, ENDPT);
         this.context = context;
     }
-    // TODO: comments missing for some methods
+    /**
+     * Retrieve all metrics, returned as an array
+     * @param userOpts option overrides for this request
+     * @returns Promise that resolves to an array of metrics
+     */
     getAll(userOpts) {
         return this.common.getAll(userOpts);
     }
+    /**
+     * Retrieve all metrics, returned as an iterator
+     * @param userOpts option overrides for this request
+     * @return An iterator that returns promises that resolve with the next metric
+     */
     getIterator(userOpts) {
         return this.common.getIterator(userOpts);
     }
+    /**
+     * Create a metric
+     * @param metric Sub-resource to metric to create
+     * @param userOpts option overrides for this request
+     * @returns A promise that resolves to the provided metric
+     */
     create(object, userOpts) {
         return this.common.create(object, userOpts);
     }

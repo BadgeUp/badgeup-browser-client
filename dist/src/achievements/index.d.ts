@@ -26,11 +26,11 @@ export declare class AchievementsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next achievement
      */
-    getIterator(userOpts?: any): IterableIterator<Promise<Achievement>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<Achievement | undefined>>;
     /**
      * Retrieve all achievements, returned as an array
      * @param userOpts option overrides for this request
-     * @returns Promise that resolves to an array of objects
+     * @returns Promise that resolves to an array of achievements
      */
     getAll(userOpts?: any): Promise<Achievement[]>;
     /**
@@ -38,7 +38,7 @@ export declare class AchievementsResource {
      * @param id ID of the achievement to be updated
      * @param updates JSON patch updates
      * @param userOpts option overrides for this request
-     * @returns A promise that resolves to the updated object
+     * @returns A promise that resolves to the updated achievement
      */
     update(id: string, updates: JsonPatch[], userOpts?: any): Promise<Achievement>;
     /**

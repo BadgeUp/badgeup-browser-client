@@ -41,7 +41,7 @@ export class Common<T> {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    *getIterator(userOpts?): IterableIterator<Promise<T>> {
+    *getIterator(userOpts?): IterableIterator<Promise<T | undefined>> {
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
         let url = `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
@@ -106,7 +106,7 @@ export class Common<T> {
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to the provided object
      */
-    create<K = T>(object: any, userOpts?): Promise<K> {
+    create<K = T>(object: Object, userOpts?): Promise<K> {
         check.assert.object(object, 'object must be an object');
 
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });

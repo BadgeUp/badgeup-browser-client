@@ -1,20 +1,18 @@
 import { Progress } from '../progress/Progress.class';
+import { Data } from '../common.class';
+
+const DEFAULT_EVENT_MODIFIER = { '@inc': 1 };
 
 export interface EventRequest {
-    data?: any;
     key: string;
     modifier: EventModifier;
-    options?: EventOptions;
     subject: string;
+    options?: EventOptions;
     timestamp?: Date;
+    data?: Data;
 }
 
 export class EventRequest implements EventRequest {
-    /**
-     * Arbitrary data that can be included to assist with achievement criteria evaluation.
-     */
-    data?: any;
-
     /**
      * The metric key that will be modified as a result of this event.
      */
@@ -40,7 +38,12 @@ export class EventRequest implements EventRequest {
      */
     timestamp?: Date;
 
-    constructor(subject: string, key: string, modifier: EventModifier = {}, options?: EventOptions) {
+    /**
+     * Arbitrary data that can be included to assist with achievement criteria evaluation.
+     */
+    data?: Data;
+
+    constructor(subject: string, key: string, modifier: EventModifier = DEFAULT_EVENT_MODIFIER, options?: EventOptions) {
         this.subject = subject;
         this.key = key;
         this.modifier = modifier;
@@ -85,7 +88,7 @@ export interface EventBase extends EventRequest {
  * BadgeUp Event response
  */
 export class Event extends EventRequest implements EventBase {
-    constructor(public id: string, public applicationId: string, subject: string, key: string, modifier: EventModifier = {}, options?: EventOptions) {
+    constructor(public id: string, public applicationId: string, subject: string, key: string, modifier: EventModifier = DEFAULT_EVENT_MODIFIER, options?: EventOptions) {
         super(subject, key, modifier, options);
     }
     public static fromSource(source: EventBase): Event {
@@ -94,10 +97,15 @@ export class Event extends EventRequest implements EventBase {
 }
 
 /**
+ * Event modifier object keys (use one)
+ */
+export type EventModifierKeys =  '@inc' | '@dec' | '@mult' | '@div' | '@set' | '@min' | '@max';
+
+/**
  * Describes how an event modifies a subjects' metric
  */
-export interface EventModifier {
-    [key: string]: number;
+export type EventModifier = {
+    [T in EventModifierKeys]?: number;
 }
 
 /**

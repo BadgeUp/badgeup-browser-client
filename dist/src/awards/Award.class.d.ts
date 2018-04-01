@@ -1,4 +1,5 @@
 import { Meta } from '../utils/Meta.class';
+import { Data } from '../common.class';
 export interface Award {
     /**
      * A string that uniquely identifies this award.
@@ -19,7 +20,7 @@ export interface Award {
     /**
      * Arbitrary data defining the award. You should populate this with data your application can use to identify what action to perform.
      */
-    data: any;
+    data: Data;
     /**
      * Meta information object. Custom fields may be added.
      */

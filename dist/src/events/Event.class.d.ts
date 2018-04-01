@@ -1,17 +1,14 @@
 import { Progress } from '../progress/Progress.class';
+import { Data } from '../common.class';
 export interface EventRequest {
-    data?: any;
     key: string;
     modifier: EventModifier;
-    options?: EventOptions;
     subject: string;
+    options?: EventOptions;
     timestamp?: Date;
+    data?: Data;
 }
 export declare class EventRequest implements EventRequest {
-    /**
-     * Arbitrary data that can be included to assist with achievement criteria evaluation.
-     */
-    data?: any;
     /**
      * The metric key that will be modified as a result of this event.
      */
@@ -32,6 +29,10 @@ export declare class EventRequest implements EventRequest {
      * Event creation date/time string, represented in the ISO 8601 format. Timezones may be expressed with UTC offsets.
      */
     timestamp?: Date;
+    /**
+     * Arbitrary data that can be included to assist with achievement criteria evaluation.
+     */
+    data?: Data;
     constructor(subject: string, key: string, modifier?: EventModifier, options?: EventOptions);
     /**
      * Retrieves the event's modifier key
@@ -40,7 +41,7 @@ export declare class EventRequest implements EventRequest {
     /**
      * Retrieves the event's modifier value
      */
-    readonly modifierValue: number;
+    readonly modifierValue: any;
     /**
      * States if this event is set to be discarded (not persisted long-term)
      */
@@ -66,11 +67,15 @@ export declare class Event extends EventRequest implements EventBase {
     static fromSource(source: EventBase): Event;
 }
 /**
+ * Event modifier object keys (use one)
+ */
+export declare type EventModifierKeys = '@inc' | '@dec' | '@mult' | '@div' | '@set' | '@min' | '@max';
+/**
  * Describes how an event modifies a subjects' metric
  */
-export interface EventModifier {
-    [key: string]: number;
-}
+export declare type EventModifier = {
+    [T in EventModifierKeys]?: number;
+};
 /**
  * Options that affect the state and operability of an event.
  */

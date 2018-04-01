@@ -40,7 +40,7 @@ export declare class EarnedAchievementQueryBuilder {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getIterator(userOpts: any): IterableIterator<Promise<EarnedAchievement>>;
+    getIterator(userOpts: any): IterableIterator<Promise<EarnedAchievement | undefined>>;
     /**
      * Delete all queried earned achievements
      * @param userOpts option overrides for this request
@@ -71,7 +71,7 @@ export declare class EarnedAchievementsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next achievement
      */
-    getIterator(userOpts?: any): IterableIterator<Promise<EarnedAchievement>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<EarnedAchievement | undefined>>;
     /**
      * Retrieve all earned achievements, returned as an array
      * @param userOpts option overrides for this request

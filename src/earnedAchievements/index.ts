@@ -108,14 +108,14 @@ export class EarnedAchievementQueryBuilder {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    *getIterator(userOpts): IterableIterator<Promise<EarnedAchievement>> {
+    *getIterator(userOpts): IterableIterator<Promise<EarnedAchievement | undefined>> {
         const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
         const queryPart = this.buildQuery(queryBy);
 
         const context = this.context;
-        function pageFn(): () => Promise<PaginatedData> {
+        function pageFn(): () => Promise<PaginatedData<EarnedAchievement>> {
             let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
-            return function(): Promise<PaginatedData> {
+            return function(): Promise<PaginatedData<EarnedAchievement>> {
                 return context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;
                     return body;
@@ -174,7 +174,7 @@ export class EarnedAchievementsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next achievement
      */
-    public getIterator(userOpts?): IterableIterator<Promise<EarnedAchievement>> {
+    public getIterator(userOpts?): IterableIterator<Promise<EarnedAchievement | undefined>> {
         return this.common.getIterator(userOpts);
     }
 
