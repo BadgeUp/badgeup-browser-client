@@ -1,5 +1,6 @@
 import { ResourceContext } from '../utils/ResourceContext';
 import { BadgeUpApplication, BadgeUpApplicationRequest } from './Application.class';
+import { JsonPatch } from '../utils/JsonPatch.class';
 /**
  * Applications resource
  */
@@ -24,7 +25,7 @@ export declare class ApplicationsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to the updated application
      */
-    update(id: string, updates: any, userOpts?: any): Promise<BadgeUpApplication>;
+    update(id: string, updates: JsonPatch[], userOpts?: any): Promise<BadgeUpApplication>;
     /**
      * Delete an application
      * @param id ID of the application to be updated

@@ -1,6 +1,7 @@
 import { Common } from '../common';
 import { ResourceContext } from '../utils/ResourceContext';
 import { ApiKey, ApiKeyScope } from './ApiKey.class';
+import { JsonPatch } from '../utils/JsonPatch.class';
 
 const ENDPT = 'apikeys';
 
@@ -45,7 +46,7 @@ export class ApiKeysResource {
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to the updated API Key
      */
-    update(id: string, updates: any[], userOpts?): Promise<ApiKey> {
+    update(id: string, updates: JsonPatch[], userOpts?): Promise<ApiKey> {
         return this.common.update(id, updates, userOpts);
     }
 

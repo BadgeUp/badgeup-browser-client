@@ -2,6 +2,7 @@ import * as check from 'check-types';
 import { ResourceContext } from '../utils/ResourceContext';
 import { pageToGenerator } from './../utils/pageToGenerator';
 import { BadgeUpApplication, BadgeUpApplicationRequest } from './Application.class';
+import { JsonPatch } from '../utils/JsonPatch.class';
 
 const ENDPT = 'apps';
 
@@ -42,7 +43,7 @@ export class ApplicationsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to the updated application
      */
-    public update(id: string, updates: any, userOpts?): Promise<BadgeUpApplication> {
+    public update(id: string, updates: JsonPatch[], userOpts?): Promise<BadgeUpApplication> {
         check.assert.string(id, 'id must be a string');
         check.assert.array(updates, 'updates must be an array');
 

@@ -1,5 +1,6 @@
 import { ResourceContext } from '../utils/ResourceContext';
 import { ApiKey, ApiKeyScope } from './ApiKey.class';
+import { JsonPatch } from '../utils/JsonPatch.class';
 /**
  * API Keys resource
  */
@@ -30,7 +31,7 @@ export declare class ApiKeysResource {
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to the updated API Key
      */
-    update(id: string, updates: any[], userOpts?: any): Promise<ApiKey>;
+    update(id: string, updates: JsonPatch[], userOpts?: any): Promise<ApiKey>;
     /**
      * Create an API Key
      * @param apiKey API Key to create
