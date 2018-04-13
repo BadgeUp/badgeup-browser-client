@@ -50,7 +50,7 @@ export class MetricQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an object stating the number of deleted metrics
      */
-    remove(userOpts?: Object) {
+    remove(userOpts?) {
         const queryBy = collectQueryParams(this._params, DELETE_QUERY_PARAMS);
 
         if (Object.keys(queryBy).length === 0) {
@@ -112,7 +112,7 @@ export class MetricsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a list of metrics
      */
-    public getAllSubjectMetrics(subject: string, userOpts?: Object): Promise<Metric[]> {
+    public getAllSubjectMetrics(subject: string, userOpts?): Promise<Metric[]> {
         check.assert.string(subject, 'subject must be a string');
 
         let array = [];
@@ -140,7 +140,7 @@ export class MetricsResource {
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    public *getSubjectMetricsIterator(subject: string, userOpts?: Object): IterableIterator<Promise<Metric | undefined>> {
+    public *getSubjectMetricsIterator(subject: string, userOpts?): IterableIterator<Promise<Metric | undefined>> {
         check.assert.string(subject, 'subject must be a string');
 
         const pageFn = () => {
@@ -163,7 +163,7 @@ export class MetricsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a single metric
      */
-    public getIndividualSubjectMetric(subject: string, key: string, userOpts?: Object): Promise<Metric> {
+    public getIndividualSubjectMetric(subject: string, key: string, userOpts?): Promise<Metric> {
         check.assert.string(subject, 'subject must be a string');
         check.assert.string(key, 'key must be a string');
 

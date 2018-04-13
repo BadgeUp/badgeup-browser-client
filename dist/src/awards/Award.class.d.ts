@@ -1,5 +1,5 @@
-import { Meta } from '../utils/Meta.class';
 import { Data } from '../common.class';
+import { Meta } from '../utils/Meta.class';
 export interface Award {
     /**
      * A string that uniquely identifies this award.

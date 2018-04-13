@@ -1,5 +1,5 @@
-import { Progress } from '../progress/Progress.class';
 import { Data } from '../common.class';
+import { Progress } from '../progress/Progress.class';
 export interface EventRequest {
     key: string;
     modifier: EventModifier;

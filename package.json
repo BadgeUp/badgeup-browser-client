@@ -11,7 +11,7 @@
     "dev": "tsc -w",
     "test": "mocha --require ts-node/register --recursive spec/*.spec.* && npm run lint",
     "build": "tsc",
-    "lint": "tslint -c tslint.yml 'src/**/*.ts spec/**/*.ts'"
+    "lint": "tslint -c tslint.yml 'src/**/*.ts' 'spec/**/*.ts'"
   },
   "author": "Mark Herhold <mark@badgeup.io>",
   "repository": {

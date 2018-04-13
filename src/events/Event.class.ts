@@ -1,5 +1,5 @@
-import { Progress } from '../progress/Progress.class';
 import { Data } from '../common.class';
+import { Progress } from '../progress/Progress.class';
 
 const DEFAULT_EVENT_MODIFIER = { '@inc': 1 };
 
@@ -106,7 +106,7 @@ export type EventModifierKeys =  '@inc' | '@dec' | '@mult' | '@div' | '@set' | '
  */
 export type EventModifier = {
     [T in EventModifierKeys]?: number;
-}
+};
 
 /**
  * Options that affect the state and operability of an event.

@@ -1,7 +1,7 @@
 import { Common } from '../common';
+import { JsonPatch } from '../utils/JsonPatch.class';
 import { ResourceContext } from '../utils/ResourceContext';
 import { ApiKey, ApiKeyScope } from './ApiKey.class';
-import { JsonPatch } from '../utils/JsonPatch.class';
 
 const ENDPT = 'apikeys';
 

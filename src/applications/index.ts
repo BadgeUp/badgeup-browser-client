@@ -1,8 +1,8 @@
 import * as check from 'check-types';
+import { JsonPatch } from '../utils/JsonPatch.class';
 import { ResourceContext } from '../utils/ResourceContext';
 import { pageToGenerator } from './../utils/pageToGenerator';
 import { BadgeUpApplication, BadgeUpApplicationRequest } from './Application.class';
-import { JsonPatch } from '../utils/JsonPatch.class';
 
 const ENDPT = 'apps';
 

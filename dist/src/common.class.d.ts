@@ -1,6 +1,6 @@
 /**
  * plain object for arbitrary data
  */
-export declare type Data = {
+export interface Data {
     [key: string]: any;
-};
+}

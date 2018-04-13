@@ -83,7 +83,7 @@ function hydrateDates(body) {
     }
     if (Array.isArray(body.data)) {
         // paginated response
-        for (let item of body.data) {
+        for (const item of body.data) {
             hydrateMeta(item);
         }
     }

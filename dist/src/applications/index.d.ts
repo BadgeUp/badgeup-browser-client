@@ -1,6 +1,6 @@
+import { JsonPatch } from '../utils/JsonPatch.class';
 import { ResourceContext } from '../utils/ResourceContext';
 import { BadgeUpApplication, BadgeUpApplicationRequest } from './Application.class';
-import { JsonPatch } from '../utils/JsonPatch.class';
 /**
  * Applications resource
  */

@@ -23,7 +23,7 @@ export declare class MetricQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an object stating the number of deleted metrics
      */
-    remove(userOpts?: Object): Promise<any>;
+    remove(userOpts?: any): Promise<any>;
 }
 /**
  * Metrics module
@@ -58,14 +58,14 @@ export declare class MetricsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a list of metrics
      */
-    getAllSubjectMetrics(subject: string, userOpts?: Object): Promise<Metric[]>;
+    getAllSubjectMetrics(subject: string, userOpts?: any): Promise<Metric[]>;
     /**
      * Retrieves metrics for a subject, returned as an iterator
      * @param subject subject to retrieve the metrics for
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getSubjectMetricsIterator(subject: string, userOpts?: Object): IterableIterator<Promise<Metric | undefined>>;
+    getSubjectMetricsIterator(subject: string, userOpts?: any): IterableIterator<Promise<Metric | undefined>>;
     /**
      * Retrieves a single metric for a subject by key
      * @param subject subject to retrieve the metric for
@@ -73,7 +73,7 @@ export declare class MetricsResource {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a single metric
      */
-    getIndividualSubjectMetric(subject: string, key: string, userOpts?: Object): Promise<Metric>;
+    getIndividualSubjectMetric(subject: string, key: string, userOpts?: any): Promise<Metric>;
     /**
      * Sets up a delete/get request targeting metrics using query filters
      * @returns Returns an instance of the EventQueryBuilder class
