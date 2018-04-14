@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 
 ### Changed
+## [1.0.1] - 2018-04-14
+### Changed
+- Type updates/fixes
+- Retry HTTP requests
+
+### Changed
 ## [1.0.0] - 2018-03-31
 ### Changed
 - TypeScript implementation. Minor breaking changes.
