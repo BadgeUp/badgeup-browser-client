@@ -49,7 +49,7 @@ describe('events', function() {
         expect(result).to.eql(event);
     });
 
-    it('should create an event', function*() {
+    it('should create an event', async function() {
         const event = generateFakeEvent();
         function _payload() {
             return event;
@@ -59,15 +59,15 @@ describe('events', function() {
             expect(options.url).to.equal('/v1/apps/1337/events');
             expect(options.method).to.equal('POST');
             expect(options.headers).to.be.an('object');
-            expect(options.headers['X-V2-PREVIEW']).to.equal(true);
+            expect(options.headers['X-V2-PREVIEW']).to.equal('true');
         }
 
-        const result = yield bup.events.createV2Preview(event, { _payload, _validate });
+        const result = await bup.events.createV2Preview(event, { _payload, _validate });
 
         expect(result).to.eql(event);
     });
 
-    it('should create an event with the showIncomplete query parameter', function*() {
+    it('should create an event with the showIncomplete query parameter', async function() {
         const event = generateFakeEvent();
         function _payload() {
             return event;
@@ -77,11 +77,11 @@ describe('events', function() {
             expect(options.url).to.equal('/v1/apps/1337/events?showIncomplete=true');
             expect(options.method).to.equal('POST');
             expect(options.headers).to.be.an('object');
-            expect(options.headers['X-V2-PREVIEW']).to.equal(true);
+            expect(options.headers['X-V2-PREVIEW']).to.equal('true');
         }
 
         const query = { showIncomplete: true };
-        const result = yield bup.events.createV2Preview(event, { query, _payload, _validate });
+        const result = await bup.events.createV2Preview(event, { query, _payload, _validate });
 
         expect(result).to.eql(event);
     });

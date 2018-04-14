@@ -29,8 +29,42 @@ describe('criterion', function () {
         const result = await bup.criteria.get(criterion.id, { _payload, _validate });
         chai_1.expect(result).to.be.an('object');
     });
-    xit('should get all criteria', function () {
-        // TODO
+    it('should get all criteria', async function () {
+        const criterion = generateFakeCriterion();
+        function _payload(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                // last page of date
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: null
+                    },
+                    data: (new Array(10)).fill(criterion)
+                });
+            }
+            else {
+                // first page of data
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: '/v1/apps/1337/criteria?after=PAGE_TWO'
+                    },
+                    data: (new Array(10)).fill(criterion)
+                });
+            }
+        }
+        function _validate(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                chai_1.expect(options.url).to.equal('/v1/apps/1337/criteria?after=PAGE_TWO');
+            }
+            else {
+                chai_1.expect(options.url).to.equal('/v1/apps/1337/criteria');
+            }
+            chai_1.expect(options.headers).to.be.an('object');
+        }
+        const criteria = await bup.criteria.getAll({ _payload, _validate });
+        // total number of criteria
+        chai_1.expect(criteria.length).to.equal(20);
     });
     it('should create a criterion', async function () {
         const criterion = generateFakeCriterion();

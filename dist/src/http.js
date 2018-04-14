@@ -2,7 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = require("lodash");
 const node_fetch_1 = require("node-fetch");
+const pRetry = require("p-retry");
 const dateStringify_1 = require("./utils/dateStringify");
+// number of retries to be attmpted in case of http errors
+const RETRY_COUNT = 3;
 // client library defaults
 const requestDefaults = {
     timeout: 15000,
@@ -53,7 +56,7 @@ class BadgeUpHttp {
         url = options.baseUrl ? options.baseUrl + url : url;
         delete options.baseUrl;
         delete options.url;
-        return node_fetch_1.default(url, options)
+        return fetchWithRetry(url, options)
             .then(response => {
             if (!response.ok) {
                 const err = new Error(response.statusText);
@@ -64,6 +67,24 @@ class BadgeUpHttp {
     }
 }
 exports.BadgeUpHttp = BadgeUpHttp;
+/**
+ * Performs fetch with retries in case of HTTP errors
+ * @param url request url
+ * @param options request options
+ * @returns Returns a Promise that resolves with the response object
+ */
+function fetchWithRetry(url, options) {
+    function fetchWrapper() {
+        return node_fetch_1.default(url, options).then((response) => {
+            // don't retry if status is 4xx
+            if (response.status >= 400 && response.status < 500) {
+                throw new pRetry.AbortError(response.statusText);
+            }
+            return response;
+        });
+    }
+    return pRetry(fetchWrapper, { retries: RETRY_COUNT });
+}
 /**
  * Hydrates dates in response bodies. Handles paginated responses and object responses.
  * Mutates input.

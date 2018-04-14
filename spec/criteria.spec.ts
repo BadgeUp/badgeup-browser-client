@@ -33,8 +33,44 @@ describe('criterion', function() {
         expect(result).to.be.an('object');
     });
 
-    xit('should get all criteria', function() {
-        // TODO
+    it('should get all criteria', async function() {
+        const criterion = generateFakeCriterion();
+        function _payload(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                // last page of date
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: null
+                    },
+                    data: (new Array(10)).fill(criterion)
+                });
+            } else {
+                // first page of data
+                return Promise.resolve({
+                    pages: {
+                        previous: null,
+                        next: '/v1/apps/1337/criteria?after=PAGE_TWO'
+                    },
+                    data: (new Array(10)).fill(criterion)
+                });
+            }
+        }
+
+        function _validate(options) {
+            if (options.url.indexOf('PAGE_TWO') > 0) {
+                expect(options.url).to.equal('/v1/apps/1337/criteria?after=PAGE_TWO');
+            } else {
+                expect(options.url).to.equal('/v1/apps/1337/criteria');
+            }
+            expect(options.headers).to.be.an('object');
+        }
+
+        const criteria = await bup.criteria.getAll({ _payload, _validate });
+
+        // total number of criteria
+        expect(criteria.length).to.equal(20);
+
     });
 
     it('should create a criterion', async function() {

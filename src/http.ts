@@ -1,6 +1,10 @@
 import { defaultsDeep } from 'lodash';
-import fetch from 'node-fetch';
+import fetch, { Response } from 'node-fetch';
+import * as pRetry from 'p-retry';
 import { replacer } from './utils/dateStringify';
+
+// number of retries to be attmpted in case of http errors
+const RETRY_COUNT = 3;
 
 // client library defaults
 const requestDefaults = {
@@ -65,7 +69,7 @@ export class BadgeUpHttp {
         delete options.baseUrl;
         delete options.url;
 
-        return fetch(url, options)
+        return fetchWithRetry(url, options)
             .then(response => {
                 if (!response.ok) {
                     const err = new Error(response.statusText);
@@ -74,6 +78,27 @@ export class BadgeUpHttp {
                 return response.json().then(hydrateDates);
             });
     }
+}
+
+/**
+ * Performs fetch with retries in case of HTTP errors
+ * @param url request url
+ * @param options request options
+ * @returns Returns a Promise that resolves with the response object
+ */
+function fetchWithRetry(url: string, options) {
+    function fetchWrapper(): Promise<Response> {
+        return fetch(url, options).then((response: Response) => {
+            // don't retry if status is 4xx
+            if (response.status >= 400 && response.status < 500) {
+                throw new pRetry.AbortError(response.statusText);
+            }
+
+            return response;
+        });
+    }
+
+    return pRetry(fetchWrapper, { retries: RETRY_COUNT });
 }
 
 /**
