@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-  - "9" # Node.js 9
+  - "10" # Node.js 10 (dubnium)
   - "--lts=carbon" # Node.js 8 latest
   - "--lts=boron" # Node.js v6 latest
 before_install:
-  - npm i -g npm@5.8.0
+  - npm i -g npm@6.1.0
 
 # See Node.js releases: https://nodejs.org/en/download/releases/
