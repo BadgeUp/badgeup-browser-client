@@ -27,7 +27,7 @@ class BadgeUp {
         // these fields are required
         check.assert.object(globalOpts, 'You must provide an options object. Please see the documentation.');
         if (!globalOpts.apiKey && !globalOpts.token) {
-            throw new Error('Either globalOpts.apiKey or globalOpts.token must be an string');
+            throw new Error('Either globalOpts.apiKey or globalOpts.token must be a string');
         }
         // ensure the request options are an object if not defined
         globalOpts.request = lodash_1.defaultsDeep({}, globalOpts.request);
