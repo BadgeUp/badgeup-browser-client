@@ -3,6 +3,7 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+const abab_1 = require("abab");
 const check = require("check-types");
 const lodash_1 = require("lodash");
 const achievementIcons_1 = require("./achievementIcons");
@@ -42,7 +43,7 @@ class BadgeUp {
         else if (globalOpts.apiKey) { // BadgeUp APIKey
             let applicationId;
             try {
-                applicationId = JSON.parse(Buffer.from(globalOpts.apiKey, 'base64').toString('utf8')).applicationId;
+                applicationId = JSON.parse(abab_1.atob(globalOpts.apiKey)).applicationId;
                 if (!applicationId) {
                     throw new Error('applicationId not present');
                 }
@@ -57,7 +58,7 @@ class BadgeUp {
                     throw error;
                 }
             }
-            globalOpts.request.headers.authorization = 'Basic ' + Buffer.from(globalOpts.apiKey + ':', 'ascii').toString('base64');
+            globalOpts.request.headers.authorization = 'Basic ' + abab_1.btoa(globalOpts.apiKey + ':');
         }
         this.http = new http_1.BadgeUpHttp(globalOpts.request);
         this.applications = new applications_1.ApplicationsResource(this);

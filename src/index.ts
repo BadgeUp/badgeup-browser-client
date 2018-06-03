@@ -1,3 +1,4 @@
+import { atob, btoa } from 'abab';
 import * as check from 'check-types';
 import { defaultsDeep } from 'lodash';
 import { AchievementIconsResource } from './achievementIcons';
@@ -60,7 +61,7 @@ export class BadgeUp implements ResourceContext {
             let applicationId;
 
             try {
-                applicationId = JSON.parse(Buffer.from(globalOpts.apiKey, 'base64').toString('utf8')).applicationId;
+                applicationId = JSON.parse(atob(globalOpts.apiKey)).applicationId;
                 if (!applicationId) {
                     throw new Error('applicationId not present');
                 }
@@ -74,7 +75,7 @@ export class BadgeUp implements ResourceContext {
                 }
             }
 
-            globalOpts.request!.headers!.authorization = 'Basic ' + Buffer.from(globalOpts.apiKey + ':', 'ascii').toString('base64');
+            globalOpts.request!.headers!.authorization = 'Basic ' + btoa(globalOpts.apiKey + ':');
         }
 
         this.http = new BadgeUpHttp(globalOpts.request);
@@ -138,4 +139,3 @@ export * from './metrics/Metric.class';
 export * from './progress/Progress.class';
 export * from './utils/Meta.class';
 export * from './utils/JsonPatch.class';
-

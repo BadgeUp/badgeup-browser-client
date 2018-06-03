@@ -20,6 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "abab": "2.0.0",
     "check-types": "^7.1.5",
     "lodash": "^4.17.5",
     "node-fetch": "^2.1.2",
