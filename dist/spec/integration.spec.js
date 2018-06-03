@@ -238,5 +238,22 @@ describe('integration tests', function () {
             chai_1.expect(e.event.subject).to.be.a('string');
         });
     });
+    it('should get achievement progress for a subject', async function () {
+        const client = new src_1.BadgeUp({ apiKey: INTEGRATION_API_KEY });
+        const rand = Math.floor(Math.random() * 100000);
+        const subject = 'nodejs-ci-' + rand;
+        const key = 'test';
+        const eventRequest = new src_1.EventRequest(subject, key, { '@inc': 5 });
+        const eventResponse = await client.events.create(eventRequest);
+        chai_1.expect(eventResponse).to.be.an('object'); // other tests check event response results
+        const progressResponse = await client.progress.query().subject(subject).getAll();
+        chai_1.expect(progressResponse).to.be.an('array');
+        chai_1.expect(progressResponse.length).to.be.gte(1);
+        chai_1.expect(progressResponse[0].isComplete).to.be.a('boolean');
+        chai_1.expect(progressResponse[0].percentComplete).to.be.a('number');
+        chai_1.expect(progressResponse[0].progressTree).to.be.an('object');
+        chai_1.expect(progressResponse[0].achievementId).to.be.a('string');
+        chai_1.expect(progressResponse[0].earnedAchievementId).to.be.a('string');
+    });
 });
 //# sourceMappingURL=integration.spec.js.map

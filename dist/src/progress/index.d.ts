@@ -19,7 +19,7 @@ export declare class ProgressQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an array of progress objects
      */
-    getAll(userOpts?: any): Promise<Progress>;
+    getAll(userOpts?: any): Promise<Progress[]>;
     /**
      * Retrieve all queried progress objects, returned as an iterator
      * @param userOpts option overrides for this request

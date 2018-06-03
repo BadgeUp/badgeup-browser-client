@@ -45,7 +45,7 @@ export class ProgressQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an array of progress objects
      */
-    getAll(userOpts?): Promise<Progress> {
+    getAll(userOpts?): Promise<Progress[]> {
         if (!this.params.subject) {
             throw new Error('subject must be provided');
         }
