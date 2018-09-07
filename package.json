@@ -45,5 +45,15 @@
   "files": [
     "src",
     "dist/src"
+  ],
+  "keywords": [
+    "badgeup",
+    "sass",
+    "achievements",
+    "awards",
+    "engagement",
+    "gamification",
+    "javascript",
+    "nodejs"
   ]
 }
