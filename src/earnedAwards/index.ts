@@ -5,13 +5,13 @@ import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator, PaginatedData } from '../utils/pageToGenerator';
 import { QueryParameters } from '../utils/QueryBuilder';
 import { ResourceContext } from '../utils/ResourceContext';
-import { EarnedAchievement } from './EarnedAchievement.class';
+import { EarnedAward } from './EarnedAward.class';
 
-const ENDPT = 'earnedachievements';
+const ENDPT = 'earnedawards';
 
-const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'since', 'until'];
+const AVAILABLE_QUERY_PARAMS = ['subject', 'awardId', 'earnedAchievementId', 'since', 'until'];
 
-export class EarnedAchievementQueryBuilder {
+export class EarnedAwardQueryBuilder {
 
     context: ResourceContext;
 
@@ -23,12 +23,22 @@ export class EarnedAchievementQueryBuilder {
     }
 
     /**
-     * Query by achievement ID
-     * @param achievementId
+     * Query by award ID
+     * @param awardId
      */
-    achievementId(achievementId: string): EarnedAchievementQueryBuilder {
-        check.assert.string(achievementId, 'achievementId must be a string');
-        this.params.achievementId = achievementId;
+    awardId(awardId: string): EarnedAwardQueryBuilder {
+        check.assert.string(awardId, 'awardId must be a string');
+        this.params.awardId = awardId;
+        return this;
+    }
+
+    /**
+     * Query by earned achievement ID
+     * @param earnedAchievementId
+     */
+    earnedAchievementId(earnedAchievementId: string): EarnedAwardQueryBuilder {
+        check.assert.string(earnedAchievementId, 'earnedAchievementId must be a string');
+        this.params.earnedAchievementId = earnedAchievementId;
         return this;
     }
 
@@ -36,7 +46,7 @@ export class EarnedAchievementQueryBuilder {
      * Query by subject
      * @param subject
      */
-    subject(subject: string): EarnedAchievementQueryBuilder {
+    subject(subject: string): EarnedAwardQueryBuilder {
         check.assert.string(subject, 'subject must be a string');
         this.params.subject = subject;
         return this;
@@ -46,7 +56,7 @@ export class EarnedAchievementQueryBuilder {
      * Query by starting date (find after)
      * @param {Date} since
      */
-    since(since: Date): EarnedAchievementQueryBuilder {
+    since(since: Date): EarnedAwardQueryBuilder {
         check.assert.date(since, 'since must be a date');
         this.params.since = since.toISOString();
         return this;
@@ -56,7 +66,7 @@ export class EarnedAchievementQueryBuilder {
      * Query by ending date (find before)
      * @param {Date} until
      */
-    until(until: Date): EarnedAchievementQueryBuilder {
+    until(until: Date): EarnedAwardQueryBuilder {
         check.assert.date(until, 'until must be a date');
         this.params.until = until.toISOString();
         return this;
@@ -68,18 +78,18 @@ export class EarnedAchievementQueryBuilder {
      */
     private buildQuery(queryBy: any): string {
         if (Object.keys(queryBy).length === 0) {
-            throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
+            throw new Error('You must specify at least ' + AVAILABLE_QUERY_PARAMS.map(item => `"${item}"`).join(', '));
         }
 
         return querystring.stringify(queryBy);
     }
 
     /**
-     * Retrieves queried earned achievements, returned as an array
+     * Retrieves queried earned awards, returned as an array
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a list of metrics
      */
-    getAll(userOpts): Promise<EarnedAchievement[]> {
+    getAll(userOpts): Promise<EarnedAward[]> {
         let array = [];
         const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
         const queryPart = this.buildQuery(queryBy);
@@ -87,7 +97,7 @@ export class EarnedAchievementQueryBuilder {
         const context = this.context;
         let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
 
-        function pageFn(): Promise<EarnedAchievement[]> {
+        function pageFn(): Promise<EarnedAward[]> {
             return context.http.makeRequest({ url }, userOpts).then(function(body) {
                 array = array.concat(body.data || []); // concatenate the new data
 
@@ -104,18 +114,18 @@ export class EarnedAchievementQueryBuilder {
     }
 
     /**
-     * Retrieves queried earned achievements, returned as an iterator
+     * Retrieves queried earned awards, returned as an iterator
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    *getIterator(userOpts): IterableIterator<Promise<EarnedAchievement | undefined>> {
+    *getIterator(userOpts): IterableIterator<Promise<EarnedAward | undefined>> {
         const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
         const queryPart = this.buildQuery(queryBy);
 
         const context = this.context;
-        function pageFn(): () => Promise<PaginatedData<EarnedAchievement>> {
+        function pageFn(): () => Promise<PaginatedData<EarnedAward>> {
             let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
-            return function(): Promise<PaginatedData<EarnedAchievement>> {
+            return function(): Promise<PaginatedData<EarnedAward>> {
                 return context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;
                     return body;
@@ -123,35 +133,20 @@ export class EarnedAchievementQueryBuilder {
             };
         }
 
-        yield* pageToGenerator<EarnedAchievement>(pageFn());
-    }
-
-    /**
-     * Delete all queried earned achievements
-     * @param userOpts option overrides for this request
-     * @returns Promise that resolves to an object stating the number of deleted earned achievements
-     */
-    remove(userOpts) {
-        const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
-
-        return this.context.http.makeRequest({
-            method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
-        }, userOpts);
+        yield* pageToGenerator<EarnedAward>(pageFn());
     }
 }
 
 /**
- * Earned Achievements resource
+ * Earned Awards resource
  */
-export class EarnedAchievementsResource {
+export class EarnedAwardsResource {
 
-    private common: Common<EarnedAchievement>;
+    private common: Common<EarnedAward>;
     private context: ResourceContext;
 
     /**
-     * Construct the earned achievements resource
+     * Construct the earned award resource
      * @param context The context to make requests as
      */
     constructor(context: ResourceContext) {
@@ -160,48 +155,38 @@ export class EarnedAchievementsResource {
     }
 
     /**
-     * Retrieve an achievement by ID
-     * @param id ID of the achievement to retrieve
+     * Retrieve an earned award by ID
+     * @param id ID of the earned award to retrieve
      * @param userOpts option overrides for this request
      * @returns Promise that resolves with the retrieved achievement
      */
-    public get(id: string, userOpts?): Promise<EarnedAchievement> {
+    public get(id: string, userOpts?): Promise<EarnedAward> {
         return this.common.get(id, userOpts);
     }
 
     /**
-     * Retrieve all earned achievements, returned as an iterator
+     * Retrieve all earned awards, returned as an iterator
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next achievement
      */
-    public getIterator(userOpts?): IterableIterator<Promise<EarnedAchievement | undefined>> {
+    public getIterator(userOpts?): IterableIterator<Promise<EarnedAward | undefined>> {
         return this.common.getIterator(userOpts);
     }
 
     /**
-     * Retrieve all earned achievements, returned as an array
+     * Retrieve all earned awards, returned as an array
      * @param userOpts option overrides for this request
-     * @returns Promise that resolves to an array of earned achievements
+     * @returns Promise that resolves to an array of earned awards
      */
-    public getAll(userOpts?): Promise<EarnedAchievement[]> {
+    public getAll(userOpts?): Promise<EarnedAward[]> {
         return this.common.getAll(userOpts);
     }
 
     /**
-     * Delete an earned achievement by ID
-     * @param id ID of the achievement to delete
-     * @param userOpts option overrides for this request
-     * @returns A promise that resolves to the deleted achievement
+     * Sets up a request targeting earned awards using query filters
+     * @returns Returns an instance of the EarnedAwardQueryBuilder class
      */
-    public remove(id: string, userOpts?): Promise<EarnedAchievement> {
-        return this.common.remove(id, userOpts);
-    }
-
-    /**
-     * Sets up a request targeting earned achievements using query filters
-     * @returns Returns an instance of the EarnedAchievementQueryBuilder class
-     */
-    public query(): EarnedAchievementQueryBuilder {
-        return new EarnedAchievementQueryBuilder(this.context);
+    public query(): EarnedAwardQueryBuilder {
+        return new EarnedAwardQueryBuilder(this.context);
     }
 }
