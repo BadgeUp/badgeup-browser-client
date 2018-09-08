@@ -5,6 +5,10 @@ import { Achievement, AchievementRequest, BadgeUp, Condition, CriterionType, Ear
 
 const INTEGRATION_API_KEY = process.env.INTEGRATION_API_KEY;
 
+function randomString() {
+    return Math.random().toString(36).slice(2);
+}
+
 describe('integration tests', function() {
     this.timeout(5000);
     before(function() {
@@ -193,8 +197,7 @@ describe('integration tests', function() {
     it('should send an event and get progress back', async function() {
         const client = new BadgeUp({ apiKey: INTEGRATION_API_KEY });
 
-        const rand = Math.floor(Math.random() * 100000);
-        const subject = 'nodejs-ci-' + rand;
+        const subject = 'nodejs-ci-' + randomString();
         const key = 'test';
 
         const eventRequest = new EventRequest(subject, key, { '@inc': 5 });
@@ -261,8 +264,7 @@ describe('integration tests', function() {
     it('should send an event and get progress back v2', async function() {
         const client = new BadgeUp({ apiKey: INTEGRATION_API_KEY });
 
-        const rand = Math.floor(Math.random() * 100000);
-        const subject = 'nodejs-ci-' + rand;
+        const subject = 'nodejs-ci-' + randomString();
         const key = 'test';
 
         const eventRequest = new EventRequest(subject, key, { '@inc': 5 });
@@ -284,8 +286,7 @@ describe('integration tests', function() {
     it('should get achievement progress for a subject', async function() {
         const client = new BadgeUp({ apiKey: INTEGRATION_API_KEY });
 
-        const rand = Math.floor(Math.random() * 100000);
-        const subject = 'nodejs-ci-' + rand;
+        const subject = 'nodejs-ci-' + randomString();
         const key = 'test';
 
         const eventRequest = new EventRequest(subject, key, { '@inc': 5 });

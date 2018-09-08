@@ -21,11 +21,11 @@
   "license": "MIT",
   "dependencies": {
     "abab": "2.0.0",
-    "check-types": "^7.1.5",
-    "lodash": "^4.17.5",
+    "check-types": "^7.4.0",
+    "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
-    "p-retry": "2.0.0",
-    "qs": "^6.5.1"
+    "p-retry": "^2.0.0",
+    "qs": "^6.5.2"
   },
   "devDependencies": {
     "@types/chai": "4.1.2",
