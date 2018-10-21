@@ -19,7 +19,7 @@ describe('metrics', function () {
             return metric;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/metrics/${metric.subject}/${metric.key}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/metrics/${metric.subject}/${metric.key}`);
             chai_1.expect(options.headers).to.be.an('object');
         }
         const result = await bup.metrics.getIndividualSubjectMetric(metric.subject, metric.key, { _payload, _validate });
@@ -43,7 +43,7 @@ describe('metrics', function () {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/metrics?after=PAGE_TWO'
+                        next: '/v2/apps/1337/metrics?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(fakeMetric)
                 });
@@ -51,10 +51,10 @@ describe('metrics', function () {
         }
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/metrics?after=PAGE_TWO');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/metrics?after=PAGE_TWO');
             }
             else {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/metrics');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/metrics');
             }
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -86,7 +86,7 @@ describe('metrics', function () {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/metrics?after=PAGE_TWO'
+                        next: '/v2/apps/1337/metrics?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(metric)
                 });
@@ -94,10 +94,10 @@ describe('metrics', function () {
         }
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/metrics?after=PAGE_TWO');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/metrics?after=PAGE_TWO');
             }
             else {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/metrics');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/metrics');
             }
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -111,7 +111,7 @@ describe('metrics', function () {
             return metric;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/metrics');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/metrics');
             chai_1.expect(options.method).to.equal('POST');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -124,7 +124,7 @@ describe('metrics', function () {
             return { count: 1 };
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }

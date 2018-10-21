@@ -24,7 +24,7 @@ class AnalyticsResource {
     eventsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/events/last-n-days?duration=${numDays}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/events/last-n-days?duration=${numDays}`
         }, userOpts);
     }
     /**
@@ -36,7 +36,7 @@ class AnalyticsResource {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         check.assert.string(subject, 'subject must be a string');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/events/last-n-days/subject/${subject}?duration=${numDays}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/events/last-n-days/subject/${subject}?duration=${numDays}`
         }, userOpts);
     }
     /**
@@ -47,7 +47,7 @@ class AnalyticsResource {
     subjectsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/subjects/last-n-days?duration=${numDays}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/subjects/last-n-days?duration=${numDays}`
         }, userOpts);
     }
     /**
@@ -58,7 +58,7 @@ class AnalyticsResource {
     newSubjectsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/subjects/new/last-n-days?duration=${numDays}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/subjects/new/last-n-days?duration=${numDays}`
         }, userOpts);
     }
     /**
@@ -69,7 +69,7 @@ class AnalyticsResource {
     earnedAchievementsLastNDays(numDays, userOpts) {
         check.assert(check.integer(numDays) && check.greater(numDays, 0), 'numDays must be a positive integer');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/earnedachievements/last-n-days?duration=${numDays}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/earnedachievements/last-n-days?duration=${numDays}`
         }, userOpts);
     }
     /**
@@ -79,7 +79,7 @@ class AnalyticsResource {
      */
     *getSubjectsSummaryIterator(userOpts) {
         const pageFn = () => {
-            let url = `/v1/apps/${this.context.applicationId}/${ENDPT}/subjects/summary`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}/subjects/summary`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;
@@ -96,7 +96,7 @@ class AnalyticsResource {
      */
     getAllMetricKeys(userOpts) {
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/metrics/keys`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/metrics/keys`
         }, userOpts).then(obj => obj.data);
     }
 }

@@ -40,7 +40,7 @@ describe('earned awards', function() {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/earnedawards/?after=PAGE_TWO'
+                        next: '/v2/apps/1337/earnedawards/?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(achievement)
                 });
@@ -49,9 +49,9 @@ describe('earned awards', function() {
 
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                expect(options.url).to.equal('/v1/apps/1337/earnedawards/?after=PAGE_TWO');
+                expect(options.url).to.equal('/v2/apps/1337/earnedawards/?after=PAGE_TWO');
             } else {
-                expect(options.url).to.equal('/v1/apps/1337/earnedawards');
+                expect(options.url).to.equal('/v2/apps/1337/earnedawards');
             }
             expect(options.headers).to.be.an('object');
         }
@@ -79,7 +79,7 @@ describe('earned awards', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedawards?subject=100`);
+            expect(options.url).to.equal(`/v2/apps/1337/earnedawards?subject=100`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }
@@ -99,7 +99,7 @@ describe('earned awards', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedawards?earnedAchievementId=100`);
+            expect(options.url).to.equal(`/v2/apps/1337/earnedawards?earnedAchievementId=100`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }
@@ -121,7 +121,7 @@ describe('earned awards', function() {
         const date = new Date();
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedawards?since=${encodeURIComponent(date.toISOString())}`);
+            expect(options.url).to.equal(`/v2/apps/1337/earnedawards?since=${encodeURIComponent(date.toISOString())}`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }
@@ -143,7 +143,7 @@ describe('earned awards', function() {
         const date = new Date();
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/earnedawards?until=${encodeURIComponent(date.toISOString())}`);
+            expect(options.url).to.equal(`/v2/apps/1337/earnedawards?until=${encodeURIComponent(date.toISOString())}`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }
@@ -166,7 +166,7 @@ describe('earned awards', function() {
         const until = new Date();
 
         function _validate(options) {
-            expect(options.url).to.equal('/v1/apps/1337/earnedawards?subject=100&'
+            expect(options.url).to.equal('/v2/apps/1337/earnedawards?subject=100&'
                 + `since=${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');

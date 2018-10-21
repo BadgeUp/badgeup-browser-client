@@ -69,15 +69,15 @@ export declare enum ICriterionOperator {
     greaterOrEqual = "@gte",
     less = "@lt",
     lessOrEqual = "@lte",
-    equal = "@eq",
+    equal = "@eq"
 }
 export declare enum CriterionType {
     standard = "standard",
-    timeseries = "timeseries",
+    timeseries = "timeseries"
 }
 export declare enum ICriterionTimeseriesPeriodUnits {
     minutes = "minutes",
     hours = "hours",
     days = "days",
-    weeks = "weeks",
+    weeks = "weeks"
 }

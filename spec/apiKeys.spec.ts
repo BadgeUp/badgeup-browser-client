@@ -20,7 +20,7 @@ describe('API Keys', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/apikeys/scopes`);
+            expect(options.url).to.equal(`/v2/apps/1337/apikeys/scopes`);
             expect(options.method).to.be.oneOf([undefined, 'GET']);
             expect(options.headers).to.be.an('object');
         }

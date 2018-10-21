@@ -47,7 +47,7 @@ class MetricQueryBuilder {
         }
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
         }, userOpts);
     }
 }
@@ -95,7 +95,7 @@ class MetricsResource {
     getAllSubjectMetrics(subject, userOpts) {
         check.assert.string(subject, 'subject must be a string');
         let array = [];
-        let url = `/v1/apps/${this.context.applicationId}/${ENDPT}/${subject}`;
+        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}/${subject}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatenate the new data
@@ -119,7 +119,7 @@ class MetricsResource {
     *getSubjectMetricsIterator(subject, userOpts) {
         check.assert.string(subject, 'subject must be a string');
         const pageFn = () => {
-            let url = `/v1/apps/${this.context.applicationId}/${ENDPT}/${subject}`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}/${subject}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;
@@ -140,7 +140,7 @@ class MetricsResource {
         check.assert.string(subject, 'subject must be a string');
         check.assert.string(key, 'key must be a string');
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/${subject}/${key}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/${subject}/${key}`
         }, userOpts);
     }
     /**

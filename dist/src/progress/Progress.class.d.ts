@@ -35,5 +35,5 @@ export interface ProgressTreeGroup {
 }
 export declare enum Condition {
     and = "AND",
-    or = "OR",
+    or = "OR"
 }

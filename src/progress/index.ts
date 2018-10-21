@@ -53,7 +53,7 @@ export class ProgressQueryBuilder {
         const queryBy = collectQueryParams(this.params, GET_QUERYPARAMS);
 
         let array = [];
-        let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
 
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -84,7 +84,7 @@ export class ProgressQueryBuilder {
         const queryBy = collectQueryParams(this.params, GET_QUERYPARAMS);
 
         const pageFn = () => {
-            let url = `/v1/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;

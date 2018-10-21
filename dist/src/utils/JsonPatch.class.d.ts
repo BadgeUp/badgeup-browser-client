@@ -9,5 +9,5 @@ export declare enum Operation {
     replace = "replace",
     copy = "copy",
     move = "move",
-    test = "test",
+    test = "test"
 }

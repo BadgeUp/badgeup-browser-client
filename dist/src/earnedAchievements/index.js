@@ -69,7 +69,7 @@ class EarnedAchievementQueryBuilder {
         const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
         const queryPart = this.buildQuery(queryBy);
         const context = this.context;
-        let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+        let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
         function pageFn() {
             return context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatenate the new data
@@ -94,7 +94,7 @@ class EarnedAchievementQueryBuilder {
         const queryPart = this.buildQuery(queryBy);
         const context = this.context;
         function pageFn() {
-            let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+            let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
             return function () {
                 return context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;
@@ -114,7 +114,7 @@ class EarnedAchievementQueryBuilder {
         const queryPart = this.buildQuery(queryBy);
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
         }, userOpts);
     }
 }
@@ -124,7 +124,7 @@ exports.EarnedAchievementQueryBuilder = EarnedAchievementQueryBuilder;
  */
 class EarnedAchievementsResource {
     /**
-     * Construct the achievements resource
+     * Construct the earned achievements resource
      * @param context The context to make requests as
      */
     constructor(context) {

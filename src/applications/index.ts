@@ -32,7 +32,7 @@ export class ApplicationsResource {
         return this.context.http.makeRequest({
             method: 'POST',
             body: object,
-            url: `/v1/${ENDPT}`
+            url: `/v2/${ENDPT}`
         }, userOpts);
     }
 
@@ -50,7 +50,7 @@ export class ApplicationsResource {
         return this.context.http.makeRequest({
             method: 'PATCH',
             body: updates,
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
 
@@ -65,7 +65,7 @@ export class ApplicationsResource {
 
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
 
@@ -79,7 +79,7 @@ export class ApplicationsResource {
         check.assert.string(id, 'id must be a string');
 
         return this.context.http.makeRequest({
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
 
@@ -90,7 +90,7 @@ export class ApplicationsResource {
      */
     public getAll(userOpts?): Promise<BadgeUpApplication[]> {
         let array = [];
-        let url = `/v1/${ENDPT}`;
+        let url = `/v2/${ENDPT}`;
 
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -115,7 +115,7 @@ export class ApplicationsResource {
      */
     public *getIterator(userOpts?): IterableIterator<Promise<BadgeUpApplication | undefined>> {
         const pageFn = () => {
-            let url = `/v1/${ENDPT}`;
+            let url = `/v2/${ENDPT}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;

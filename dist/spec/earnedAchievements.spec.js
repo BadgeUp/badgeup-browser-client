@@ -36,7 +36,7 @@ describe('earned achievements', function () {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/earnedachievements/?after=PAGE_TWO'
+                        next: '/v2/apps/1337/earnedachievements/?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(achievement)
                 });
@@ -44,10 +44,10 @@ describe('earned achievements', function () {
         }
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/earnedachievements/?after=PAGE_TWO');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/earnedachievements/?after=PAGE_TWO');
             }
             else {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/earnedachievements');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/earnedachievements');
             }
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -71,7 +71,7 @@ describe('earned achievements', function () {
             };
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?subject=100`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -88,7 +88,7 @@ describe('earned achievements', function () {
             };
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?achievementId=100`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?achievementId=100`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -106,7 +106,7 @@ describe('earned achievements', function () {
         }
         const date = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -124,7 +124,7 @@ describe('earned achievements', function () {
         }
         const date = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -143,7 +143,7 @@ describe('earned achievements', function () {
         const since = new Date();
         const until = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/earnedachievements?subject=100&achievementId=100&since='
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/earnedachievements?subject=100&achievementId=100&since='
                 + `${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
@@ -160,7 +160,7 @@ describe('earned achievements', function () {
             return { count: 5 };
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?subject=100`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?subject=100`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -171,7 +171,7 @@ describe('earned achievements', function () {
             return { count: 5 };
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?achievementId=100`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?achievementId=100`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -189,7 +189,7 @@ describe('earned achievements', function () {
         }
         const date = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?since=${encodeURIComponent(date.toISOString())}`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -207,7 +207,7 @@ describe('earned achievements', function () {
         }
         const date = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/earnedachievements?until=${encodeURIComponent(date.toISOString())}`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -220,7 +220,7 @@ describe('earned achievements', function () {
         const since = new Date();
         const until = new Date();
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/earnedachievements?subject=100&achievementId=100&since='
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/earnedachievements?subject=100&achievementId=100&since='
                 + `${encodeURIComponent(since.toISOString())}&until=${encodeURIComponent(until.toISOString())}`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');

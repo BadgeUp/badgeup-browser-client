@@ -93,22 +93,15 @@ export interface EventProgress extends Progress {
     isNew: boolean;
 }
 /**
- * Event response structure for the source event (API v1)
+ * Event response structure containing for the source or side-effect events
  */
-export interface EventV1 {
-    event: EventBase;
-    progress: EventProgress[];
+export interface EventResults {
+    results: EventResult[];
 }
 /**
- * Event response structure containing for the source or side-effect events (API v2)
+ * Event response structure containing results of a single event or side-effect
  */
-export interface EventV2Preview {
-    results: EventResultV2Preview[];
-}
-/**
- * Event response structure (API v2)
- */
-export interface EventResultV2Preview {
+export interface EventResult {
     event: EventBase;
     cause: string;
     progress: EventProgress[];

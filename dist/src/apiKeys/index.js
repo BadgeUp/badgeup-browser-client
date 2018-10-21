@@ -65,7 +65,7 @@ class ApiKeysResource {
      */
     listScopes(userOpts) {
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/scopes`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/scopes`
         }, userOpts).then((body) => body.data);
     }
 }

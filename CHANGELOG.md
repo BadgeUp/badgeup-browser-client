@@ -7,6 +7,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 
 ### Changed
+
+## [2.0.0] - 2018-09-08
+### Added
+- Added Earned Award support
+- Added Webhook management support
+
+### Changed
+- Renamed `events.createV2Preview()` to `events.create()`
+- Use BadgeUp API v2
+- Dependency updates
+
+## [1.0.3] - 2018-06-03
+### Changed
+- Progress type definition fix
+
+## [1.0.2] - 2018-06-02
+### Changed
+- Dependency updates
+
 ## [1.0.1] - 2018-04-14
 ### Changed
 - Type updates/fixes
@@ -38,7 +57,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added `since` and `until` filters for earned achievements
 
 ## [0.7.0] - 2017-04-23
-### Added
 
 ### Changed
 - Users no longer need to provide applicationId

@@ -95,7 +95,7 @@ export class EarnedAwardQueryBuilder {
         const queryPart = this.buildQuery(queryBy);
 
         const context = this.context;
-        let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+        let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
 
         function pageFn(): Promise<EarnedAward[]> {
             return context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -124,7 +124,7 @@ export class EarnedAwardQueryBuilder {
 
         const context = this.context;
         function pageFn(): () => Promise<PaginatedData<EarnedAward>> {
-            let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+            let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
             return function(): Promise<PaginatedData<EarnedAward>> {
                 return context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;

@@ -32,7 +32,7 @@ export class Common<T> {
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
 
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
 
@@ -43,7 +43,7 @@ export class Common<T> {
      */
     *getIterator(userOpts?): IterableIterator<Promise<T | undefined>> {
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
-        let url = `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`;
+        let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
                 url = body.pages.next;
@@ -62,7 +62,7 @@ export class Common<T> {
     getAll(userOpts?): Promise<T[]> {
         let array = [];
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
-        let url = `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`;
+        let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
 
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -96,7 +96,7 @@ export class Common<T> {
         return this.context.http.makeRequest({
             method: 'PATCH',
             body: updates,
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
 
@@ -114,7 +114,7 @@ export class Common<T> {
         return this.context.http.makeRequest({
             method: 'POST',
             body: object,
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`
         }, userOpts);
     }
 
@@ -131,7 +131,7 @@ export class Common<T> {
 
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
 }

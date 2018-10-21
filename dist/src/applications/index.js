@@ -25,7 +25,7 @@ class ApplicationsResource {
         return this.context.http.makeRequest({
             method: 'POST',
             body: object,
-            url: `/v1/${ENDPT}`
+            url: `/v2/${ENDPT}`
         }, userOpts);
     }
     /**
@@ -41,7 +41,7 @@ class ApplicationsResource {
         return this.context.http.makeRequest({
             method: 'PATCH',
             body: updates,
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
     /**
@@ -54,7 +54,7 @@ class ApplicationsResource {
         check.assert.string(id, 'id must be a string');
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
     /**
@@ -66,7 +66,7 @@ class ApplicationsResource {
     get(id, userOpts) {
         check.assert.string(id, 'id must be a string');
         return this.context.http.makeRequest({
-            url: `/v1/${ENDPT}/${id}`
+            url: `/v2/${ENDPT}/${id}`
         }, userOpts);
     }
     /**
@@ -76,7 +76,7 @@ class ApplicationsResource {
      */
     getAll(userOpts) {
         let array = [];
-        let url = `/v1/${ENDPT}`;
+        let url = `/v2/${ENDPT}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatenate the new data
@@ -98,7 +98,7 @@ class ApplicationsResource {
      */
     *getIterator(userOpts) {
         const pageFn = () => {
-            let url = `/v1/${ENDPT}`;
+            let url = `/v2/${ENDPT}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;

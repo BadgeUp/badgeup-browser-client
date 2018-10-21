@@ -15,7 +15,7 @@ describe('achievement icons', function () {
         }
         function _validate(options) {
             chai_1.expect(options.method).to.equal('GET');
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/achievementicons');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/achievementicons');
         }
         const results = await bup.achievementIcons.getAll({ _payload, _validate });
         chai_1.expect(results.length).to.equal(1);
@@ -29,7 +29,7 @@ describe('achievement icons', function () {
         }
         function _validate(options) {
             chai_1.expect(options.method).to.equal('DELETE');
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/achievementicons/myIcon.png');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/achievementicons/myIcon.png');
         }
         await bup.achievementIcons.remove('myIcon.png', { _payload, _validate });
     });

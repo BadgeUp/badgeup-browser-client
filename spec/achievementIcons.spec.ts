@@ -15,7 +15,7 @@ describe('achievement icons', function() {
 
         function _validate(options) {
             expect(options.method).to.equal('GET');
-            expect(options.url).to.equal('/v1/apps/1337/achievementicons');
+            expect(options.url).to.equal('/v2/apps/1337/achievementicons');
         }
 
         const results = await bup.achievementIcons.getAll({ _payload, _validate });
@@ -33,7 +33,7 @@ describe('achievement icons', function() {
 
         function _validate(options) {
             expect(options.method).to.equal('DELETE');
-            expect(options.url).to.equal('/v1/apps/1337/achievementicons/myIcon.png');
+            expect(options.url).to.equal('/v2/apps/1337/achievementicons/myIcon.png');
         }
 
         await bup.achievementIcons.remove('myIcon.png', { _payload, _validate });

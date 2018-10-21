@@ -93,7 +93,7 @@ export class AchievementsResource {
         check.assert.string(id, 'id must be a string');
 
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/${id}/criteria`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/${id}/criteria`
         }, userOpts).then(function(body) { return body.data as Criterion[]; });
     }
 
@@ -107,7 +107,7 @@ export class AchievementsResource {
         check.assert.string(id, 'id must be a string');
 
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}/${id}/awards`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/${id}/awards`
         }, userOpts).then((body) => {
             return body.data;
         });

@@ -20,7 +20,7 @@ describe('metrics', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/metrics/${metric.subject}/${metric.key}`);
+            expect(options.url).to.equal(`/v2/apps/1337/metrics/${metric.subject}/${metric.key}`);
             expect(options.headers).to.be.an('object');
         }
 
@@ -47,7 +47,7 @@ describe('metrics', function() {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/metrics?after=PAGE_TWO'
+                        next: '/v2/apps/1337/metrics?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(fakeMetric)
                 });
@@ -56,9 +56,9 @@ describe('metrics', function() {
 
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                expect(options.url).to.equal('/v1/apps/1337/metrics?after=PAGE_TWO');
+                expect(options.url).to.equal('/v2/apps/1337/metrics?after=PAGE_TWO');
             } else {
-                expect(options.url).to.equal('/v1/apps/1337/metrics');
+                expect(options.url).to.equal('/v2/apps/1337/metrics');
             }
             expect(options.headers).to.be.an('object');
         }
@@ -93,7 +93,7 @@ describe('metrics', function() {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/metrics?after=PAGE_TWO'
+                        next: '/v2/apps/1337/metrics?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(metric)
                 });
@@ -102,9 +102,9 @@ describe('metrics', function() {
 
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                expect(options.url).to.equal('/v1/apps/1337/metrics?after=PAGE_TWO');
+                expect(options.url).to.equal('/v2/apps/1337/metrics?after=PAGE_TWO');
             } else {
-                expect(options.url).to.equal('/v1/apps/1337/metrics');
+                expect(options.url).to.equal('/v2/apps/1337/metrics');
             }
             expect(options.headers).to.be.an('object');
         }
@@ -122,7 +122,7 @@ describe('metrics', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal('/v1/apps/1337/metrics');
+            expect(options.url).to.equal('/v2/apps/1337/metrics');
             expect(options.method).to.equal('POST');
             expect(options.headers).to.be.an('object');
         }
@@ -139,7 +139,7 @@ describe('metrics', function() {
         }
 
         function _validate(options) {
-            expect(options.url).to.equal(`/v1/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
+            expect(options.url).to.equal(`/v2/apps/1337/metrics?subject=${metric.subject}&key=${metric.key}`);
             expect(options.method).to.equal('DELETE');
             expect(options.headers).to.be.an('object');
         }

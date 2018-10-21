@@ -17,7 +17,7 @@ describe('API Keys', function () {
             return Promise.resolve(payload);
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/apikeys/scopes`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/apikeys/scopes`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }

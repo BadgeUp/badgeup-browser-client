@@ -19,7 +19,7 @@ describe('events', function () {
             return event;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/events');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/events');
             chai_1.expect(options.method).to.equal('POST');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -32,41 +32,12 @@ describe('events', function () {
             return event;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/events?showIncomplete=true');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/events?showIncomplete=true');
             chai_1.expect(options.method).to.equal('POST');
             chai_1.expect(options.headers).to.be.an('object');
         }
         const query = { showIncomplete: true };
         const result = await bup.events.create(event, { query, _payload, _validate });
-        chai_1.expect(result).to.eql(event);
-    });
-    it('should create an event', async function () {
-        const event = generateFakeEvent();
-        function _payload() {
-            return event;
-        }
-        function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/events');
-            chai_1.expect(options.method).to.equal('POST');
-            chai_1.expect(options.headers).to.be.an('object');
-            chai_1.expect(options.headers['X-V2-PREVIEW']).to.equal('true');
-        }
-        const result = await bup.events.createV2Preview(event, { _payload, _validate });
-        chai_1.expect(result).to.eql(event);
-    });
-    it('should create an event with the showIncomplete query parameter', async function () {
-        const event = generateFakeEvent();
-        function _payload() {
-            return event;
-        }
-        function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/events?showIncomplete=true');
-            chai_1.expect(options.method).to.equal('POST');
-            chai_1.expect(options.headers).to.be.an('object');
-            chai_1.expect(options.headers['X-V2-PREVIEW']).to.equal('true');
-        }
-        const query = { showIncomplete: true };
-        const result = await bup.events.createV2Preview(event, { query, _payload, _validate });
         chai_1.expect(result).to.eql(event);
     });
 });

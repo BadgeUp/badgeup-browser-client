@@ -1,5 +1,5 @@
 import { ResourceContext } from '../utils/ResourceContext';
-import { EventRequest, EventV1, EventV2Preview } from './Event.class';
+import { EventRequest, EventResults } from './Event.class';
 /**
  * Events resource
  */
@@ -16,6 +16,5 @@ export declare class EventsResource {
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to the provided event
      */
-    create(object: EventRequest, userOpts?: any): Promise<EventV1>;
-    createV2Preview(object: EventRequest, userOpts?: any): Promise<EventV2Preview>;
+    create(object: EventRequest, userOpts?: any): Promise<EventResults>;
 }

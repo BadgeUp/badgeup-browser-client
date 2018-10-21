@@ -15,6 +15,7 @@ import { BadgeUpHttp } from './http';
 import { MetricsResource } from './metrics';
 import { ProgressResource } from './progress';
 import { ResourceContext } from './utils/ResourceContext';
+import { WebhooksResource } from './webhooks';
 
 export class BadgeUp implements ResourceContext {
 
@@ -36,6 +37,7 @@ export class BadgeUp implements ResourceContext {
     public progress: ProgressResource;
     public earnedAwards: EarnedAwardsResource;
     public achievementIcons: AchievementIconsResource;
+    public webhooks: WebhooksResource;
 
     /**
      * Construct an instance of the BadgeUp client.
@@ -94,6 +96,7 @@ export class BadgeUp implements ResourceContext {
         this.progress = new ProgressResource(this);
         this.achievementIcons = new AchievementIconsResource(this);
         this.earnedAwards = new EarnedAwardsResource(this);
+        this.webhooks = new WebhooksResource(this);
     }
 }
 
@@ -141,5 +144,6 @@ export * from './earnedAwards/EarnedAward.class';
 export * from './events/Event.class';
 export * from './metrics/Metric.class';
 export * from './progress/Progress.class';
+export * from './webhooks/Webhook.class';
 export * from './utils/Meta.class';
 export * from './utils/JsonPatch.class';

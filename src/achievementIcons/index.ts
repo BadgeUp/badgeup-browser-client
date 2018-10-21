@@ -28,7 +28,7 @@ export class AchievementIconsResource {
     public getAll(userOpts?): Promise<AchievementIcon[]> {
         return this.context.http.makeRequest({
             method: 'GET',
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}`
         }, userOpts);
     }
 

@@ -32,7 +32,7 @@ describe('Analytics', function () {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/analytics/subjects/summary?after=PAGE_TWO'
+                        next: '/v2/apps/1337/analytics/subjects/summary?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(fakeSubjectStats)
                 });
@@ -40,10 +40,10 @@ describe('Analytics', function () {
         }
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/analytics/subjects/summary?after=PAGE_TWO');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/analytics/subjects/summary?after=PAGE_TWO');
             }
             else {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/analytics/subjects/summary');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/analytics/subjects/summary');
             }
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -63,7 +63,7 @@ describe('Analytics', function () {
             });
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal('/v1/apps/1337/analytics/metrics/keys');
+            chai_1.expect(options.url).to.equal('/v2/apps/1337/analytics/metrics/keys');
         }
         const result = await bup.analytics.getAllMetricKeys({ _payload, _validate });
         chai_1.expect(result).to.be.an('array');

@@ -23,7 +23,7 @@ class Common {
         check.assert.string(id, 'id must be a string');
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
         return this.context.http.makeRequest({
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
     /**
@@ -33,7 +33,7 @@ class Common {
      */
     *getIterator(userOpts) {
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
-        let url = `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`;
+        let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 url = body.pages.next;
@@ -50,7 +50,7 @@ class Common {
     getAll(userOpts) {
         let array = [];
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
-        let url = `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`;
+        let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatinate the new data
@@ -79,7 +79,7 @@ class Common {
         return this.context.http.makeRequest({
             method: 'PATCH',
             body: updates,
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
     /**
@@ -94,7 +94,7 @@ class Common {
         return this.context.http.makeRequest({
             method: 'POST',
             body: object,
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`
         }, userOpts);
     }
     /**
@@ -108,7 +108,7 @@ class Common {
         const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
+            url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
     }
 }

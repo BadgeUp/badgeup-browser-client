@@ -22,7 +22,7 @@ describe('criterion', function () {
             return criterion;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/criteria/${criterion.id}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/criteria/${criterion.id}`);
             chai_1.expect(options.method).to.be.oneOf([undefined, 'GET']);
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -47,7 +47,7 @@ describe('criterion', function () {
                 return Promise.resolve({
                     pages: {
                         previous: null,
-                        next: '/v1/apps/1337/criteria?after=PAGE_TWO'
+                        next: '/v2/apps/1337/criteria?after=PAGE_TWO'
                     },
                     data: (new Array(10)).fill(criterion)
                 });
@@ -55,10 +55,10 @@ describe('criterion', function () {
         }
         function _validate(options) {
             if (options.url.indexOf('PAGE_TWO') > 0) {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/criteria?after=PAGE_TWO');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/criteria?after=PAGE_TWO');
             }
             else {
-                chai_1.expect(options.url).to.equal('/v1/apps/1337/criteria');
+                chai_1.expect(options.url).to.equal('/v2/apps/1337/criteria');
             }
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -72,7 +72,7 @@ describe('criterion', function () {
             return criterion;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/criteria`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/criteria`);
             chai_1.expect(options.method).to.equal('POST');
             chai_1.expect(options.headers).to.be.an('object');
         }
@@ -85,7 +85,7 @@ describe('criterion', function () {
             return criterion;
         }
         function _validate(options) {
-            chai_1.expect(options.url).to.equal(`/v1/apps/1337/criteria/${criterion.id}`);
+            chai_1.expect(options.url).to.equal(`/v2/apps/1337/criteria/${criterion.id}`);
             chai_1.expect(options.method).to.equal('DELETE');
             chai_1.expect(options.headers).to.be.an('object');
         }

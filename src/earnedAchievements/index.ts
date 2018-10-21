@@ -85,7 +85,7 @@ export class EarnedAchievementQueryBuilder {
         const queryPart = this.buildQuery(queryBy);
 
         const context = this.context;
-        let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+        let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
 
         function pageFn(): Promise<EarnedAchievement[]> {
             return context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -114,7 +114,7 @@ export class EarnedAchievementQueryBuilder {
 
         const context = this.context;
         function pageFn(): () => Promise<PaginatedData<EarnedAchievement>> {
-            let url = `/v1/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
+            let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
             return function(): Promise<PaginatedData<EarnedAchievement>> {
                 return context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;
@@ -137,7 +137,7 @@ export class EarnedAchievementQueryBuilder {
 
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v1/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
         }, userOpts);
     }
 }

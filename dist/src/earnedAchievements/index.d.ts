@@ -28,7 +28,7 @@ export declare class EarnedAchievementQueryBuilder {
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */
-    private buildQuery(queryBy);
+    private buildQuery;
     /**
      * Retrieves queried earned achievements, returned as an array
      * @param userOpts option overrides for this request
@@ -55,7 +55,7 @@ export declare class EarnedAchievementsResource {
     private common;
     private context;
     /**
-     * Construct the achievements resource
+     * Construct the earned achievements resource
      * @param context The context to make requests as
      */
     constructor(context: ResourceContext);
