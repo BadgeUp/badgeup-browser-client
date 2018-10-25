@@ -1,5 +1,5 @@
 import { Data } from '../common.class';
-import { Progress } from '../progress/Progress.class';
+import { BaseProgress } from '../progress/Progress.class';
 
 const DEFAULT_EVENT_MODIFIER = { '@inc': 1 };
 
@@ -118,7 +118,7 @@ export interface EventOptions {
 /**
  * Event response progress element
  */
-export interface EventProgress extends Progress {
+export interface EventProgress extends BaseProgress {
     /**
      * Set to `true` every time a new earned achievement record is created, even if `earnLimit` allows an
      * achievement to be earned multiple times and the achievement has already been earned before.

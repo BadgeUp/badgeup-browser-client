@@ -1,6 +1,6 @@
 import { Achievement } from '../achievements/Achievement.class';
 
-export interface Progress {
+export interface BaseProgress {
     /**
      * States if the achievement has been earned.
      */
@@ -18,13 +18,16 @@ export interface Progress {
      */
     achievementId: string;
     /**
-     * The root achievement document.
-     */
-    achievement: Achievement;
-    /**
      * A string that uniquely identifies this most recently earned achievement.
      */
     earnedAchievementId: string;
+}
+
+export interface Progress extends BaseProgress {
+    /**
+     * Included achievement document information.
+     */
+    achievement?: Achievement;
 }
 
 export interface ProgressTreeGroup {
