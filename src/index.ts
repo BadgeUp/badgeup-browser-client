@@ -1,6 +1,6 @@
 import { atob, btoa } from 'abab';
 import * as check from 'check-types';
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash.defaultsdeep';
 import { AchievementIconsResource } from './achievementIcons';
 import { AchievementsResource } from './achievements';
 import { AnalyticsResource } from './analytics';

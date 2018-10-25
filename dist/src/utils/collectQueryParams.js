@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const lodash_1 = require("lodash");
+const lodash_pickby_1 = __importDefault(require("lodash.pickby"));
 function collectQueryParams(source, keys) {
-    return lodash_1.pickBy(source, function (value, key) {
+    return lodash_pickby_1.default(source, function (value, key) {
         return !!value && keys.includes(key);
     });
 }

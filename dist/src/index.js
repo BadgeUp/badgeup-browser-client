@@ -2,10 +2,20 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const abab_1 = require("abab");
-const check = require("check-types");
-const lodash_1 = require("lodash");
+const check = __importStar(require("check-types"));
+const lodash_defaultsdeep_1 = __importDefault(require("lodash.defaultsdeep"));
 const achievementIcons_1 = require("./achievementIcons");
 const achievements_1 = require("./achievements");
 const analytics_1 = require("./analytics");
@@ -33,8 +43,8 @@ class BadgeUp {
             throw new Error('Either globalOpts.apiKey or globalOpts.token must be a string');
         }
         // ensure the request options are an object if not defined
-        globalOpts.request = lodash_1.defaultsDeep({}, globalOpts.request);
-        globalOpts.request.headers = lodash_1.defaultsDeep({}, globalOpts.request.headers);
+        globalOpts.request = lodash_defaultsdeep_1.default({}, globalOpts.request);
+        globalOpts.request.headers = lodash_defaultsdeep_1.default({}, globalOpts.request.headers);
         // setup the Authorization header
         if (globalOpts.token) { // JWT bearer token
             check.assert.string(globalOpts.applicationId, 'You must provide your applicationId.');

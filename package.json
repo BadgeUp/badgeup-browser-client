@@ -22,17 +22,20 @@
   "dependencies": {
     "abab": "2.0.0",
     "check-types": "^7.4.0",
-    "lodash": "^4.17.10",
+    "lodash.defaultsdeep": "4.6.0",
+    "lodash.pickby": "4.6.0",
     "node-fetch": "^2.2.0",
     "p-retry": "^2.0.0",
     "qs": "^6.5.2"
   },
   "devDependencies": {
     "@types/chai": "4.1.4",
-    "@types/lodash": "4.14.116",
+    "@types/lodash.defaultsdeep": "4.6.4",
+    "@types/lodash.pickby": "4.6.4",
     "@types/mocha": "5.2.5",
     "@types/node": "10.9.4",
     "@types/node-fetch": "2.1.2",
+    "@types/p-retry": "2.0.0",
     "@types/qs": "^6.5.1",
     "chai": "4.2.0",
     "mocha": "5.2.0",

@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const lodash_1 = require("lodash");
-const node_fetch_1 = require("node-fetch");
-const pRetry = require("p-retry");
+const lodash_defaultsdeep_1 = __importDefault(require("lodash.defaultsdeep"));
+const node_fetch_1 = __importDefault(require("node-fetch"));
+const p_retry_1 = __importDefault(require("p-retry"));
 const dateStringify_1 = require("./utils/dateStringify");
 // number of retries to be attmpted in case of http errors
 const RETRY_COUNT = 3;
@@ -32,7 +35,7 @@ class BadgeUpHttp {
      * @return Returns a Promise that resolves with the request data
      */
     makeRequest(reqOpts, userOpts) {
-        const options = lodash_1.defaultsDeep({}, userOpts, reqOpts, this.globalReqOpts, requestDefaults);
+        const options = lodash_defaultsdeep_1.default({}, userOpts, reqOpts, this.globalReqOpts, requestDefaults);
         // for internal unit tests
         if (options._validate) {
             options._validate(options);
@@ -78,12 +81,12 @@ function fetchWithRetry(url, options) {
         return node_fetch_1.default(url, options).then((response) => {
             // don't retry if status is 4xx
             if (response.status >= 400 && response.status < 500) {
-                throw new pRetry.AbortError(response.statusText);
+                throw new p_retry_1.default.AbortError(response.statusText);
             }
             return response;
         });
     }
-    return pRetry(fetchWrapper, { retries: RETRY_COUNT });
+    return p_retry_1.default(fetchWrapper, { retries: RETRY_COUNT });
 }
 /**
  * Hydrates dates in response bodies. Handles paginated responses and object responses.

@@ -1,6 +1,6 @@
-import { defaultsDeep } from 'lodash';
+import defaultsDeep from 'lodash.defaultsdeep';
 import fetch, { Response } from 'node-fetch';
-import * as pRetry from 'p-retry';
+import pRetry from 'p-retry';
 import { replacer } from './utils/dateStringify';
 
 // number of retries to be attmpted in case of http errors

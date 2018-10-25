@@ -1,4 +1,4 @@
-import { pickBy } from 'lodash';
+import pickBy from 'lodash.pickby';
 import { QueryParameters } from './QueryBuilder';
 
 export function collectQueryParams(source: QueryParameters, keys: string[]) {

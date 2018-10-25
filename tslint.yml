@@ -45,8 +45,6 @@ rules:
     - true
     - check-format
     - allow-leading-underscore
-  no-var-requires:
-    - false
   arrow-parens:
     - false
   only-arrow-functions:
