@@ -10,6 +10,12 @@ export declare class Common<T> {
     private endpoint;
     constructor(context: ResourceContext, endpoint: string);
     /**
+     * Builds a URL query string, prepending ? if needed
+     * @param queryBy query parameter object
+     * @returns Query string beginning with ?
+     */
+    private buildQueryString;
+    /**
      * Retrieve resource object by ID
      * @param id ID of the object to retrieve
      * @param userOpts option overrides for this request

@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
-const querystring = __importStar(require("querystring"));
+const url_1 = require("url");
 const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("./../utils/pageToGenerator");
 const ENDPT = 'progress';
@@ -48,7 +48,7 @@ class ProgressQueryBuilder {
         }
         const queryBy = collectQueryParams_1.collectQueryParams(this.params, GET_QUERYPARAMS);
         let array = [];
-        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatenate the new data
@@ -74,7 +74,7 @@ class ProgressQueryBuilder {
         }
         const queryBy = collectQueryParams_1.collectQueryParams(this.params, GET_QUERYPARAMS);
         const pageFn = () => {
-            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;

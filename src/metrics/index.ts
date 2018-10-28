@@ -1,5 +1,5 @@
 import * as check from 'check-types';
-import * as querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import { Common } from '../common';
 import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator } from '../utils/pageToGenerator';
@@ -59,7 +59,7 @@ export class MetricQueryBuilder {
 
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${new URLSearchParams(queryBy).toString()}`
         }, userOpts);
     }
 }

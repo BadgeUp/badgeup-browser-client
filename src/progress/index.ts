@@ -1,5 +1,5 @@
 import * as check from 'check-types';
-import * as querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import { collectQueryParams } from '../utils/collectQueryParams';
 import { QueryParameters } from '../utils/QueryBuilder';
 import { ResourceContext } from '../utils/ResourceContext';
@@ -53,7 +53,7 @@ export class ProgressQueryBuilder {
         const queryBy = collectQueryParams(this.params, GET_QUERYPARAMS);
 
         let array = [];
-        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new URLSearchParams(queryBy).toString()}`;
 
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
@@ -84,7 +84,7 @@ export class ProgressQueryBuilder {
         const queryBy = collectQueryParams(this.params, GET_QUERYPARAMS);
 
         const pageFn = () => {
-            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new URLSearchParams(queryBy).toString()}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function(body) {
                     url = body.pages.next;

@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
-const querystring = __importStar(require("querystring"));
+const url_1 = require("url");
 const common_1 = require("../common");
 const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("../utils/pageToGenerator");
@@ -54,7 +54,7 @@ class MetricQueryBuilder {
         }
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${querystring.stringify(queryBy)}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`
         }, userOpts);
     }
 }

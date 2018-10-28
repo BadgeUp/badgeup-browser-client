@@ -25,8 +25,7 @@
     "lodash.defaultsdeep": "4.6.0",
     "lodash.pickby": "4.6.0",
     "node-fetch": "^2.2.0",
-    "p-retry": "^2.0.0",
-    "qs": "^6.5.2"
+    "p-retry": "^2.0.0"
   },
   "devDependencies": {
     "@types/chai": "4.1.4",
@@ -36,7 +35,6 @@
     "@types/node": "10.9.4",
     "@types/node-fetch": "2.1.2",
     "@types/p-retry": "2.0.0",
-    "@types/qs": "^6.5.1",
     "chai": "4.2.0",
     "mocha": "5.2.0",
     "ts-node": "7.0.1",

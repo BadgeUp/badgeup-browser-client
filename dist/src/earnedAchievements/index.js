@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
-const querystring = __importStar(require("querystring"));
+const url_1 = require("url");
 const common_1 = require("../common");
 const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("../utils/pageToGenerator");
@@ -64,7 +64,7 @@ class EarnedAchievementQueryBuilder {
         if (Object.keys(queryBy).length === 0) {
             throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
         }
-        return querystring.stringify(queryBy);
+        return new url_1.URLSearchParams(queryBy).toString();
     }
     /**
      * Retrieves queried earned achievements, returned as an array

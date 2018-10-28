@@ -1,5 +1,5 @@
 import * as check from 'check-types';
-import * as querystring from 'querystring';
+import { URLSearchParams } from 'url';
 import { Common } from '../common';
 import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator, PaginatedData } from '../utils/pageToGenerator';
@@ -71,7 +71,7 @@ export class EarnedAchievementQueryBuilder {
             throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
         }
 
-        return querystring.stringify(queryBy);
+        return new URLSearchParams(queryBy).toString();
     }
 
     /**

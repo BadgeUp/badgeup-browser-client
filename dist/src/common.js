@@ -8,7 +8,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
-const qs = __importStar(require("qs"));
+const url_1 = require("url");
 const pageToGenerator_1 = require("./utils/pageToGenerator");
 /**
  * Provides a set of common functionality that can be used on most endpoints
@@ -21,6 +21,15 @@ class Common {
         this.endpoint = endpoint;
     }
     /**
+     * Builds a URL query string, prepending ? if needed
+     * @param queryBy query parameter object
+     * @returns Query string beginning with ?
+     */
+    buildQueryString(queryBy) {
+        const str = new url_1.URLSearchParams(queryBy).toString();
+        return str.length > 0 ? '?' + str : '';
+    }
+    /**
      * Retrieve resource object by ID
      * @param id ID of the object to retrieve
      * @param userOpts option overrides for this request
@@ -28,7 +37,7 @@ class Common {
      */
     get(id, userOpts) {
         check.assert.string(id, 'id must be a string');
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         return this.context.http.makeRequest({
             url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
         }, userOpts);
@@ -39,7 +48,7 @@ class Common {
      * @return An iterator that returns promises that resolve with the next object
      */
     *getIterator(userOpts) {
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
@@ -56,7 +65,7 @@ class Common {
      */
     getAll(userOpts) {
         let array = [];
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         let url = `/v2/apps/${this.context.applicationId}/${this.endpoint}${query}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
@@ -82,7 +91,7 @@ class Common {
     update(id, updates, userOpts) {
         check.assert.string(id, 'id must be a string');
         check.assert.array(updates, 'updates must be an array');
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         return this.context.http.makeRequest({
             method: 'PATCH',
             body: updates,
@@ -97,7 +106,7 @@ class Common {
      */
     create(object, userOpts) {
         check.assert.object(object, 'object must be an object');
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         return this.context.http.makeRequest({
             method: 'POST',
             body: object,
@@ -112,7 +121,7 @@ class Common {
      */
     remove(id, userOpts) {
         check.assert.string(id, 'id must be a string');
-        const query = qs.stringify((userOpts || {}).query, { addQueryPrefix: true });
+        const query = this.buildQueryString((userOpts || {}).query);
         return this.context.http.makeRequest({
             method: 'DELETE',
             url: `/v2/apps/${this.context.applicationId}/${this.endpoint}/${id}${query}`
