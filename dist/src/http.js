@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_defaultsdeep_1 = __importDefault(require("lodash.defaultsdeep"));
-const node_fetch_1 = __importDefault(require("node-fetch"));
 const p_retry_1 = __importDefault(require("p-retry"));
 const dateStringify_1 = require("./utils/dateStringify");
 // number of retries to be attmpted in case of http errors
@@ -78,7 +77,7 @@ exports.BadgeUpHttp = BadgeUpHttp;
  */
 function fetchWithRetry(url, options) {
     function fetchWrapper() {
-        return node_fetch_1.default(url, options).then((response) => {
+        return fetch(url, options).then((response) => {
             // don't retry if status is 4xx
             if (response.status >= 400 && response.status < 500) {
                 throw new p_retry_1.default.AbortError(response.statusText);

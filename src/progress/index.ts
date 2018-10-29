@@ -1,5 +1,4 @@
 import * as check from 'check-types';
-import { URLSearchParams } from 'url';
 import { collectQueryParams } from '../utils/collectQueryParams';
 import { QueryParameters } from '../utils/QueryBuilder';
 import { ResourceContext } from '../utils/ResourceContext';

@@ -1,7 +1,7 @@
 {
-  "name": "@badgeup/badgeup-node-client",
+  "name": "@badgeup/badgeup-browser-client",
   "version": "2.0.2",
-  "description": "Official Node.js client for BadgeUp, a user engagement and gamification service.",
+  "description": "Official browser client for BadgeUp, a user engagement and gamification service.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
@@ -16,7 +16,7 @@
   "author": "Mark Herhold <mark@badgeup.io>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/badgeup/badgeup-node-client"
+    "url": "https://github.com/badgeup/badgeup-browser-client"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,7 +24,6 @@
     "check-types": "^7.4.0",
     "lodash.defaultsdeep": "4.6.0",
     "lodash.pickby": "4.6.0",
-    "node-fetch": "^2.2.0",
     "p-retry": "^2.0.0"
   },
   "devDependencies": {
@@ -33,7 +32,6 @@
     "@types/lodash.pickby": "4.6.4",
     "@types/mocha": "5.2.5",
     "@types/node": "10.9.4",
-    "@types/node-fetch": "2.1.2",
     "@types/p-retry": "2.0.0",
     "chai": "4.2.0",
     "mocha": "5.2.0",

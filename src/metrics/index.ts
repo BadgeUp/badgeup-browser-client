@@ -1,5 +1,4 @@
 import * as check from 'check-types';
-import { URLSearchParams } from 'url';
 import { Common } from '../common';
 import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator } from '../utils/pageToGenerator';

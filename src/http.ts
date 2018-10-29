@@ -1,5 +1,4 @@
 import defaultsDeep from 'lodash.defaultsdeep';
-import fetch, { Response } from 'node-fetch';
 import pRetry from 'p-retry';
 import { replacer } from './utils/dateStringify';
 

@@ -43,7 +43,7 @@
     "types": [                                /* Type declaration files to be included in compilation. */
       "lodash.pickby",
       "lodash.defaultsdeep",
-      "node-fetch",
+      "node",
       "mocha",
       "p-retry"
     ],

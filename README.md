@@ -1,19 +1,19 @@
-# BadgeUp Node.js Client
-Official Node.js client for working with [BadgeUp](https://www.badgeup.io/), a user engagement and gamification service.
+# BadgeUp Browser Client
+Official browser client for working with [BadgeUp](https://www.badgeup.io/), a user engagement and gamification service.
 
-[![Build Status](https://travis-ci.org/BadgeUp/badgeup-node-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-node-client)
+[![Build Status](https://travis-ci.org/BadgeUp/badgeup-browser-client.svg?branch=master)](https://travis-ci.org/BadgeUp/badgeup-browser-client)
 
 ## Quickstart
 
 ```sh
-npm install @badgeup/badgeup-node-client --save
+npm install @badgeup/badgeup-browser-client --save
 ```
 
 ## Initialization
-The BadgeUp Node.js client is initialized with an options object.
+The BadgeUp browser client is initialized with an options object.
 ```js
-const { BadgeUp } = require('@badgeup/badgeup-node-client');
-// or for TypeScript, import { BadgeUp } from '@badgeup/badgeup-node-client';
+const { BadgeUp } = require('@badgeup/badgeup-browser-client');
+// or for TypeScript, import { BadgeUp } from '@badgeup/badgeup-browser-client';
 
 const badgeup = new BadgeUp({
     apiKey: // the API Key created for use with this application
@@ -30,4 +30,4 @@ Run `npm run dev` to have TypeScript watch for changes and automatically compile
 
 ## Support
 
-If you find an problem with this module, please file an issue. This module targets compatibility with all LTS versions of Node.js. These versions can be found in `.travis.yml`.
+If you find an problem with this module, please file an issue.

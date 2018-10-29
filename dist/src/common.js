@@ -8,7 +8,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
-const url_1 = require("url");
 const pageToGenerator_1 = require("./utils/pageToGenerator");
 /**
  * Provides a set of common functionality that can be used on most endpoints
@@ -26,7 +25,7 @@ class Common {
      * @returns Query string beginning with ?
      */
     buildQueryString(queryBy) {
-        const str = new url_1.URLSearchParams(queryBy).toString();
+        const str = new URLSearchParams(queryBy).toString();
         return str.length > 0 ? '?' + str : '';
     }
     /**

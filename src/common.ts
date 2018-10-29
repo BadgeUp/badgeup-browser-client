@@ -1,7 +1,6 @@
 'use strict';
 
 import * as check from 'check-types';
-import { URLSearchParams } from 'url';
 import { JsonPatch } from './utils/JsonPatch.class';
 import { pageToGenerator } from './utils/pageToGenerator';
 import { ResourceContext } from './utils/ResourceContext';
