@@ -9,14 +9,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
 const url_1 = require("url");
-const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("./../utils/pageToGenerator");
 const ENDPT = 'progress';
-const GET_QUERYPARAMS = ['subject', 'achievementId'];
 class ProgressQueryBuilder {
     constructor(context) {
         // container for the query parameters
-        this.params = {};
+        this.params = new url_1.URLSearchParams();
         this.context = context;
     }
     /**
@@ -25,7 +23,7 @@ class ProgressQueryBuilder {
      */
     achievementId(achievementId) {
         check.assert.string(achievementId, 'achievementId must be a string');
-        this.params.achievementId = achievementId;
+        this.params.set('achievementId', achievementId);
         return this;
     }
     /**
@@ -34,7 +32,16 @@ class ProgressQueryBuilder {
      */
     subject(subject) {
         check.assert.string(subject, 'subject must be a string');
-        this.params.subject = subject;
+        this.params.set('subject', subject);
+        return this;
+    }
+    /**
+     * Include additional resources in the response
+     * @param resource
+     */
+    include(resource) {
+        // remove any existing includes
+        this.params.append('include', resource);
         return this;
     }
     /**
@@ -43,12 +50,11 @@ class ProgressQueryBuilder {
      * @returns Promise that resolves to an array of progress objects
      */
     getAll(userOpts) {
-        if (!this.params.subject) {
+        if (!this.params.has('subject')) {
             throw new Error('subject must be provided');
         }
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, GET_QUERYPARAMS);
         let array = [];
-        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`;
+        let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${this.params.toString()}`;
         const pageFn = () => {
             return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                 array = array.concat(body.data || []); // concatenate the new data
@@ -69,12 +75,11 @@ class ProgressQueryBuilder {
      * @return An iterator that returns promises that resolve with the next progress object
      */
     *getIterator(userOpts) {
-        if (!this.params.subject) {
+        if (!this.params.has('subject')) {
             throw new Error('subject must be provided');
         }
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, GET_QUERYPARAMS);
         const pageFn = () => {
-            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`;
+            let url = `/v2/apps/${this.context.applicationId}/${ENDPT}?${this.params.toString()}`;
             return () => {
                 return this.context.http.makeRequest({ url }, userOpts).then(function (body) {
                     url = body.pages.next;

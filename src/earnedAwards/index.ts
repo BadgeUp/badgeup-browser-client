@@ -1,9 +1,7 @@
 import * as check from 'check-types';
 import { URLSearchParams } from 'url';
 import { Common } from '../common';
-import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator, PaginatedData } from '../utils/pageToGenerator';
-import { QueryParameters } from '../utils/QueryBuilder';
 import { ResourceContext } from '../utils/ResourceContext';
 import { EarnedAward } from './EarnedAward.class';
 
@@ -16,7 +14,7 @@ export class EarnedAwardQueryBuilder {
     context: ResourceContext;
 
     // container for the query parameters
-    private params: QueryParameters = {};
+    private params: URLSearchParams = new URLSearchParams();
 
     constructor(context: ResourceContext) {
         this.context = context;
@@ -28,7 +26,7 @@ export class EarnedAwardQueryBuilder {
      */
     awardId(awardId: string): EarnedAwardQueryBuilder {
         check.assert.string(awardId, 'awardId must be a string');
-        this.params.awardId = awardId;
+        this.params.set('awardId', awardId);
         return this;
     }
 
@@ -38,7 +36,7 @@ export class EarnedAwardQueryBuilder {
      */
     earnedAchievementId(earnedAchievementId: string): EarnedAwardQueryBuilder {
         check.assert.string(earnedAchievementId, 'earnedAchievementId must be a string');
-        this.params.earnedAchievementId = earnedAchievementId;
+        this.params.set('earnedAchievementId', earnedAchievementId);
         return this;
     }
 
@@ -48,7 +46,7 @@ export class EarnedAwardQueryBuilder {
      */
     subject(subject: string): EarnedAwardQueryBuilder {
         check.assert.string(subject, 'subject must be a string');
-        this.params.subject = subject;
+        this.params.set('subject', subject);
         return this;
     }
 
@@ -58,7 +56,7 @@ export class EarnedAwardQueryBuilder {
      */
     since(since: Date): EarnedAwardQueryBuilder {
         check.assert.date(since, 'since must be a date');
-        this.params.since = since.toISOString();
+        this.params.set('since', since.toISOString());
         return this;
     }
 
@@ -68,7 +66,7 @@ export class EarnedAwardQueryBuilder {
      */
     until(until: Date): EarnedAwardQueryBuilder {
         check.assert.date(until, 'until must be a date');
-        this.params.until = until.toISOString();
+        this.params.set('until', until.toISOString());
         return this;
     }
 
@@ -76,12 +74,12 @@ export class EarnedAwardQueryBuilder {
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */
-    private buildQuery(queryBy: any): string {
-        if (Object.keys(queryBy).length === 0) {
+    private buildQuery(): string {
+        if ([...this.params.keys()].length === 0) {
             throw new Error('You must specify at least ' + AVAILABLE_QUERY_PARAMS.map(item => `"${item}"`).join(', '));
         }
 
-        return new URLSearchParams(queryBy).toString();
+        return this.params.toString();
     }
 
     /**
@@ -91,8 +89,7 @@ export class EarnedAwardQueryBuilder {
      */
     getAll(userOpts?): Promise<EarnedAward[]> {
         let array = [];
-        const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
 
         const context = this.context;
         let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
@@ -119,8 +116,7 @@ export class EarnedAwardQueryBuilder {
      * @return An iterator that returns promises that resolve with the next object
      */
     *getIterator(userOpts?): IterableIterator<Promise<EarnedAward | undefined>> {
-        const queryBy = collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
 
         const context = this.context;
         function pageFn(): () => Promise<PaginatedData<EarnedAward>> {

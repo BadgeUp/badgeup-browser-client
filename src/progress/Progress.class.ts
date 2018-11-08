@@ -1,3 +1,4 @@
+import { Award, Criterion } from '..';
 import { Achievement } from '../achievements/Achievement.class';
 
 export interface BaseProgress {
@@ -25,9 +26,14 @@ export interface BaseProgress {
 
 export interface Progress extends BaseProgress {
     /**
-     * Included achievement document information.
+     * Included achievement and corresponding resource information
      */
-    achievement?: Achievement;
+    achievement?: Achievement & {
+        resources?: {
+            criteria?: Criterion[];
+            awards?: Award[];
+        };
+    };
 }
 
 export interface ProgressTreeGroup {

@@ -1,5 +1,3 @@
-import { Award } from '../awards/Award.class';
-import { Criterion } from '../criteria/Criterion.class';
 import { Condition } from '../progress/Progress.class';
 import { Meta } from '../utils/Meta.class';
 
@@ -22,13 +20,7 @@ export interface Achievement extends AchievementRequest {
     applicationId: string;
     awards: string[];
     evalTree: EvalTreeGroup;
-    resources: AchievementResource;
     meta: AchievementMeta;
-}
-
-export interface AchievementResource {
-    criteria: Criterion[];
-    awards: Award[];
 }
 
 export interface EvalTreeGroup {
@@ -41,4 +33,3 @@ export interface EvalTreeGroup {
 export interface AchievementMeta extends Meta {
     icon: string;
 }
-

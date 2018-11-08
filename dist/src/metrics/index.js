@@ -10,10 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
 const url_1 = require("url");
 const common_1 = require("../common");
-const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("../utils/pageToGenerator");
 const ENDPT = 'metrics';
-const DELETE_QUERY_PARAMS = ['key', 'subject'];
 class MetricQueryBuilder {
     /**
      * Construct the metrics resource
@@ -21,7 +19,7 @@ class MetricQueryBuilder {
      */
     constructor(context) {
         // container for the query parameters
-        this._params = {};
+        this.params = new url_1.URLSearchParams();
         this.context = context;
     }
     /**
@@ -30,7 +28,7 @@ class MetricQueryBuilder {
      */
     key(key) {
         check.assert.string(key, 'key must be a string');
-        this._params.key = key;
+        this.params.set('key', key);
         return this;
     }
     /**
@@ -39,7 +37,7 @@ class MetricQueryBuilder {
      */
     subject(subject) {
         check.assert.string(subject, 'subject must be a string');
-        this._params.subject = subject;
+        this.params.set('subject', subject);
         return this;
     }
     /**
@@ -48,13 +46,12 @@ class MetricQueryBuilder {
      * @returns Promise that resolves to an object stating the number of deleted metrics
      */
     remove(userOpts) {
-        const queryBy = collectQueryParams_1.collectQueryParams(this._params, DELETE_QUERY_PARAMS);
-        if (Object.keys(queryBy).length === 0) {
+        if ([...this.params.keys()].length === 0) {
             throw new Error('You must specify at least the "subject" or "key"');
         }
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${new url_1.URLSearchParams(queryBy).toString()}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${this.params.toString()}`
         }, userOpts);
     }
 }

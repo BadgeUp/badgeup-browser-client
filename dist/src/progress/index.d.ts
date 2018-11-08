@@ -15,6 +15,11 @@ export declare class ProgressQueryBuilder {
      */
     subject(subject: string): ProgressQueryBuilder;
     /**
+     * Include additional resources in the response
+     * @param resource
+     */
+    include(resource: 'achievement' | 'criterion' | 'award'): ProgressQueryBuilder;
+    /**
      * Retrieve all queried progress objects, returned as an array
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an array of progress objects

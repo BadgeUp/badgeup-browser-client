@@ -245,7 +245,6 @@ describe('integration tests', function() {
                 expect(achievement.meta.created).to.be.a('Date');
                 expect(achievement.name).to.be.a('string');
                 expect(achievement.options).to.be.an('object');
-                expect(achievement.resources).to.be.undefined;
 
                 for (const awardId of achievement.awards) {
                     expect(awardId).to.be.a('string');
@@ -282,10 +281,45 @@ describe('integration tests', function() {
 
         expect(progressResponse).to.be.an('array');
         expect(progressResponse.length).to.be.gte(1);
-        expect(progressResponse[0].isComplete).to.be.a('boolean');
-        expect(progressResponse[0].percentComplete).to.be.a('number');
-        expect(progressResponse[0].progressTree).to.be.an('object');
-        expect(progressResponse[0].achievementId).to.be.a('string');
-        expect(progressResponse[0].earnedAchievementId).to.be.a('string');
+
+        const p = progressResponse[0];
+        expect(p.isComplete).to.be.a('boolean');
+        expect(p.percentComplete).to.be.a('number');
+        expect(p.progressTree).to.be.an('object');
+        expect(p.achievementId).to.be.a('string');
+        expect(p.earnedAchievementId).to.be.a('string');
+    });
+
+    it('should get achievement progress with attached achievement info for a subject', async function() {
+        const client = new BadgeUp({ apiKey: INTEGRATION_API_KEY });
+
+        const subject = 'nodejs-ci-' + randomString();
+        const key = 'test';
+
+        const eventRequest = new EventRequest(subject, key, { '@inc': 5 });
+
+        const eventResponse = await client.events.create(eventRequest);
+        expect(eventResponse).to.be.an('object'); // other tests check event response results
+
+        const progressResponse = await client.progress.query().subject(subject).include('achievement').include('criterion').getAll();
+
+        expect(progressResponse).to.be.an('array');
+        expect(progressResponse.length).to.be.gte(1);
+
+        const p = progressResponse[0];
+        expect(p.isComplete).to.be.a('boolean');
+        expect(p.percentComplete).to.be.a('number');
+        expect(p.progressTree).to.be.an('object');
+        expect(p.achievementId).to.be.a('string');
+        expect(p.earnedAchievementId).to.be.a('string');
+        expect(p.earnedAchievementId).to.be.a('string');
+
+        // validate an achievement is present
+        expect(p.achievement).to.be.an('object');
+        expect(p.achievement!.name).to.be.a('string');
+
+        // validate achievement resources are present
+        expect(p.achievement!.resources!.criteria).to.be.an('array');
+        expect(p.achievement!.resources!.criteria).to.have.lengthOf(1);
     });
 });

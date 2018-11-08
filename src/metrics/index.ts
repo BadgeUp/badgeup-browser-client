@@ -1,21 +1,17 @@
 import * as check from 'check-types';
 import { URLSearchParams } from 'url';
 import { Common } from '../common';
-import { collectQueryParams } from '../utils/collectQueryParams';
 import { pageToGenerator } from '../utils/pageToGenerator';
-import { QueryParameters } from '../utils/QueryBuilder';
 import { ResourceContext } from '../utils/ResourceContext';
 import { Metric, MetricRequest } from './Metric.class';
 
 const ENDPT = 'metrics';
 
-const DELETE_QUERY_PARAMS = ['key', 'subject'];
-
 export class MetricQueryBuilder {
     context: ResourceContext;
 
     // container for the query parameters
-    private _params: QueryParameters = {};
+    private params: URLSearchParams = new URLSearchParams();
 
     /**
      * Construct the metrics resource
@@ -31,7 +27,7 @@ export class MetricQueryBuilder {
      */
     key(key: string) {
         check.assert.string(key, 'key must be a string');
-        this._params.key = key;
+        this.params.set('key', key);
         return this;
     }
 
@@ -41,7 +37,7 @@ export class MetricQueryBuilder {
      */
     subject(subject: string) {
         check.assert.string(subject, 'subject must be a string');
-        this._params.subject = subject;
+        this.params.set('subject', subject);
         return this;
     }
 
@@ -51,15 +47,13 @@ export class MetricQueryBuilder {
      * @returns Promise that resolves to an object stating the number of deleted metrics
      */
     remove(userOpts?) {
-        const queryBy = collectQueryParams(this._params, DELETE_QUERY_PARAMS);
-
-        if (Object.keys(queryBy).length === 0) {
+        if ([...this.params.keys()].length === 0) {
             throw new Error('You must specify at least the "subject" or "key"');
         }
 
         return this.context.http.makeRequest({
             method: 'DELETE',
-            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${new URLSearchParams(queryBy).toString()}`
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${this.params.toString()}`
         }, userOpts);
     }
 }

@@ -10,14 +10,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
 const url_1 = require("url");
 const common_1 = require("../common");
-const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("../utils/pageToGenerator");
 const ENDPT = 'earnedachievements';
-const AVAILABLE_QUERY_PARAMS = ['achievementId', 'subject', 'since', 'until'];
 class EarnedAchievementQueryBuilder {
     constructor(context) {
         // container for the query parameters
-        this.params = {};
+        this.params = new url_1.URLSearchParams();
         this.context = context;
     }
     /**
@@ -26,7 +24,7 @@ class EarnedAchievementQueryBuilder {
      */
     achievementId(achievementId) {
         check.assert.string(achievementId, 'achievementId must be a string');
-        this.params.achievementId = achievementId;
+        this.params.set('achievementId', achievementId);
         return this;
     }
     /**
@@ -35,7 +33,7 @@ class EarnedAchievementQueryBuilder {
      */
     subject(subject) {
         check.assert.string(subject, 'subject must be a string');
-        this.params.subject = subject;
+        this.params.set('subject', subject);
         return this;
     }
     /**
@@ -44,7 +42,7 @@ class EarnedAchievementQueryBuilder {
      */
     since(since) {
         check.assert.date(since, 'since must be a date');
-        this.params.since = since.toISOString();
+        this.params.set('since', since.toISOString());
         return this;
     }
     /**
@@ -53,18 +51,18 @@ class EarnedAchievementQueryBuilder {
      */
     until(until) {
         check.assert.date(until, 'until must be a date');
-        this.params.until = until.toISOString();
+        this.params.set('until', until.toISOString());
         return this;
     }
     /**
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */
-    buildQuery(queryBy) {
-        if (Object.keys(queryBy).length === 0) {
+    buildQuery() {
+        if ([...this.params.keys()].length === 0) {
             throw new Error('You must specify at least the "achievementId", "subject", "since", or "until"');
         }
-        return new url_1.URLSearchParams(queryBy).toString();
+        return this.params.toString();
     }
     /**
      * Retrieves queried earned achievements, returned as an array
@@ -73,8 +71,7 @@ class EarnedAchievementQueryBuilder {
      */
     getAll(userOpts) {
         let array = [];
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
         const context = this.context;
         let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
         function pageFn() {
@@ -97,8 +94,7 @@ class EarnedAchievementQueryBuilder {
      * @return An iterator that returns promises that resolve with the next object
      */
     *getIterator(userOpts) {
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
         const context = this.context;
         function pageFn() {
             let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
@@ -117,8 +113,7 @@ class EarnedAchievementQueryBuilder {
      * @returns Promise that resolves to an object stating the number of deleted earned achievements
      */
     remove(userOpts) {
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
         return this.context.http.makeRequest({
             method: 'DELETE',
             url: `/v2/apps/${this.context.applicationId}/${ENDPT}?${queryPart}`
