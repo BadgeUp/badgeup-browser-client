@@ -39,13 +39,13 @@ export declare class EarnedAwardQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a list of metrics
      */
-    getAll(userOpts: any): Promise<EarnedAward[]>;
+    getAll(userOpts?: any): Promise<EarnedAward[]>;
     /**
      * Retrieves queried earned awards, returned as an iterator
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getIterator(userOpts: any): IterableIterator<Promise<EarnedAward | undefined>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<EarnedAward | undefined>>;
 }
 /**
  * Earned Awards resource
