@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [2.0.3] - 2018-10-28
+### Changed
+- Fix request options type definition
+- Allow including progress resources
+
+## [2.0.2] - 2018-10-28
+### Changed
+- Drop `qs` dependency
+
+## [2.0.1] - 2018-10-25
+### Changed
+- Use individual lodash modules
+- Progress type fixes
+
 ## [2.0.0] - 2018-09-08
 ### Added
 - Added Earned Award support
