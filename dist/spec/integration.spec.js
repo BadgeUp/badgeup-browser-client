@@ -207,7 +207,6 @@ describe('integration tests', function () {
                 chai_1.expect(achievement.meta.created).to.be.a('Date');
                 chai_1.expect(achievement.name).to.be.a('string');
                 chai_1.expect(achievement.options).to.be.an('object');
-                chai_1.expect(achievement.resources).to.be.undefined;
                 for (const awardId of achievement.awards) {
                     chai_1.expect(awardId).to.be.a('string');
                     const award = await client.awards.get(awardId);
@@ -236,11 +235,36 @@ describe('integration tests', function () {
         const progressResponse = await client.progress.query().subject(subject).getAll();
         chai_1.expect(progressResponse).to.be.an('array');
         chai_1.expect(progressResponse.length).to.be.gte(1);
-        chai_1.expect(progressResponse[0].isComplete).to.be.a('boolean');
-        chai_1.expect(progressResponse[0].percentComplete).to.be.a('number');
-        chai_1.expect(progressResponse[0].progressTree).to.be.an('object');
-        chai_1.expect(progressResponse[0].achievementId).to.be.a('string');
-        chai_1.expect(progressResponse[0].earnedAchievementId).to.be.a('string');
+        const p = progressResponse[0];
+        chai_1.expect(p.isComplete).to.be.a('boolean');
+        chai_1.expect(p.percentComplete).to.be.a('number');
+        chai_1.expect(p.progressTree).to.be.an('object');
+        chai_1.expect(p.achievementId).to.be.a('string');
+        chai_1.expect(p.earnedAchievementId).to.be.a('string');
+    });
+    it('should get achievement progress with attached achievement info for a subject', async function () {
+        const client = new src_1.BadgeUp({ apiKey: INTEGRATION_API_KEY });
+        const subject = 'nodejs-ci-' + randomString();
+        const key = 'test';
+        const eventRequest = new src_1.EventRequest(subject, key, { '@inc': 5 });
+        const eventResponse = await client.events.create(eventRequest);
+        chai_1.expect(eventResponse).to.be.an('object'); // other tests check event response results
+        const progressResponse = await client.progress.query().subject(subject).include('achievement').include('criterion').getAll();
+        chai_1.expect(progressResponse).to.be.an('array');
+        chai_1.expect(progressResponse.length).to.be.gte(1);
+        const p = progressResponse[0];
+        chai_1.expect(p.isComplete).to.be.a('boolean');
+        chai_1.expect(p.percentComplete).to.be.a('number');
+        chai_1.expect(p.progressTree).to.be.an('object');
+        chai_1.expect(p.achievementId).to.be.a('string');
+        chai_1.expect(p.earnedAchievementId).to.be.a('string');
+        chai_1.expect(p.earnedAchievementId).to.be.a('string');
+        // validate an achievement is present
+        chai_1.expect(p.achievement).to.be.an('object');
+        chai_1.expect(p.achievement.name).to.be.a('string');
+        // validate achievement resources are present
+        chai_1.expect(p.achievement.resources.criteria).to.be.an('array');
+        chai_1.expect(p.achievement.resources.criteria).to.have.lengthOf(1);
     });
 });
 //# sourceMappingURL=integration.spec.js.map

@@ -9,14 +9,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const check = __importStar(require("check-types"));
 const common_1 = require("../common");
-const collectQueryParams_1 = require("../utils/collectQueryParams");
 const pageToGenerator_1 = require("../utils/pageToGenerator");
 const ENDPT = 'earnedawards';
 const AVAILABLE_QUERY_PARAMS = ['subject', 'awardId', 'earnedAchievementId', 'since', 'until'];
 class EarnedAwardQueryBuilder {
     constructor(context) {
         // container for the query parameters
-        this.params = {};
+        this.params = new URLSearchParams();
         this.context = context;
     }
     /**
@@ -25,7 +24,7 @@ class EarnedAwardQueryBuilder {
      */
     awardId(awardId) {
         check.assert.string(awardId, 'awardId must be a string');
-        this.params.awardId = awardId;
+        this.params.set('awardId', awardId);
         return this;
     }
     /**
@@ -34,7 +33,7 @@ class EarnedAwardQueryBuilder {
      */
     earnedAchievementId(earnedAchievementId) {
         check.assert.string(earnedAchievementId, 'earnedAchievementId must be a string');
-        this.params.earnedAchievementId = earnedAchievementId;
+        this.params.set('earnedAchievementId', earnedAchievementId);
         return this;
     }
     /**
@@ -43,7 +42,7 @@ class EarnedAwardQueryBuilder {
      */
     subject(subject) {
         check.assert.string(subject, 'subject must be a string');
-        this.params.subject = subject;
+        this.params.set('subject', subject);
         return this;
     }
     /**
@@ -52,7 +51,7 @@ class EarnedAwardQueryBuilder {
      */
     since(since) {
         check.assert.date(since, 'since must be a date');
-        this.params.since = since.toISOString();
+        this.params.set('since', since.toISOString());
         return this;
     }
     /**
@@ -61,18 +60,18 @@ class EarnedAwardQueryBuilder {
      */
     until(until) {
         check.assert.date(until, 'until must be a date');
-        this.params.until = until.toISOString();
+        this.params.set('until', until.toISOString());
         return this;
     }
     /**
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */
-    buildQuery(queryBy) {
-        if (Object.keys(queryBy).length === 0) {
+    buildQuery() {
+        if ([...this.params.keys()].length === 0) {
             throw new Error('You must specify at least ' + AVAILABLE_QUERY_PARAMS.map(item => `"${item}"`).join(', '));
         }
-        return new URLSearchParams(queryBy).toString();
+        return this.params.toString();
     }
     /**
      * Retrieves queried earned awards, returned as an array
@@ -81,8 +80,7 @@ class EarnedAwardQueryBuilder {
      */
     getAll(userOpts) {
         let array = [];
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
         const context = this.context;
         let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;
         function pageFn() {
@@ -105,8 +103,7 @@ class EarnedAwardQueryBuilder {
      * @return An iterator that returns promises that resolve with the next object
      */
     *getIterator(userOpts) {
-        const queryBy = collectQueryParams_1.collectQueryParams(this.params, AVAILABLE_QUERY_PARAMS);
-        const queryPart = this.buildQuery(queryBy);
+        const queryPart = this.buildQuery();
         const context = this.context;
         function pageFn() {
             let url = `/v2/apps/${context.applicationId}/${ENDPT}?${queryPart}`;

@@ -34,19 +34,19 @@ export declare class EarnedAchievementQueryBuilder {
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to a list of metrics
      */
-    getAll(userOpts: any): Promise<EarnedAchievement[]>;
+    getAll(userOpts?: any): Promise<EarnedAchievement[]>;
     /**
      * Retrieves queried earned achievements, returned as an iterator
      * @param userOpts option overrides for this request
      * @return An iterator that returns promises that resolve with the next object
      */
-    getIterator(userOpts: any): IterableIterator<Promise<EarnedAchievement | undefined>>;
+    getIterator(userOpts?: any): IterableIterator<Promise<EarnedAchievement | undefined>>;
     /**
      * Delete all queried earned achievements
      * @param userOpts option overrides for this request
      * @returns Promise that resolves to an object stating the number of deleted earned achievements
      */
-    remove(userOpts: any): Promise<any>;
+    remove(userOpts?: any): Promise<any>;
 }
 /**
  * Earned Achievements resource

@@ -2,7 +2,7 @@ import { ResourceContext } from '../utils/ResourceContext';
 import { Metric, MetricRequest } from './Metric.class';
 export declare class MetricQueryBuilder {
     context: ResourceContext;
-    private _params;
+    private params;
     /**
      * Construct the metrics resource
      * @param context The context to make requests as
