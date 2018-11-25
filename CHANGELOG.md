@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [2.0.4] - 2018-11-25
+### Changed
+- Adding orderBy created option to earned achievement query builder
+
 ## [2.0.3] - 2018-10-28
 ### Changed
 - Fix request options type definition
