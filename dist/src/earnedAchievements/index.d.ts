@@ -25,6 +25,11 @@ export declare class EarnedAchievementQueryBuilder {
      */
     until(until: Date): EarnedAchievementQueryBuilder;
     /**
+     * Orders earned achievement records by the date that they were earned
+     * @param order Earn date sort order. Must be either "+created" or "-created"
+     */
+    orderBy(order: '+created' | '-created'): this;
+    /**
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */
