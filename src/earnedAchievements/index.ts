@@ -58,6 +58,16 @@ export class EarnedAchievementQueryBuilder {
     }
 
     /**
+     * Orders earned achievement records by the date that they were earned
+     * @param order Earn date sort order. Must be either "+created" or "-created"
+     */
+    orderBy(order: '+created' | '-created') {
+        check.assert.string(order, 'order must be a string');
+        this.params.set('orderBy', order);
+        return this;
+    }
+
+    /**
      * Checks and builds query parameters for use in a URL
      * @returns Returns a string containing URL query parameters
      */

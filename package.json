@@ -1,6 +1,6 @@
 {
   "name": "@badgeup/badgeup-browser-client",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Official browser client for BadgeUp, a user engagement and gamification service.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
