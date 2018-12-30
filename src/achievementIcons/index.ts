@@ -20,8 +20,21 @@ export class AchievementIconsResource {
         this.common = new Common(context, ENDPT);
     }
 
+
     /**
-     * Get all achievement icons
+     * Get a list of all preloaded achievement icons
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object[]>} A promise that resolves to an array of achievement icon identifiers
+     */
+    public getAllPreloaded(userOpts?): Promise<AchievementIcon[]> {
+        return this.context.http.makeRequest({
+            method: 'GET',
+            url: `/v2/apps/${this.context.applicationId}/${ENDPT}/preloaded`
+        }, userOpts);
+    }
+
+    /**
+     * Get a list of all uploaded achievement icons
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to an array of achievement icon identifiers
      */

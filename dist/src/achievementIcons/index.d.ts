@@ -12,7 +12,13 @@ export declare class AchievementIconsResource {
      */
     constructor(context: ResourceContext);
     /**
-     * Get all achievement icons
+     * Get a list of all preloaded achievement icons
+     * @param {object} userOpts option overrides for this request
+     * @returns {Promise<object[]>} A promise that resolves to an array of achievement icon identifiers
+     */
+    getAllPreloaded(userOpts?: any): Promise<AchievementIcon[]>;
+    /**
+     * Get a list of all uploaded achievement icons
      * @param userOpts option overrides for this request
      * @returns A promise that resolves to an array of achievement icon identifiers
      */
