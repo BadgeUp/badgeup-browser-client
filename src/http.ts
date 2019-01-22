@@ -86,16 +86,22 @@ export class BadgeUpHttp {
  * @param options request options
  * @returns Returns a Promise that resolves with the response object
  */
-function fetchWithRetry(url: string, options) {
-    function fetchWrapper(): Promise<Response> {
-        return fetch(url, options).then((response: Response) => {
-            // don't retry if status is 4xx
-            if (response.status >= 400 && response.status < 500) {
+function fetchWithRetry(url: string, options): Promise<Response> {
+    async function fetchWrapper() {
+        const response = await fetch(url, options);
+
+        // don't retry if status is 4xx
+        if (response.status >= 400 && response.status < 500) {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const body = await response.json();
+                throw new pRetry.AbortError(body.message);
+            } else {
                 throw new pRetry.AbortError(response.statusText);
             }
+        }
 
-            return response;
-        });
+        return response;
     }
 
     return pRetry(fetchWrapper, { retries: RETRY_COUNT });
