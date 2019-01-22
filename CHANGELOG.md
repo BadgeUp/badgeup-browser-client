@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 
+## [3.0.0] - 2019-01-22
+### Changed
+- Minimum Node.js version is now 8
+- Use 4xx API error message in thrown HTTP errors
+- Updating dependencies
+
 ## [2.0.6] - 2018-12-30
 ### Changed
 - Adding preloaded achievement icons
